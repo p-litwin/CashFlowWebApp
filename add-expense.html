@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Google fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/6c76f76ae7.js" crossorigin="anonymous"></script>
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link href="styles.css" rel="stylesheet">
+
+    <!-- Bootstrao scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <title>WeBudget - Dodaj wydatek</title>
+</head>
+<body>
+  <section id="navigation-bar">
+  <nav class="navbar navbar-expand-lg navbar-light">
+    <img class="brand-image" src="images/wallet.png" alt="">
+    <h1 class="brand-name" href="#">WeBudget</h1>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="add-expense.html"><i class="fa-solid fa-wallet"></i> <i class="fa-solid fa-arrow-right"></i> Dodaj wydatek <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa-solid fa-wallet"></i> <i class="fa-solid fa-arrow-left"></i> Dodaj przychód</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="balance.html"><i class="fa-solid fa-chart-pie"></i> Wyświetl bilans</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa-solid fa-gear"></i> Ustawienia</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#"><i class="fa-solid fa-right-from-bracket"></i> Wyloguj</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  </section>
+  <section id="content">
+  <div class="container main-content">
+    <div class="card add-expense-income-card">
+      <div class="card-header">
+        Dodaj nowy wydatek
+      </div>
+      <div class="card-body">
+    <form>
+          <label for="kwota">Kwota:</label>
+          <input class="form-control" type="number" id="kwota" name="kwota" step="0.01">
+          <label for="data">Data:</label>
+          <input class="form-control" type="date" id="data" name="data">
+          <label for="sposob_platnosci">Sposób płatności:</label>
+          <select class="form-control" id="sposob_platnosci" name="sposob_platnosci">
+            <option value="gotówka">Gotówka</option>
+            <option value="Karta płatnicza">Karta płatnicza</option>
+            <option value="Blik">Blik</option>
+            <option value="Przelew">Przelew</option>
+          </select>
+          <label for="kategoria">Kategoria:</label>
+          <select class="form-control" id="kategoria" name="kategoria">
+            <option value="Jedzenie">Jedzenie</option>
+            <option value="Transport">Transport</option>
+            <option value="Mieszkanie">Mieszkanie</option>
+          </select>
+  
+          <label for="komentarz">Komentarz:</label>
+          <textarea class="form-control" id="komentarz" name="komentarz"></textarea>
+          <div class="row buttons">
+            <div class="col-6">
+              <button class="btn btn-primary btn-block" type="button">Anuluj</button>
+            </div>
+            <div class="col-6">
+            <button class="btn btn-primary btn-block" type="submit">Dodaj</button>
+          </div>
+          </div>
+      </form>
+    </div>
+  </div>
+      </div>
+      </section>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+  crossorigin="anonymous"></script>
+</body>
+</html>

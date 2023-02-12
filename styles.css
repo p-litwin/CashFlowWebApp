@@ -1,0 +1,117 @@
+body {
+    background-color:#f0f0f0;
+    font-family: 'Roboto Slab', serif;
+    
+}
+
+.kolumna-lewa {
+    background-color:#93BFCF;
+    text-align: center;
+}
+
+.login-form {
+    margin: 10px 0;
+}
+
+.brand {
+    margin-top: 6rem;
+}
+
+.brand-name {
+    display:inline;
+    vertical-align: top;
+    font-size: 3.125rem;
+    padding:0;
+    line-height: 1;
+}
+.brand-image {
+    width: 50px;
+    padding: 0;
+    margin: 0 0 0 15px;
+}
+
+.form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: 0 auto;
+    }
+
+input {
+    margin:15px 0;
+}
+.btn-block {
+    width:100%;
+}
+
+.tagline {
+    text-align: center;
+    padding:10rem 0;
+}
+
+.feature-image  {
+    width:50px;
+    padding: 25px 0;
+}
+
+.feature {
+    text-align: center;
+}
+
+.feature-text {
+    padding:0 25px;
+    font-weight: 400;
+}
+
+.login-text {
+    margin-top:1rem;
+}
+
+@media (max-width: 767px) {
+    .brand {
+        margin-top: 2rem;
+    }
+    .tagline {
+        padding: 2rem 0;
+    }
+    .feature-text {
+        margin: 0 0 0 46px;
+        text-align: left;
+    }
+    .feature-image {
+        width: 50px;
+        padding: 0 0 20px 0px;
+        float: left;
+    }
+}
+
+@media (min-width:768px) {
+    .kolumna-lewa {
+        height:100vh;
+    }
+}
+
+.navbar {
+    background-color:#93BFCF;
+}
+
+.add-expense-income-card {
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.main-content {
+    padding-top:2rem;
+}
+
+.buttons {
+    padding-top:2rem;
+}
+
+.navbar-nav {
+    padding-right: 10px;
+}
+
+.navbar-toggler {
+    margin-right:10px;
+}
