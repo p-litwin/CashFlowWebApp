@@ -68,9 +68,16 @@
         </nav>
     </section>
     <section id="date-selector">
-        <nav class="navbar navbar-light bg-light">
+        <nav class="navbar navbar-light justify-content-end">
             <form class="form-inline">
-                <input class="form-control" type="date" id="data" name="data"> <input class="form-control" type="date" id="data" name="data">
+                <label for="date-selector">Wybierz zakres dat:</label>
+                <select class="form-inline" id="date-selector" name="date_selector">
+                    <option value="currentMonth">Ten miesiąc</option>
+                    <option value="lastMonth">Ubiegły miesiąc</option>
+                    <option value="thisYear">Ten rok</option>
+                    <option value="lastYear">Ubiegły rok</option>
+                    <option value="custom">Niestandardowy</option>
+                </select>
             </form>
           </nav>
     </section>

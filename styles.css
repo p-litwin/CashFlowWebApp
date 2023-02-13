@@ -5,7 +5,7 @@ body {
 }
 
 .kolumna-lewa {
-    background-color:#93BFCF;
+    background-color:#59c6ed;
     text-align: center;
 }
 
@@ -92,7 +92,7 @@ input {
 }
 
 .navbar {
-    background-color:#93BFCF;
+    background-color:#59c6ed;
 }
 
 .add-expense-income-card {
@@ -108,8 +108,8 @@ input {
     padding-top:2rem;
 }
 
-.navbar-nav {
-    padding-right: 10px;
+.navbar {
+    padding-right: 1rem;
 }
 
 .navbar-toggler {
