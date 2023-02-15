@@ -89,13 +89,14 @@ body {
     }
 }
 
-.navbar {
+.main-menu {
     background-color:#59c6ed;
+    box-shadow: 5px 5px 15px grey;
 }
 
 .add-expense-income-card {
     max-width: 500px;
-    margin: 0 auto;
+    margin: 0 auto 2rem auto;
     box-shadow: 5px 5px 15px #a5a5a5;
 }
 
@@ -139,4 +140,18 @@ body {
 
 .card-header {
     background-color: #59c6ed;
+}
+
+.pie-chart {
+    max-width:100%;
+}
+
+.navbar-brand {
+    font-size:2rem;
+}
+
+.navbar-image {
+    width:32px;
+    
+    margin:0 0.75rem;
 }

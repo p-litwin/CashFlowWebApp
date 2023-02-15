@@ -29,14 +29,14 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-    <title>WeBudget - Bilans</title>
+    <title>CashFlowApp - Bilans</title>
 </head>
 
 <body>
     <section id="navigation-bar">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <img class="brand-image" src="images/wallet.png" alt="">
-            <h1 class="brand-name" href="#">WeBudget</h1>
+        <nav class="navbar navbar-expand-lg navbar-light main-menu">
+            <img class="navbar-image  navbar-brand" src="images/wallet.png" alt="">
+            <span class="navbar-brand">CashFlowApp</span>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -68,7 +68,7 @@
         </nav>
     </section>
     <section id="date-selector">
-        <nav class="navbar navbar-light justify-content-end">
+        <div class="navbar navbar-light justify-content-end">
             <form class="form-inline">
                 <label for="date-selector">Wybierz zakres dat:</label>
                 <select class="form-inline" id="date-selector" name="date_selector">
@@ -79,15 +79,51 @@
                     <option value="custom">Niestandardowy</option>
                 </select>
             </form>
-          </nav>
+        </div>
     </section>
     <section id="content">
         <div class="container-fluid main-content">
+            <h2>Bilans przychodów i wydatków za okres: Bieżący miesiąc</h2>
             <div class="row">
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="card add-expense-income-card">
                         <div class="card-header">
-                            Przychody
+                            Przychody razem
+                        </div>
+                        <div class="card-body text-center text-success fs-4">
+                            6800
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card add-expense-income-card">
+                        <div class="card-header">
+                            Wydatki razem
+                        </div>
+                        <div class="card-body text-center text-danger fs-4">
+                            7500
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card add-expense-income-card">
+                        <div class="card-header">
+                            Bilans
+                        </div>
+                        <div class="card-body text-center text-danger fs-4">
+                            -700
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card add-expense-income-card">
+                        <div class="card-header">
+                            Przychody kategoriami
                         </div>
                         <div class="card-body">
                             <table class="table table-striped">
@@ -121,10 +157,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="card add-expense-income-card">
                         <div class="card-header">
-                            Wydatki
+                            Wydatki kategoriami
                         </div>
                         <div class="card-body">
                             <table class="table table-striped">
@@ -137,47 +173,47 @@
                                 <tbody>
                                     <tr>
                                         <td>Jedzenie</td>
-                                        <td>1000</td>
+                                        <td>1000.00</td>
                                     </tr>
                                     <tr>
                                         <td>Mieszkanie</td>
-                                        <td>2000</td>
+                                        <td>2000.00</td>
                                     </tr>
                                     <tr>
                                         <td>Transport</td>
-                                        <td>500</td>
+                                        <td>500.00</td>
                                     </tr>
                                     <tr>
                                         <td>Rachunki</td>
-                                        <td>800</td>
+                                        <td>800.00</td>
                                     </tr>
                                     <tr>
                                         <td>Rozrywka</td>
-                                        <td>300</td>
+                                        <td>300.00</td>
                                     </tr>
                                     <tr>
                                         <td>Ubranie</td>
-                                        <td>400</td>
+                                        <td>400.00</td>
                                     </tr>
                                     <tr>
                                         <td>Zdrowie</td>
-                                        <td>200</td>
+                                        <td>200.00</td>
                                     </tr>
                                     <tr>
                                         <td>Oszczędności</td>
-                                        <td>1000</td>
+                                        <td>1000.00</td>
                                     </tr>
                                     <tr>
                                         <td>Edukacja</td>
-                                        <td>500</td>
+                                        <td>500.00</td>
                                     </tr>
                                     <tr>
                                         <td>Inne</td>
-                                        <td>200</td>
+                                        <td>200.00</td>
                                     </tr>
                                     <tr>
                                         <td>Razem</td>
-                                        <td>7500</td>
+                                        <td>7500.00</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -185,22 +221,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4">
+                <div class="col-lg-4 col-md-6">
                     <div class="card add-expense-income-card">
                         <div class="card-header">
-                           Bilans
+                            Wykres wydatków
                         </div>
-                        <div class="card-body">
-                            -700
-
-                        </div>
-                    </div>
-                    <div class="card add-expense-income-card">
-                        <div class="card-header">
-                           Wykres wydatków
-                        </div>
-                        <div class="card-body">
-
+                        <div class="card-body text-center">
+                            <img src="https://www.tibco.com/sites/tibco/files/media_entity/2022-01/doughnut-chart-example.svg" class="pie-chart" alt="">
                         </div>
                     </div>
                 </div>
