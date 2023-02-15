@@ -96,6 +96,7 @@ body {
 .add-expense-income-card {
     max-width: 500px;
     margin: 0 auto;
+    box-shadow: 5px 5px 15px #a5a5a5;
 }
 
 .main-content {
@@ -103,7 +104,7 @@ body {
 }
 
 .buttons {
-    padding-top:2rem;
+    padding-top:1rem;
 }
 
 .navbar {
@@ -120,14 +121,20 @@ body {
 
 .input-group {
     padding: 0.5rem 0;
+    margin-right:0;
 }
 
 .input-group-prepend {
     text-align: right;
+    padding-right:0;
 }
 
 .input-group-text {
     align-items: baseline;
+    background-color:rgb(234, 234, 234);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    
 }
 
 .card-header {
