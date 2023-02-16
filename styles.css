@@ -1,12 +1,24 @@
-body {
+body, html {
     background-color:#f0f0f0;
-    
-    
+    min-height:100%; 
 }
 
-.kolumna-lewa {
+.left-column {
     background-color:#59c6ed;
     text-align: center;
+    height:100vh;
+}
+.login-register-content {
+    height:100vh;
+}
+@media (max-width:768px) {
+    .left-column {
+        height:auto;
+    }
+}
+
+.features {
+    background-color:#59c6ed;
 }
 
 .login-form {
@@ -27,8 +39,7 @@ body {
 }
 .brand-image {
     width: 50px;
-    padding: 0;
-    margin: 0 0 0 15px;
+    margin-right:1rem;
 }
 
 .form-signin {
@@ -46,6 +57,7 @@ body {
 .tagline {
     text-align: center;
     padding:10rem 0;
+    background-color: #59c6ed;
 }
 
 .feature-image  {
@@ -81,12 +93,6 @@ body {
         width: 50px;
         padding: 0 0 20px 0px;
         float: left;
-    }
-}
-
-@media (min-width:768px) {
-    .kolumna-lewa {
-        height:100vh;
     }
 }
 
@@ -150,6 +156,7 @@ body {
 
 .navbar-brand {
     font-size:2rem;
+    font-family: 'Roboto Slab', serif;
 }
 
 .navbar-image {
@@ -181,4 +188,9 @@ body {
         text-align: center;
         margin-top:1.3rem;
     }
+}
+
+
+.form-control {
+    margin: 0 0 1rem 0;
 }
