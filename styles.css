@@ -97,7 +97,7 @@ body {
 
 .add-expense-income-card {
     max-width: 500px;
-    margin: 0 auto 2rem auto;
+    margin: 0 auto 2rem 0;
     box-shadow: 5px 5px 15px #a5a5a5;
     border:0;
 }
@@ -157,11 +157,11 @@ body {
 }
 
 .site-title {
-    margin-bottom:2rem;
+    margin-bottom: 1.4rem;
 }
 
 .site-title h1 {
-    font-size:1.8rem;
+    font-size:1.7rem;
 }
 
 .date-selector {
