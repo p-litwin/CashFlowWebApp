@@ -1,6 +1,6 @@
 body {
     background-color:#f0f0f0;
-    font-family: 'Roboto Slab', serif;
+    
     
 }
 
@@ -23,6 +23,7 @@ body {
     font-size: 3.125rem;
     padding:0;
     line-height: 1;
+    font-family: 'Roboto Slab', serif;
 }
 .brand-image {
     width: 50px;
@@ -91,17 +92,22 @@ body {
 
 .main-menu {
     background-color:#59c6ed;
-    box-shadow: 5px 5px 15px grey;
+    box-shadow: 5px 5px 15px #a5a5a5;
 }
 
 .add-expense-income-card {
     max-width: 500px;
     margin: 0 auto 2rem auto;
     box-shadow: 5px 5px 15px #a5a5a5;
+    border:0;
+}
+
+.balance-card {
+    margin: 0 auto 2rem auto;
 }
 
 .main-content {
-    padding-top:2rem;
+    padding:2rem;
 }
 
 .buttons {
@@ -109,11 +115,7 @@ body {
 }
 
 .navbar {
-    padding-right: 1rem;
-}
-
-.navbar-toggler {
-    margin-right:10px;
+   padding: 0 2rem;
 }
 
 .textarea-100 {
@@ -152,6 +154,31 @@ body {
 
 .navbar-image {
     width:32px;
-    
-    margin:0 0.75rem;
+}
+
+.site-title {
+    margin-bottom:2rem;
+}
+
+.site-title h1 {
+    font-size:1.8rem;
+}
+
+.date-selector {
+    text-align:right;
+}
+
+.form-inline {
+    margin:  0 0 0 auto;
+}
+
+@media (max-width:767px) {
+    .site-title h1 {
+    text-align: center;
+    font-size:1.5rem;
+    }
+    .date-selector {
+        text-align: center;
+        margin-top:1.3rem;
+    }
 }
