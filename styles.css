@@ -26,7 +26,7 @@ body, html {
 }
 
 .brand {
-    margin-top: 6rem;
+    padding-top: 6rem;
 }
 
 .brand-name {
@@ -56,7 +56,7 @@ body, html {
 
 .tagline {
     text-align: center;
-    padding:10rem 0;
+    padding:10rem 2rem;
     background-color: #59c6ed;
 }
 
@@ -70,8 +70,9 @@ body, html {
 }
 
 .feature-text {
-    padding:0 25px;
-    font-weight: 400;
+    padding:0 1.5rem 1rem 1.5rem;
+    font-weight: 600;
+    font-size: 1.2rem;
 }
 
 .login-text {
@@ -83,7 +84,7 @@ body, html {
         margin-top: 2rem;
     }
     .tagline {
-        padding: 2rem 0;
+        padding: 2rem;
     }
     .feature-text {
         margin: 0 0 0 46px;
