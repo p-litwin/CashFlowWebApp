@@ -4,21 +4,11 @@ html {
     min-height: 100%;
 }
 
-.left-column {
-    background-color: #59c6ed;
-    text-align: center;
-    height: 100vh;
+/* Block buttons */
+
+.btn-block {
+    width: 100%;
 }
-
-
-@media (max-width:767px) {
-    .left-column {
-        height: auto;
-    }
-}
-
-
-
 
 /* Login and register form */
 
@@ -29,15 +19,23 @@ html {
     margin: 0 auto;
 }
 
-.login-register-button {
-    width: 100%;
-}
-
 .login-text {
     margin-top: 1rem;
 }
 
 /* Login and register page left panel */
+
+.left-column {
+    background-color: #59c6ed;
+    text-align: center;
+    height: 100vh;
+}
+
+@media (max-width:767px) {
+    .left-column {
+        height: auto;
+    }
+}
 
 .brand {
     padding-top: 6rem;
@@ -81,8 +79,6 @@ html {
 }
 
 
-
-
 @media (max-width: 767px) {
     .brand {
         padding-top: 2rem;
@@ -104,10 +100,38 @@ html {
     }
 }
 
+/* Navigation bar */
+
 .main-menu {
     background-color: #59c6ed;
     box-shadow: 5px 5px 15px #a5a5a5;
+    padding: 0 2rem;
 }
+
+.navbar-brand {
+    font-size: 2rem;
+    font-family: 'Roboto Slab', serif;
+}
+
+.navbar-image {
+    width: 32px;
+}
+
+.site-title {
+    margin-bottom: 1.4rem;
+}
+
+.site-title h1 {
+    font-size: 1.7rem;
+}
+
+/* Main content of the app */
+
+.main-content {
+    padding: 2rem;
+}
+
+/* Add expense and income card */
 
 .add-expense-income-card {
     max-width: 500px;
@@ -116,20 +140,8 @@ html {
     border: 0;
 }
 
-.balance-card {
-    margin: 0 auto 2rem auto;
-}
-
-.main-content {
-    padding: 2rem;
-}
-
 .buttons {
     padding-top: 1rem;
-}
-
-.navbar {
-    padding: 0 2rem;
 }
 
 .textarea-100 {
@@ -151,40 +163,20 @@ html {
     background-color: rgb(234, 234, 234);
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-
 }
 
-.card-header {
-    background-color: #59c6ed;
+.login-register-fields {
+    margin: 0 0 1rem 0;
 }
 
-.pie-chart {
-    max-width: 100%;
-}
+/* Balance page */
 
-.navbar-brand {
-    font-size: 2rem;
-    font-family: 'Roboto Slab', serif;
-}
-
-.navbar-image {
-    width: 32px;
-}
-
-.site-title {
-    margin-bottom: 1.4rem;
-}
-
-.site-title h1 {
-    font-size: 1.7rem;
+.balance-card {
+    margin: 0 auto 2rem auto;
 }
 
 .date-selector {
     text-align: right;
-}
-
-.form-inline {
-    margin: 0 0 0 auto;
 }
 
 @media (max-width:767px) {
@@ -199,7 +191,12 @@ html {
     }
 }
 
+/* Cards */
 
-.form-control {
-    margin: 0 0 1rem 0;
+.card-header {
+    background-color: #59c6ed;
+}
+
+.pie-chart {
+    max-width: 100%;
 }
