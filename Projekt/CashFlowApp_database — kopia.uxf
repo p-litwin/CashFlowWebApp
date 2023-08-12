@@ -1,0 +1,58 @@
+<diagram program="umletino" version="15.1"><zoom_level>8</zoom_level><help_text></help_text><element><id>UMLClass</id><coordinates><x>519</x><y>312</y><w>208</w><h>96</h></coordinates><panel_attributes>User
+--
+&lt;&lt;PK&gt;&gt; userId: INTEGER
+userName: VARCHAR(20)
+userSurname: VARCHAR(20)
+login: VARCHAR(20)
+password:VARCHAR(255)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>127</x><y>464</y><w>168</w><h>112</h></coordinates><panel_attributes>Expense
+--
+&lt;&lt;PK&gt;&gt; expenseId: INTEGER
+&lt;&lt;FK&gt;&gt; userId: INTEGER
+date: DATE
+item: VARCHAR(20)
+amount: FLOAT
+&lt;&lt;FK&gt;&gt; incomeCategory: INTEGER
+&lt;&lt;FK&gt;&gt; paymentMethod: INTEGER</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>887</x><y>472</y><w>168</w><h>96</h></coordinates><panel_attributes>Income
+--
+&lt;&lt;PK&gt;&gt; incomeId: INTEGER
+&lt;&lt;FK&gt;&gt; userId: INTEGER
+date: DATE
+item: VARCHAR(20)
+amount: FLOAT
+&lt;&lt;FK&gt;&gt; incomeCategory: INTEGER
+style=wordwrap</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>191</x><y>344</y><w>344</w><h>136</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..n
+</panel_attributes><additional_attributes>410;20;10;20;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>719</x><y>352</y><w>248</w><h>136</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..n</panel_attributes><additional_attributes>10;10;270;10;270;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>439</x><y>632</y><w>168</w><h>64</h></coordinates><panel_attributes>ExpenseCategory
+--
+&lt;&lt;PK&gt;&gt; expenseCategoryId: INTEGER
+&lt;&lt;FK&gt;&gt; userId: INTEGER
+expenseCategory: VARCHAR(20)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>191</x><y>568</y><w>264</w><h>120</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..n</panel_attributes><additional_attributes>310;120;10;120;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>631</x><y>496</y><w>168</w><h>64</h></coordinates><panel_attributes>IncomeCategory
+--
+&lt;&lt;PK&gt;&gt; IncomeCategoryId: INTEGER
+&lt;&lt;FK&gt;&gt; userId: INTEGER
+incomeCategory: VARCHAR(20)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>791</x><y>520</y><w>112</w><h>32</h></coordinates><panel_attributes>lt=-
+m1=1
+m2=0..n</panel_attributes><additional_attributes>10;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>575</x><y>400</y><w>40</w><h>248</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=1
+
+</panel_attributes><additional_attributes>10;290;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>671</x><y>400</y><w>40</w><h>112</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=1
+
+</panel_attributes><additional_attributes>10;120;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>391</x><y>488</y><w>168</w><h>64</h></coordinates><panel_attributes>PaymentMethod
+--
+&lt;&lt;PK&gt;&gt; paymentMethodId: INTEGER
+&lt;&lt;FK&gt;&gt; userId: INTEGER
+paymentMethod: VARCHAR(20)</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>287</x><y>512</y><w>120</w><h>32</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=1</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>527</x><y>400</y><w>40</w><h>104</h></coordinates><panel_attributes>lt=-
+m1=0..n
+m2=1
+
+</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element></diagram>
