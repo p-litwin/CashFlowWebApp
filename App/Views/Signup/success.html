@@ -1,10 +1,21 @@
 {% extends "base.html" %}
 
-{% block title %}Signup{% endblock %}
+{% block title %}CashFlowApp - Zarejestruj się{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            
+            {% include 'splash_screen_left.html' %}
 
-<h1>Signup</h1>
-<p>Success! Thank you  for signing up.</p>
-<p>Please check your email to activate your account.</p>
+            <div class="col-lg-6 col-md-6">
+
+                <h1>Signup</h1>
+                <p>Success! Thank you  for signing up.</p>
+                <p>Please check your email to activate your account.</p>
+
+            </div>
+        </div>
+    </div>
+
 {% endblock %}
