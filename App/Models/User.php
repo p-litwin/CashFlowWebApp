@@ -163,15 +163,15 @@ class User extends \Core\Model{
 
     protected function validate(){
         if ($this->name == '') {
-            $this->errors[] = 'Name is required';
+            $this->errors[] = 'Pole imię jest obowiązkowe';
         }
 
         if (filter_var($this->email, FILTER_VALIDATE_EMAIL) === false) {
-            $this->errors[] = 'Invalid email';
+            $this->errors[] = 'Nieprawidłowy adres email';
         }
 
         if (static::emailExists($this->email, $this->userId ?? null)) {
-            $this->errors[] = 'Email already taken';
+            $this->errors[] = 'Email jest już zajęty';
         }
 
         $this->validatePassword();
@@ -185,15 +185,15 @@ class User extends \Core\Model{
     protected function validatePassword(){
         if (isset($this->password)) {
             if (strlen($this->password) < 6) {
-                $this->errors[] = 'Password must be at least 6 characters long';
+                $this->errors[] = 'Minimalna długość hasła: 6 znaków';
             }
             
             if (preg_match('/[a-z]+/i',  $this->password) == 0) {
-                $this->errors[] = 'Password needs at least one letter';
+                $this->errors[] = 'Hasło musi zawierać przynajmniej 1 literę';
             }
             
             if (preg_match('/[\d]+/i',  $this->password) == 0) {
-                $this->errors[] = 'Password needs at least one digit';
+                $this->errors[] = 'Hasło musi zawierać przynajmniej 1 cyfrę';
             }
         }
     }

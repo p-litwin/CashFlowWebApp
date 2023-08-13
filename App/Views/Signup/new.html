@@ -23,7 +23,14 @@
             debug: true,
             messages: {
                 email: {
-                    remote: 'email already taken'
+                    remote: 'Email jest już zajęty',
+                    email: 'Nieprawidłowy adres email',
+                    required: 'To pole nie może być puste'
+                },
+                password: {
+                    required: 'To pole nie może być puste',
+                    minlength: 'Minimalna długość: 6 znaków',
+                    validPassword: 'Przynajmniej 1 cyfra'
                 }
             }
         });
