@@ -9,14 +9,23 @@
             {% include 'splash_screen_left.html' %}
 
             <div class="col-lg-6 col-md-6">
-                <form class="login-register-form">
+                <form class="login-register-form" action="/login/create" method="post">
                     <h3 class="font-weight-normal">Zaloguj się</h3>
-                    <label for="inputLogin" class="sr-only">Login</label>
-                    <input type="text" id="inputLogin" class="form-control login-register-fields" placeholder="Login" required autofocus>
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" class="form-control login-register-fields" placeholder="Hasło" required>
+                    <div class="form-group">
+                        <label for="inputEmail" class="sr-only">Email (login)</label>
+                        <input type="text" id="inputEmail" name="email" class="form-control login-register-fields" placeholder="Email (login)" required autofocus>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control login-register-fields" placeholder="Hasło" required>
+                        <p><a href="/password">Nie pamiętam hasła</a></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputRememberMe">
+                        <input id="inputRememberMe" name="remember_me" class="form-checkbox mb-3" type="checkbox">Pamiętaj mnie</label>
+                    </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się</button>
-                    <p class="login-text">Nie masz konta? <a href="signup">Zarejestruj się</a></p>
+                    <p class="login-text">Nie masz konta? <a href="/signup">Zarejestruj się</a></p>
                 </form>
             </div>
         </div>
