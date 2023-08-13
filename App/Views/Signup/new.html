@@ -1,7 +1,35 @@
 {% extends "base.html" %}
 
 {% block title %}CashFlowApp - Zarejestruj się {% endblock %}
+{% block footer %}    
+    <script>
+    $(document).ready(function () {
 
+        $("#signupForm").validate({
+            rules: {
+                name: 'required',
+                email: {
+                    required: true,
+                    email: true,
+                    remote: '/account/validate-email'
+                },
+                password: {
+                    required: true,
+                    minlength: 6,
+                    validPassword: true
+                }
+            },
+            messages: {
+                email: {
+                    remote: 'email already taken'
+                }
+            }
+        });
+    });
+
+    $('#inputPassword').hideShowPassword(false, true);
+    </script>
+{% endblock %}
 {% block body %}
     <div class="container-fluid">
         <div class="row align-items-center">
@@ -9,14 +37,14 @@
             {% include 'splash_screen_left.html' %}
 
             <div class="col-lg-6 col-md-6">
-                <form class="login-register-form">
+                <form id="signupForm" class="login-register-form" method="post" action="/signup/create">
                     <h3 class="font-weight-normal">Załóż konto</h3>
-                    <label for="inputName" class="sr-only">Imię</label>
-                    <input type="text" id="inputName" class="form-control login-register-fields" placeholder="Imię" required autofocus>
-                    <label for="inputEmail" class="sr-only">Adres email (login)</label>
-                    <input type="email" id="inputEmail" class="form-control login-register-fields" placeholder="Email (login)" required>
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" id="inputPassword" class="form-control login-register-fields" placeholder="Hasło" required>
+                    <label for="name" class="sr-only">Imię</label>
+                    <input type="text" name="name" id="inputName" class="form-control login-register-fields" placeholder="Imię" required autofocus>
+                    <label for="email" class="sr-only">Adres email (login)</label>
+                    <input type="email" name="email" id="inputEmail" class="form-control login-register-fields" placeholder="Email (login)" required>
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control login-register-fields" placeholder="Hasło" required>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Załóż konto</button>
                     <p class="login-text">Masz już konto? <a href="/login">Zaloguj się</a></p>
                 </form>
