@@ -165,9 +165,9 @@ html {
     border-bottom-right-radius: 0;
 }
 
-.login-register-fields {
+/* .login-register-fields {
     margin: 0 0 1rem 0;
-}
+} */
 
 /* Balance page */
 
@@ -237,4 +237,14 @@ html {
 .hideShowPassword-toggle:focus {
   border-color: #0088cc;
   outline: transparent;
+}
+
+/* jQuery form validation errors */
+
+label.error {
+    color: red;
+    font-size:0.8em;
+}
+input.error {
+    color:red;
 }
