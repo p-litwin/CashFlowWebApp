@@ -225,8 +225,6 @@ html {
   overflow: 'hidden';
   text-indent: -999em;
   width: 46px;
-  -moz-appearance: none;
-  -webkit-appearance: none;
 }
 
 .hideShowPassword-toggle-hide {
