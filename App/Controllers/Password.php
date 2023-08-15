@@ -52,7 +52,7 @@ class Password extends \Core\Controller {
             
         if ($user->changePassword($token, $new_password)) {
             
-            Flash::addMessage('Password changed successfully. You can now login with new password.', Flash::SUCCESS);
+            Flash::addMessage('Hasło zostało zmienione. Możesz się teraz zalogować.', Flash::SUCCESS);
             View::renderTemplate('Login/new.html');
         
         }
