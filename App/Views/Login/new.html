@@ -2,6 +2,10 @@
 
 {% block title %}CashFlowApp - Zaloguj się{% endblock %}
 
+{% block footer %}
+<script type="text/javascript" src="/js/hideShowPasswordToggle.js"></script>
+{% endblock %}
+
 {% block body %}
     <div class="container-fluid">
         <div class="row align-items-center">
@@ -13,7 +17,7 @@
                     <h3 class="font-weight-normal">Zaloguj się</h3>
                     <div class="pb-4">
                         <label for="inputEmail" class="sr-only">Email (login)</label>
-                        <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email (login)" required autofocus>
+                        <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email (login)" value="{{ email }}" required autofocus>
                     </div>
                     <div class="pb-2">
                         <label for="inputPassword" class="sr-only">Password</label>

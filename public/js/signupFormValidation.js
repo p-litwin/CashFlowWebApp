@@ -14,7 +14,6 @@ $(document).ready(function () {
                 validPassword: true
             }
         },
-        debug: true,
         messages: {
             email: {
                 remote: 'Email jest już zajęty',

@@ -18,12 +18,12 @@
                 <h3 class="font-weight-normal">Załóż konto</h3>
                 <div class="pb-3">
                     <label for="inputName" class="form-label sr-only">Imię</label>
-                    <input type="text" name="name" id="inputName" class="form-control" placeholder="Imię" required
+                    <input type="text" name="name" id="inputName" class="form-control" placeholder="Imię" value="{{ user.name }}" required
                         autofocus>
                 </div>
                 <div class="pb-3">
                     <label for="inputEmail" class="sr-only">Adres email (login)</label>
-                    <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email (login)"
+                    <input type="email" name="email" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Email (login)"
                         required>
                 </div>
                 <div class="pb-3">
