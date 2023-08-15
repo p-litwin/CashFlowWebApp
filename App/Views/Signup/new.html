@@ -14,26 +14,28 @@
         {% include 'splash_screen_left.html' %}
 
         <div class="col-lg-6 col-md-6">
-            <form id="signupForm" class="login-register-form" method="post" action="/signup/create">
-                <h3 class="font-weight-normal">Załóż konto</h3>
-                <div class="pb-3">
-                    <label for="inputName" class="form-label sr-only">Imię</label>
-                    <input type="text" name="name" id="inputName" class="form-control" placeholder="Imię" value="{{ user.name }}" required
-                        autofocus>
-                </div>
-                <div class="pb-3">
-                    <label for="inputEmail" class="sr-only">Adres email (login)</label>
-                    <input type="email" name="email" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Email (login)"
-                        required>
-                </div>
-                <div class="pb-3">
-                    <label for="inputPassword" class="sr-only">Password</label>
-                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Hasło"
-                        required>
-                </div>
-                <button class="btn btn-lg btn-primary btn-block" type="submit">Załóż konto</button>
-                <p class="login-text">Masz już konto? <a href="/login">Zaloguj się</a></p>
-            </form>
+            <div class="right-wrapper">
+                <form id="signupForm" method="post" action="/signup/create">
+                    <h3 class="font-weight-normal">Załóż konto</h3>
+                    <div class="pb-3">
+                        <label for="inputName" class="form-label sr-only">Imię</label>
+                        <input type="text" name="name" id="inputName" class="form-control" placeholder="Imię" value="{{ user.name }}" required
+                            autofocus>
+                    </div>
+                    <div class="pb-3">
+                        <label for="inputEmail" class="sr-only">Adres email (login)</label>
+                        <input type="email" name="email" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Email (login)"
+                            required>
+                    </div>
+                    <div class="pb-3">
+                        <label for="inputPassword" class="sr-only">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Hasło"
+                            required>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Załóż konto</button>
+                    <p class="login-text">Masz już konto? <a href="/login">Zaloguj się</a></p>
+                </form>
+            </div>
         </div>
     </div>
 </div>

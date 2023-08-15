@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% block title %}CashFlowApp - Zarejestruj się{% endblock %}
+{% block title %}CashFlowApp - Rejestracja nowego użytkownika{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
@@ -9,11 +9,12 @@
             {% include 'splash_screen_left.html' %}
 
             <div class="col-lg-6 col-md-6">
-
-                <h1>Signup</h1>
-                <p>Success! Thank you  for signing up.</p>
-                <p>Please check your email to activate your account.</p>
-
+                <div class="right-wrapper">
+                    <h1>Rejestracja</h1>
+                    <p>Dziękuję za założenie nowego konta.</p>
+                    <p>Sprawdź podaną skrzynkę pocztową, aby aktywować konto.</p>
+                    <p><a href="/login">Zaloguj się</a></p>
+                </div>
             </div>
         </div>
     </div>

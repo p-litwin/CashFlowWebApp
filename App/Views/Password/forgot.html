@@ -9,15 +9,17 @@
             {% include 'splash_screen_left.html' %}
 
             <div class="col-lg-6 col-md-6">
-                <form class="login-register-form" method="post" action="/password/requestReset" id="passwordResetForm">
-                    <h3 class="font-weight-normal">Resetuj hasło</h3>
-                    <div class="form-group mb-3">
-                        <label class="form-label" for="email">Login (email)</label>
-                        <input class="form-control" type="email" id="email" name="email" placeholder="email" autofocus required
-                            type="email">
-                    </div>
-                    <button type="submit" class="btn btn-block btn-lg btn-primary">Resetuj hasło</button><a class="btn btn-block btn-lg btn-secondary mt-2" role="button" href="/login">Anuluj</a>
-                </form>
+                <div class="right-wrapper">
+                    <form method="post" action="/password/requestReset" id="passwordResetForm">
+                        <h3 class="font-weight-normal">Resetuj hasło</h3>
+                        <div class="form-group mb-3">
+                            <label class="form-label" for="email">Login (email)</label>
+                            <input class="form-control" type="email" id="email" name="email" placeholder="email" autofocus required
+                                type="email">
+                        </div>
+                        <button type="submit" class="btn btn-block btn-lg btn-primary">Resetuj hasło</button><a class="btn btn-block btn-lg btn-secondary mt-2" role="button" href="/login">Anuluj</a>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
