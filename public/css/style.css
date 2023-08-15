@@ -69,7 +69,7 @@ html {
 
 .features {
     background-color: #59c6ed;
-    text-align:center;
+    text-align: center;
 }
 
 .feature-text {
@@ -205,44 +205,57 @@ html {
 
 ::-ms-reveal,
 ::-ms-clear {
-  display: none !important;
+    display: none !important;
 }
 
 .hideShowPassword-toggle {
-  background-color: transparent;
-  background-image: url('/images/wink.png'); /* fallback */
-  background-image: url('/images/wink.svg'), none;
-  background-position: 0 center;
-  background-repeat: no-repeat;
-  border: 2px solid transparent;
-  border-radius: 0.25em;
-  cursor: pointer;
-  font-size: 100%;
-  height: 37.5px;
-  margin: 0;
-  max-height: 100%;
-  padding: 0;
-  overflow: 'hidden';
-  text-indent: -999em;
-  width: 46px;
+    background-color: transparent;
+    background-image: url('/images/wink.png');
+    /* fallback */
+    background-image: url('/images/wink.svg'), none;
+    background-position: 0 center;
+    background-repeat: no-repeat;
+    border: 2px solid transparent;
+    border-radius: 0.25em;
+    cursor: pointer;
+    font-size: 100%;
+    height: 37.5px;
+    margin: 0;
+    max-height: 100%;
+    padding: 0;
+    overflow: 'hidden';
+    text-indent: -999em;
+    width: 46px;
 }
 
 .hideShowPassword-toggle-hide {
-  background-position: -44px center;
+    background-position: -44px center;
 }
 
 .hideShowPassword-toggle:hover,
 .hideShowPassword-toggle:focus {
-  border-color: #0088cc;
-  outline: transparent;
+    border-color: #0088cc;
+    outline: transparent;
 }
 
 /* jQuery form validation errors */
 
 label.error {
     color: red;
-    font-size:0.8em;
+    font-size: 0.8em;
 }
+
 input.error {
-    color:red;
+    color: red;
+}
+
+.flash-messages-container {
+    position: fixed;
+    bottom: 4%;
+    right: 4%;
+    
+}
+
+.flash-message {
+    box-shadow: 5px 5px 15px gray;
 }

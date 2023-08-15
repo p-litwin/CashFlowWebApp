@@ -24,11 +24,15 @@
 </head>
 <body>
     
-    {% for message in flash_messages %}
-        <div class="alert alert-{{ message.type }}">
+    {% if flash_messages %}
+    <div class="flash-messages-container">
+        {% for message in flash_messages %}
+            <div class="flash-message alert alert-{{ message.type }}">
             {{ message.body }}
-        </div>
-    {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
 
     {% block body %}
 
