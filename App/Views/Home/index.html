@@ -3,5 +3,7 @@
 {% block body %}
 
     {% include "/Home/navbar.html"  %}
-
+    <div class="container-fluid mt-4 ms-4">
+        <h1>Witaj {{ current_user.name }}</h1>
+    </div>
 {% endblock %}
