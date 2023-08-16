@@ -115,6 +115,7 @@ html {
 
 .navbar-image {
     width: 32px;
+    margin-bottom:10px;
 }
 
 .site-title {
@@ -253,9 +254,52 @@ input.error {
     position: fixed;
     bottom: 4%;
     right: 4%;
-    
+
 }
 
 .flash-message {
     box-shadow: 5px 5px 15px gray;
 }
+
+
+/* 404 page */
+.error-page {
+    background: #59c6ed;
+    background-size: cover;
+    color: #000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    height: 100vh;
+}
+
+.error-message-container {
+    padding:3em;
+}
+
+.error-page-emoticon {
+    font-size: 25vh;
+}
+
+@media (max-width:500px){
+.error-page-emoticon {
+    font-size: 16vh;
+}
+}
+
+.error-code {
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.error-url:link,
+.error-url:visited {
+    text-decoration: none;
+    color: #000;
+}
+
+.error-url:hover{
+    text-decoration: none;
+    background: #fff;
+    color: #3498DB;
+    cursor: pointer;
+  }
