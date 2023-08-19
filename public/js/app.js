@@ -14,6 +14,6 @@ $.validator.addMethod('validPassword',
         );
     
         jQuery(".btn-close").click(function() {
-            var contentPanelId = "#" + jQuery(this).parent().attr("id");
+            var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
             $(contentPanelId).remove();
         });
