@@ -28,9 +28,11 @@
     {% if flash_messages %}
     <div class="flash-messages-container">
         {% for message in flash_messages %}
-            <div id="flash-message-{{ message.id }}" role="dialog" class="flash-message alert alert-{{ message.type }}">
-                {{ message.body }}
-                <button type="button" class="btn-close" aria-label="Close"></button>
+            <div>
+                <div id="flash-message-{{ message.id }}" role="dialog" class="flash-message alert alert-{{ message.type }}">
+                    {{ message.body }}
+                    <button type="button" class="btn-close" aria-label="Close"></button>
+                </div>
             </div>
         {% endfor %}
     </div>

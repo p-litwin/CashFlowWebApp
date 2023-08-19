@@ -46,12 +46,11 @@ html {
     vertical-align: top;
     font-size: 3.125rem;
     padding: 0;
-    line-height: 1;
     font-family: 'Roboto Slab', serif;
 }
 
 .brand-image {
-    width: 50px;
+    width: 52px;
     margin-right: 1rem;
 }
 
@@ -261,6 +260,7 @@ input.error {
     text-align: right;
     box-shadow: 5px 5px 15px gray;
     z-index:999;
+    display:inline-block;
 }
 
 .btn-close {
