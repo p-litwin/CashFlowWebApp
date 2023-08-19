@@ -38,7 +38,7 @@ html {
 }
 
 .brand {
-    padding-top: 6rem;
+    padding-top: 10vh;
 }
 
 .brand-name {
@@ -56,9 +56,13 @@ html {
 
 .tagline {
     text-align: center;
-    padding: 8.5rem 2rem;
+    padding: 15vh 1vh;
     background-color: #59c6ed;
     margin-bottom: 0;
+}
+
+.feature-column {
+    padding: 0 0.5rem 0 2.65rem;
 }
 
 .feature-image {
@@ -74,7 +78,7 @@ html {
 .feature-text {
     padding: 0 1.5rem 1rem 1.5rem;
     font-weight: 600;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 
@@ -87,6 +91,10 @@ html {
         padding: 2rem;
     }
 
+    .feature-column {
+        padding: 0 0.5rem 1rem 2.65rem;
+      }
+      
     .feature-text {
         margin: 0 0 0 46px;
         text-align: left;
