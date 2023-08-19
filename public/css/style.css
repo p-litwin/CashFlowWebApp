@@ -254,13 +254,20 @@ input.error {
     position: fixed;
     bottom: 4%;
     right: 4%;
-
+    text-align: right;
 }
 
 .flash-message {
+    text-align: right;
     box-shadow: 5px 5px 15px gray;
+    z-index:999;
 }
 
+.btn-close {
+    font-size: 10px;
+    vertical-align: middle;
+    margin-left: 5px;
+}
 
 /* 404 page */
 .error-page {
