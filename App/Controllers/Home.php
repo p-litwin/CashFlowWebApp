@@ -8,30 +8,13 @@ use \App\Auth;
 /**
  * Home controller
  */
-class Home extends \Core\Controller {
+class Home extends Authenticated {
     /**
      * Show the index page
      * @return void
      */
     public function indexAction() {
         View::renderTemplate('Home/index.html');
-    }
-
-    /**
-     * Before filter - called before an action method
-     * 
-     * @return void
-     */
-    protected function before() {
-
-    }
-
-    /**
-     * After filter - called after an action  method
-     * @return void
-     */
-    protected function after() {
-
     }
 
 }

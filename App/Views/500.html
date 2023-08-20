@@ -1,10 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %} Page not found {% endblock %}
+{% block title %}CashFlowApp - Nie znaleziono strony {% endblock %}
 
 {% block body %}
-
-<h1>An error occured</h1>
-<p>Sorry, an error has occured.</p>
+<div class="error-page">
+    <nav class="navbar navbar-expand-lg ps-5 bg-transparent">
+        <img class="navbar-image navbar-brand" src="/images/wallet.png" alt="">
+        <span class="navbar-brand error-page-logo">CashFlowApp</span>
+    </nav>
+    <div class="error-message-container">
+        <h1 class="error-page-emoticon">:(</h1><br>
+        <h2>Błąd <span class="error-code">500</span>. Wystąpił błąd.</h2><br><br>
+        <h3><a class="error-url" href="/">Strona główna</a>&nbsp;|&nbsp;<a class="error-url" href="javascript:history.back()">Powrót</a></h3>
+    </div>
+</div>
 
 {% endblock %}

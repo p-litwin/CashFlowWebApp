@@ -10,5 +10,10 @@ $.validator.addMethod('validPassword',
                 }
                 return true;
             },
-            'Must contain at least one letter and one number'
+            'At least one letter and one number'
         );
+    
+        jQuery(".btn-close").click(function() {
+            var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
+            $(contentPanelId).remove();
+        });

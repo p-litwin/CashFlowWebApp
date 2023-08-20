@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 
-{% block title %}Account activated{% endblock %}
+{% block title %}CashFlowApp - Zarejestruj się{% endblock %}
 
 {% block body %}
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            
+            {% include 'splash_screen_left.html' %}
 
-<h1>Activation successful</h1>
-<p>Thank you for activating your account. You can now <a href="/login/new">login</a>.</p>
+            <div class="col-lg-6 col-md-6">
+                <div class="right-wrapper">
+                    <h1>Activation successful</h1>
+                    <p>Thank you for activating your account. You can now <a href="/login/new">login</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 {% endblock %}

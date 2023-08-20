@@ -1,16 +1,9 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
-
 {% block body %}
 
-<h1>Welcome</h1>
-
-    {% if current_user %}
-        Hello {{ current_user.name}}.
-        <a href="/logout">Log out</a>
-    {% else %}
-        <a href="/Signup/create">Sign up</a> or <a href="/login">Log in</a>
-    {% endif %}
-
+    {% include "/Home/navbar.html"  %}
+    <div class="container-fluid pt-4 ps-4">
+        <h1>Witaj {{ current_user.name }}</h1>
+    </div>
 {% endblock %}

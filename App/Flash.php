@@ -45,6 +45,7 @@ public static function addMessage($message, $type = 'success') {
     }
 
     $_SESSION['flash_notification'][] = [
+        'id' => sizeof($_SESSION['flash_notification']),
         'body' => $message,
         'type' => $type
     ];
