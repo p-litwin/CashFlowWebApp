@@ -1,0 +1,5 @@
+Password reset
+
+Please click on the following URL to reset your password:
+
+{{ url }}

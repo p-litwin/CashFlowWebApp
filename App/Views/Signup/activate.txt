@@ -1,0 +1,5 @@
+Account activation
+
+Please click on the following URL to activate your account:
+
+{{ url }}
