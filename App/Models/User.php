@@ -374,7 +374,7 @@ class User extends \Core\Model{
         $text = View::getTemplate('Password\reset_email.txt', ['url'=>$url]);
         $html = View::getTemplate('Password\reset_email.html', ['url'=>$url]);
 
-        Mail::send($this->email, 'Password reset', $text, $html);
+        Mail::send($this->email, 'CashFlowApp - Zmiana hasła', $text, $html);
 
     }
 
@@ -389,7 +389,7 @@ class User extends \Core\Model{
         $text = View::getTemplate('Signup\activate.txt', ['url'=>$url]);
         $html = View::getTemplate('Signup\activate.html', ['url'=>$url]);
 
-        Mail::send($this->email, 'Activate your account', $text, $html);
+        Mail::send($this->email, 'CashFlowApp - Aktywuj swoje konto', $text, $html);
 
     }
 

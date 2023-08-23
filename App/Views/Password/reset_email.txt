@@ -1,5 +1,5 @@
-Password reset
+CashFlowApp - Reset hasła
 
-Please click on the following URL to reset your password:
+Kliknij w poniższy link, aby zmienić swoje hasło:
 
 {{ url }}

@@ -1,5 +1,5 @@
-Account activation
+CashFlowApp - Aktywacja konta
 
-Please click on the following URL to activate your account:
+Kliknij w poniższy link, aby aktywować swoje konto:
 
 {{ url }}

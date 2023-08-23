@@ -72,7 +72,7 @@ class Password extends \Core\Controller {
             return $user;
         }
         
-        Flash::addMessage('Password reset token invalid or expired', Flash::WARNING);
+        Flash::addMessage('Link resetu hasła jest nieprawidłowy lub wygasł.', Flash::WARNING);
         $this->redirect('/');
         exit();
 
