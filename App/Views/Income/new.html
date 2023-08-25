@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}CashFlowApp - Dodaj przychód{% endblock %}
+
+{% block body %}
+
+    {% include "/Home/navbar.html"  %}
+    <div class="container-fluid main-content pt-4 ps-4">
+        <div class="row site-title">
+          <h1 class="">Dodawanie nowego przychodu</h1>
+        </div>
+        <div class="card add-expense-income-card">
+          <div class="card-header">
+            Dane nowego przychodu
+          </div>
+          <div class="card-body">
+            <form>
+              <div class="input-group">
+                <div class="input-group-prepend col-6">
+                  <label class="input-group-text" for="amount" id="inputGroup-sizing-default">Kwota</label>
+                </div>
+                <input class="form-control" type="number" id="amount" name="amount" step="0.01" value="0.01" min="0.01">
+              </div>
+  
+              <div class="input-group">
+                <div class="input-group-prepend col-6">
+                  <label class="input-group-text" for="incomeDate">Data</label>
+                </div>
+                <input class="form-control" type="date" id="incomeDate" name="incomeDate" value="2023-08-25">
+              </div>
+  
+              <div class="input-group">
+                <div class="input-group-prepend col-6">
+                  <label class="input-group-text" for="incomeCategory">Kategoria:</label>
+                </div>
+                <select class="form-control" id="incomeCategory" name="incomeCategory">
+                  <option value="Etat">Etat</option>
+                  <option value="Praca dodatkowa">Praca dodatkowa</option>
+                  <option value="Sprzedaż olx">Sprzedaż olx</option>
+                </select>
+              </div>
+  
+              <div class="input-group">
+                <div class="input-group-prepend col-6" >
+                  <label class="input-group-text textarea-100" for="incomeComment">Komentarz:</label>
+                </div>
+                <textarea class="form-control" id="incomeComment" name="incomeComment"></textarea>
+              </div>
+  
+              <div class="row buttons">
+                <div class="col-6">
+                  <button class="btn btn-secondary btn-block btn-lg" type="button">Anuluj</button>
+                </div>
+                <div class="col-6">
+                  <button class="btn btn-primary btn-block btn-lg" type="submit">Dodaj</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+{% endblock %}
