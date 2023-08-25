@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}CashFlowApp - Dodaj wydatek{% endblock %}
+
+{% block body %}
+
+    {% include "/Home/navbar.html"  %}
+            <div class="container-fluid main-content pt-4 ps-4">
+              <div class="row site-title">
+                <h1 class="">Dodawanie nowego wydatku</h1>
+              </div>
+              <div class="card add-expense-income-card">
+                <div class="card-header">
+                  Dane nowego wydatku
+                </div>
+                <div class="card-body">
+                  <form method="post" action="">
+                    <div class="input-group">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text" for="amount" id="inputGroup-sizing-default">Kwota</label>
+                      </div>
+                      <input class="form-control" type="number" id="amount" name="amount" step="0.01" value="0.00">
+                    </div>
+        
+                    <div class="input-group">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text" for="expenseDate">Data</label>
+                      </div>
+                      <input class="form-control" type="date" id="expenseDate" name="date" value="2023-08-25">
+                    </div>
+        
+        
+                    <div class="input-group">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text" for="paymentMethod">Sposób płatności:</label>
+                      </div>
+                      <select class="form-control" id="paymentMethod" name="paymentMethod">
+                        <option value="Gotówka">Gotówka</option>
+                        <option value="Karta płatnicza">Karta płatnicza</option>
+                        <option value="Blik">Blik</option>
+                        <option value="Przelew">Przelew</option>
+                      </select>
+                    </div>
+        
+                    <div class="input-group">
+                      <div class="input-group-prepend col-6">
+                        <label class="input-group-text" for="expesneCategory">Kategoria:</label>
+                      </div>
+                      <select class="form-control" id="expenseCategory" name="expenseCategory">
+                        <option value="Jedzenie">Jedzenie</option>
+                        <option value="Transport">Transport</option>
+                        <option value="Mieszkanie">Mieszkanie</option>
+                      </select>
+                    </div>
+        
+                    <div class="input-group">
+                      <div class="input-group-prepend col-6" >
+                        <label class="input-group-text textarea-100" for="expenseComment">Komentarz:</label>
+                      </div>
+                      <textarea class="form-control" id="expenseComment" name="expenseComment"></textarea>
+                    </div>
+        
+                    <div class="row buttons">
+                      <div class="col-6">
+                        <button class="btn btn-secondary btn-block btn-lg" type="button">Anuluj</button>
+                      </div>
+                      <div class="col-6">
+                        <button class="btn btn-primary btn-block btn-lg" type="submit">Dodaj</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </section>
+{% endblock %}
