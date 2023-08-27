@@ -35,10 +35,9 @@
                         <label class="input-group-text" for="paymentMethod">Sposób płatności:</label>
                       </div>
                       <select class="form-control" id="paymentMethod" name="paymentMethod">
-                        <option value="Gotówka">Gotówka</option>
-                        <option value="Karta płatnicza">Karta płatnicza</option>
-                        <option value="Blik">Blik</option>
-                        <option value="Przelew">Przelew</option>
+                        {% for method in user_payment_methods %}
+                        <option value="{{ method.id }}">{{ method.name }}</option>
+                        {% endfor %}
                       </select>
                     </div>
         
@@ -47,12 +46,11 @@
                         <label class="input-group-text" for="expesneCategory">Kategoria:</label>
                       </div>
                       <select class="form-control" id="expenseCategory" name="expenseCategory">
-                        <option value="Jedzenie">Jedzenie</option>
-                        <option value="Transport">Transport</option>
-                        <option value="Mieszkanie">Mieszkanie</option>
+                        {% for category in user_categories %}
+                        <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
                       </select>
                     </div>
-        
                     <div class="input-group">
                       <div class="input-group-prepend col-6" >
                         <label class="input-group-text textarea-100" for="expenseComment">Komentarz:</label>
