@@ -19,14 +19,15 @@
                       <div class="input-group-prepend col-6">
                         <label class="input-group-text" for="amount" id="inputGroup-sizing-default">Kwota</label>
                       </div>
-                      <input class="form-control" type="number" id="amount" name="amount" step="0.01" value="0.00">
+                      <input class="form-control" type="number" id="amount" name="amount" step="0.01" min="0.01" value="0.01">
                     </div>
         
                     <div class="input-group">
                       <div class="input-group-prepend col-6">
                         <label class="input-group-text" for="expenseDate">Data</label>
                       </div>
-                      <input class="form-control" type="date" id="expenseDate" name="date" value="2023-08-25">
+                      <input class="form-control" type="text" id="expenseDate" name="date" value="{{ current_date }}"
+                      pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="RRRR-MM-DD">
                     </div>
         
         
