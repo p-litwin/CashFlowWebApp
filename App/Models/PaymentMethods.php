@@ -16,7 +16,7 @@ use PDO;
      * @param integer $user_id Id of logged in user
      * @return array Associative array of the payment method id and payment method name
      */
-    public static function getUserPaymentMethods($user_id) {
+    public static function getPaymentMethodsByUserId($user_id) {
         
         $sql = 'SELECT id, name
                 FROM payment_methods_assigned_to_users
