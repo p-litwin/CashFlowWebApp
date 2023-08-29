@@ -17,7 +17,7 @@ class Expenses extends \App\Controllers\Authenticated {
      * @return void
      */
     public static function newAction() {
-        $user_categories[] = ExpensesCategories::getUserExpensesCategories($_SESSION['user_id']);
+        $user_categories[] = ExpensesCategories::getExpensesCategoriesByUserId($_SESSION['user_id']);
         $user_payment_methods[] = User::getUserPaymentMethods($_SESSION['user_id']);
         View::renderTemplate('\Expense\new.html', [
                 'user_categories'=>$user_categories[0],

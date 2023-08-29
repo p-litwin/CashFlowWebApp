@@ -15,7 +15,7 @@ class ExpensesCategories extends Model {
      * @param integer $user_id Id of logged in user
      * @return array Associative array of the expense category id and expense category name
      */
-    public static function getUserExpensesCategories($user_id) {
+    public static function getExpensesCategoriesByUserId($user_id) {
         
         $sql = 'SELECT id, name
                 FROM expenses_category_assigned_to_users
