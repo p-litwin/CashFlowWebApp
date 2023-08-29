@@ -6,6 +6,8 @@
 
     {% include "/Home/navbar.html"  %}
             <div class="container-fluid main-content pt-4 ps-4">
+              
+              
               <div class="row site-title">
                 <h1 class="">Dodawanie nowego wydatku</h1>
               </div>
@@ -14,19 +16,20 @@
                   Dane nowego wydatku
                 </div>
                 <div class="card-body">
-                  <form method="post" action="">
+                  <form method="post" action="/expenses/add">
                     <div class="input-group">
                       <div class="input-group-prepend col-6">
+                        <input type="hidden" name="user_id" value="{{ current_user.userId }}">
                         <label class="input-group-text" for="amount" id="inputGroup-sizing-default">Kwota</label>
                       </div>
-                      <input class="form-control" type="number" id="amount" name="amount" step="0.01" min="0.01" value="0.01">
+                      <input class="form-control" type="number" id="amount" name="amount" step="0.01" min="0.01" value="{% if expense.amount is not empty %}{{expense.amount}}{% else %}0.01{% endif %}">
                     </div>
         
                     <div class="input-group">
                       <div class="input-group-prepend col-6">
                         <label class="input-group-text" for="expenseDate">Data</label>
                       </div>
-                      <input class="form-control" type="text" id="expenseDate" name="date" value="{{ current_date }}"
+                      <input class="form-control" type="text" id="expenseDate" name="date" value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}"
                       pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" title="RRRR-MM-DD">
                     </div>
         
@@ -35,7 +38,7 @@
                       <div class="input-group-prepend col-6">
                         <label class="input-group-text" for="paymentMethod">Sposób płatności:</label>
                       </div>
-                      <select class="form-control" id="paymentMethod" name="paymentMethod">
+                      <select class="form-control" id="paymentMethod" name="payment_method">
                         {% for method in user_payment_methods %}
                         <option value="{{ method.id }}">{{ method.name }}</option>
                         {% endfor %}
@@ -46,7 +49,7 @@
                       <div class="input-group-prepend col-6">
                         <label class="input-group-text" for="expesneCategory">Kategoria:</label>
                       </div>
-                      <select class="form-control" id="expenseCategory" name="expenseCategory">
+                      <select class="form-control" id="expenseCategory" name="category">
                         {% for category in user_categories %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
@@ -56,7 +59,7 @@
                       <div class="input-group-prepend col-6" >
                         <label class="input-group-text textarea-100" for="expenseComment">Komentarz:</label>
                       </div>
-                      <textarea class="form-control" id="expenseComment" name="expenseComment"></textarea>
+                      <textarea class="form-control" id="expenseComment" name="comment"></textarea>
                     </div>
         
                     <div class="row buttons">
