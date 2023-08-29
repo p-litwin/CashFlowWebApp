@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Flash;
+use App\Models\PaymentMethods;
 use App\Models\User;
 use Core\View;
 use App\Models\ExpensesCategories;
@@ -18,7 +19,7 @@ class Expenses extends \App\Controllers\Authenticated {
      */
     public static function newAction() {
         $user_categories[] = ExpensesCategories::getExpensesCategoriesByUserId($_SESSION['user_id']);
-        $user_payment_methods[] = User::getUserPaymentMethods($_SESSION['user_id']);
+        $user_payment_methods[] = PaymentMethods::getUserPaymentMethods($_SESSION['user_id']);
         View::renderTemplate('\Expense\new.html', [
                 'user_categories'=>$user_categories[0],
                 'user_payment_methods'=>$user_payment_methods[0]
