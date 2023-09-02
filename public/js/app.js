@@ -17,3 +17,11 @@ $.validator.addMethod('validPassword',
             var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
             $(contentPanelId).remove();
         });
+
+$('#expenseDate').flatpickr(
+    {
+        enableTime: false,
+        dateFormat: "Y-m-d"
+
+    }
+);
