@@ -18,6 +18,8 @@ $.validator.addMethod('validPassword',
             $(contentPanelId).remove();
         });
 
+flatpickr.localize(flatpickr.l10ns.pl);
+
 $('#expenseDate').flatpickr(
     {
         enableTime: false,
