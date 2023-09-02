@@ -22,7 +22,7 @@
                         <input type="hidden" name="user_id" value="{{ current_user.userId }}">
                         <label class="input-group-text" for="amount" id="inputGroup-sizing-default">Kwota</label>
                       </div>
-                      <input class="form-control" type="number" id="amount" name="amount" step="0.01" min="0.01" value="{% if expense.amount is not empty %}{{expense.amount}}{% else %}0.01{% endif %}">
+                      <input class="form-control" type="number" id="amount" name="amount" step="0.10" min="0.00S" value="{% if expense.amount is not empty %}{{expense.amount}}{% else %}0.00{% endif %}">
                     </div>
         
                     <div class="input-group">
@@ -38,7 +38,8 @@
                       <div class="input-group-prepend col-6">
                         <label class="input-group-text" for="paymentMethod">Sposób płatności:</label>
                       </div>
-                      <select class="form-control" id="paymentMethod" name="payment_method">
+                      <select class="form-control" id="paymentMethod" name="payment_method" required>
+                        <option value="">Wybierz metodę</option>
                         {% for method in user_payment_methods %}
                         <option value="{{ method.id }}">{{ method.name }}</option>
                         {% endfor %}
@@ -49,7 +50,8 @@
                       <div class="input-group-prepend col-6">
                         <label class="input-group-text" for="expesneCategory">Kategoria:</label>
                       </div>
-                      <select class="form-control" id="expenseCategory" name="category">
+                      <select class="form-control" id="expenseCategory" name="category" required>
+                        <option value="">Wybierz kategorię</option>
                         {% for category in user_categories %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
