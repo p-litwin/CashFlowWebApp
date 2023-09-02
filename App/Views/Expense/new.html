@@ -40,7 +40,7 @@
                       </div>
                       <select class="form-control" id="paymentMethod" name="payment_method" required>
                         <option value="">Wybierz metodę</option>
-                        {% for method in user_payment_methods %}
+                        {% for method in payment_methods %}
                         <option value="{{ method.id }}">{{ method.name }}</option>
                         {% endfor %}
                       </select>
@@ -52,7 +52,7 @@
                       </div>
                       <select class="form-control" id="expenseCategory" name="category" required>
                         <option value="">Wybierz kategorię</option>
-                        {% for category in user_categories %}
+                        {% for category in expenses_categories %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
                         {% endfor %}
                       </select>

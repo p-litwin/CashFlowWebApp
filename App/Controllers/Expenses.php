@@ -19,11 +19,12 @@ class Expenses extends \App\Controllers\Authenticated {
      * @return void
      */
     public function newAction() {
-        $user_categories[] = ExpensesCategories::getExpensesCategoriesByUserId($_SESSION['user_id']);
-        $user_payment_methods[] = PaymentMethods::getPaymentMethodsByUserId($_SESSION['user_id']);
+        $_SESSION['expenses_categories'] = ExpensesCategories::getExpensesCategoriesByUserId($_SESSION['user_id']);
+        $_SESSION['payment_methods'] = PaymentMethods::getPaymentMethodsByUserId($_SESSION['user_id']);
+        
         View::renderTemplate('\Expense\new.html', [
-                'user_categories'=>$user_categories[0],
-                'user_payment_methods'=>$user_payment_methods[0]
+                'expenses_categories'=> $_SESSION['expenses_categories'],
+                'payment_methods'=>$_SESSION['payment_methods']
             ]);
     }
 
@@ -38,14 +39,18 @@ class Expenses extends \App\Controllers\Authenticated {
             if ($expense->save()){
                 Flash::addMessage('Wydatek został dodany');
                 View::renderTemplate('\Expense\new.html', [
-                    'expense'=>$expense
+                    'expense'=>$expense,
+                    'expenses_categories'=> $_SESSION['expenses_categories'],
+                    'payment_methods'=>$_SESSION['payment_methods']
                 ]);
             }  else {
                 foreach ($expense->errors as $error) {
                     Flash::addMessage($error, Flash::WARNING);
                 }
                 View::renderTemplate('\Expense\new.html', [
-                    'expense'=>$expense
+                    'expense'=>$expense,
+                    'expenses_categories'=> $_SESSION['expenses_categories'],
+                    'payment_methods'=>$_SESSION['payment_methods']
                 ]);
             }
         } else {
