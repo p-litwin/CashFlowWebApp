@@ -18,7 +18,7 @@ class Expenses extends \App\Controllers\Authenticated {
      * Display form to get the data of new expense from the users
      * @return void
      */
-    public static function newAction() {
+    public function newAction() {
         $user_categories[] = ExpensesCategories::getExpensesCategoriesByUserId($_SESSION['user_id']);
         $user_payment_methods[] = PaymentMethods::getPaymentMethodsByUserId($_SESSION['user_id']);
         View::renderTemplate('\Expense\new.html', [
@@ -31,22 +31,26 @@ class Expenses extends \App\Controllers\Authenticated {
      * Add new expense
      * @return void
      */
-    public static function addAction() {
-        $expense = new Expense($_POST);
+    public function addAction() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $expense = new Expense($_POST);
         
-        if ($expense->save()){
-            Flash::addMessage('Wydatek został dodany');
-            View::renderTemplate('\Expense\new.html', [
-                'expense'=>$expense
-            ]);
-        }  else {
-            foreach ($expense->errors as $error) {
-                Flash::addMessage($error, Flash::WARNING);
+            if ($expense->save()){
+                Flash::addMessage('Wydatek został dodany');
+                View::renderTemplate('\Expense\new.html', [
+                    'expense'=>$expense
+                ]);
+            }  else {
+                foreach ($expense->errors as $error) {
+                    Flash::addMessage($error, Flash::WARNING);
+                }
+                View::renderTemplate('\Expense\new.html', [
+                    'expense'=>$expense
+                ]);
             }
-            View::renderTemplate('\Expense\new.html', [
-                'expense'=>$expense
-            ]);
-        } 
+        } else {
+            $this->redirect("/expenses/new");
+        }
     
     }
 
