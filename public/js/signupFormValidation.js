@@ -1,10 +1,10 @@
 $(document).ready(function () {
-  
-    var FIELD_REQUIRED_TEXT = "To pole nie może być puste";
 
     $("#signupForm").validate({
         rules: {
-            name: 'required',
+            name: {
+                required: true
+            },
             email: {
                 required: true,
                 email: true,
@@ -17,18 +17,13 @@ $(document).ready(function () {
             }
         },
         messages: {
-            name: {
-                required: FIELD_REQUIRED_TEXT
-            },
             email: {
                 remote: 'Email jest już zajęty',
-                email: 'Nieprawidłowy adres email',
-                required: FIELD_REQUIRED_TEXT
+
             },
             password: {
-                required: FIELD_REQUIRED_TEXT,
                 minlength: 'Minimalna długość: 6 znaków',
-                validPassword: 'Przynajmniej 1 cyfra'
+                validPassword: 'Przynajmniej 1 cyfra i 1 litera'
             }
 
         }
