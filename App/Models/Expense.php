@@ -110,6 +110,9 @@ class Expense extends Model {
         if ($this->amount == '') {
             $this->errors[] = 'Pole kwota nie może być puste';
         }
+        if (!floatval($this->amount)) {
+            $this->errors[] = 'Nieprawidłowa wartość w polu kwota';
+        }
         if ($this->amount <= 0) {
             $this->errors[] = 'Kwota musi być większa od 0';
         }
