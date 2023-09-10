@@ -26,7 +26,7 @@
                         <input type="hidden" name="user_id" value="{{ current_user.userId }}">
                         <label class="input-group-text" for="amount" id="inputGroup-sizing-default">Kwota</label>
                       </div>
-                      <input class="form-control" type="text" id="amount" name="amount" value="{% if expense.amount is not empty %}{{expense.amount}}{% else %}0,00{% endif %}" required>
+                      <input class="form-control" type="number" id="amount" min="0.00" step="0.01" name="amount" value="{% if expense.amount is not empty %}{{expense.amount}}{% else %}0,00{% endif %}" required>
                     </div>
         
                     <div class="input-group">
