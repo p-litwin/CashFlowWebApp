@@ -295,6 +295,18 @@ class User extends \Core\Model{
             return $statement->execute();
     }
 
+    public function deletePreviousRememberedLogin() {
+            
+            $sql = "DELETE FROM remembered_login
+                    WHERE :userId";
+
+            $db = static::getDB();
+            $statement = $db->prepare($sql);
+            $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
+
+            return $statement->execute();
+
+    }
 
     /**
      * Get the remember_token value
