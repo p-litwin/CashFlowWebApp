@@ -27,3 +27,11 @@ $('#expenseDate').flatpickr(
 
     }
 );
+
+$('#incomeDate').flatpickr(
+    {
+        enableTime: false,
+        dateFormat: "Y-m-d"
+
+    }
+);

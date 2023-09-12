@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $("#expenseForm").validate({
+    $("#incomeForm").validate({
         errorClass: "is-invalid",
         errorElement: "span",
         highlight: function (element, errorClass, validClass) {
@@ -23,9 +23,6 @@ $(document).ready(function () {
                 dateISO: true
             },
             category: {
-                required: true
-            },
-            payment_method: {
                 required: true
             }
         },

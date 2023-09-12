@@ -34,7 +34,7 @@
                   
  
                   <div class="form-outline mb-4 has-validation">
-                      <select class="form-control" id="paymentMethod" name="payment_method" placeholder="Sposób płatności" required>
+                      <select class="form-control" id="paymentMethod" name="payment_method" placeholder="Sposób płatności">
                         <option value=""></option>
                         {% for method in payment_methods %}
                         <option value="{{ method.id }}">{{ method.name }}</option>
@@ -45,7 +45,7 @@
                
                     
                     <div class="form-outline mb-4 has-validation">
-                      <select class="form-control" id="expenseCategory" placeholder="Kategoria" name="category" required>
+                      <select class="form-control" id="expenseCategory" placeholder="Kategoria" name="category">
                         <option value=""></option>
                         {% for category in expenses_categories %}
                         <option value="{{ category.id }}">{{ category.name }}</option>
