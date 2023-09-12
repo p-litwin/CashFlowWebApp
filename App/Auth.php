@@ -25,10 +25,8 @@ class Auth {
 
         if ($remember_me) {
 
-            $user->deletePreviousRememberedLogin();
-
             if($user->rememberLogin()) {
-
+                
                 setcookie('remember_me', $user->getRemember_token(), $user->getExpiry_timestamp(), '/');
                 
             }
@@ -61,10 +59,10 @@ class Auth {
              );
          }
 
-         static::forgetLogin();
          // Finally, destroy the session.
          session_destroy();
 
+         static::forgetLogin();
 
     }
 
