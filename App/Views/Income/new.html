@@ -21,13 +21,13 @@
 
         <div class="form-outline  mb-4 has-validation">
           <label class="form-label" for="amount" id="inputGroup-sizing-default">Kwota</label>
-          <input class="form-control" type="number" id="amount" name="amount" step="0.01" value="0.01" min="0.01">
+          <input class="form-control" type="number" id="amount" name="amount" step="0.01" value="{% if income.amount is not empty %}{{income.amount}}{% else %}0,00{% endif %}" min="0.00">
         </div>
 
 
         <div class="form-outline  mb-4 has-validation">
-          <label class="form-label" for="incomeDate">Data</label>
-          <input class="form-control" type="text" id="incomeDate" name="date" value="2023-08-25">
+          <label class="form-label" for="incomeDate">Data (RRRR-MM-DD)</label>
+          <input class="form-control" type="text" id="incomeDate" name="date" value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}">
         </div>
 
 
@@ -35,9 +35,9 @@
           <label class="form-label" for="incomeCategory">Kategoria przychodu:</label>
           <select class="form-select" id="incomeCategory" name="category">
             <option value=""></option>
-            <option value="Etat">Etat</option>
-            <option value="Praca dodatkowa">Praca dodatkowa</option>
-            <option value="Sprzedaż olx">Sprzedaż olx</option>
+            {% for category in incomes_categories %}
+            <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
           </select>
         </div>
 
