@@ -142,11 +142,25 @@ html {
 /* Add expense and income card */
 
 .add-expense-income-card {
-    max-width: 500px;
+    max-width: 400px;
     margin: 0 auto 2rem 0;
     box-shadow: 5px 5px 15px #a5a5a5;
     border: 0;
 }
+
+.form-outline {
+    position:relative;
+}
+
+.form-label {
+    margin-bottom: 0;
+    top: -12px;
+    position: absolute;
+    background: white;
+    left: 0.7rem;
+    font-size: 0.85rem;
+    padding: 0px 8px 0px 2px;
+  }
 
 .buttons {
     padding-top: 1rem;
@@ -248,10 +262,17 @@ html {
 
 /* jQuery form validation errors */
 
-label.error {
-    color: red;
+span.is-invalid {
     font-size: 0.8em;
-}
+    padding-left: 12px;
+  }
+  .is-invalid {
+    color: var(--bs-danger);
+  }
+
+.has-validation:nth-last-child() {
+    color: var(--bs-danger);
+  }
 
 input.error {
     color: red;
