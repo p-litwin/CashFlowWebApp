@@ -1,6 +1,13 @@
 $(document).ready(function () {
 
     $("#signupForm").validate({
+        errorClass: "is-invalid",
+        errorElement: "span",
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+            $(element.form).find("label[for=" + element.id + "]")
+                .addClass(errorClass);
+        },
         rules: {
             name: {
                 required: true

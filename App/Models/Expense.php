@@ -5,7 +5,8 @@ namespace App\Models;
 use Core\Model;
 use PDO;
 
-class Expense extends Model {
+class Expense extends Model
+{
 
     /**
      * Logged in user id
@@ -61,7 +62,8 @@ class Expense extends Model {
      * 
      * @param array $expense_data Associative array containing the expense data
      */
-    public function __construct($expense_data = []){
+    public function __construct($expense_data = [])
+    {
         foreach ($expense_data as $key => $value) {
             $this->$key = $value;
         }
@@ -72,8 +74,9 @@ class Expense extends Model {
      * 
      * @return boolean false if the expense was succesfully written to the database, fals otherwise
      */
-    public function save() {
-        
+    public function save()
+    {
+
         $this->validate();
 
         if (empty($this->errors)) {
@@ -88,7 +91,7 @@ class Expense extends Model {
             $statement->bindValue(':expense_category_assigned_to_user_id', $this->category, PDO::PARAM_INT);
             $statement->bindValue(':payment_method_assigned_to_user_id', $this->payment_method, PDO::PARAM_INT);
             $statement->bindValue(':amount', $this->amount, PDO::PARAM_STR);
-            $statement->bindValue(':date_of_expense',$this->date, PDO::PARAM_STR);
+            $statement->bindValue(':date_of_expense', $this->date, PDO::PARAM_STR);
             $statement->bindValue(':expense_comment', $this->comment, PDO::PARAM_STR);
 
 
@@ -96,7 +99,7 @@ class Expense extends Model {
 
         } else {
 
-        return false;
+            return false;
 
         }
     }
@@ -106,7 +109,8 @@ class Expense extends Model {
      * 
      * @return void
      */
-    private function validate() {
+    private function validate()
+    {
         if ($this->amount == '') {
             $this->errors[] = 'Pole kwota nie może być puste';
         }
@@ -118,6 +122,13 @@ class Expense extends Model {
         }
         if (strtotime($this->date) === false) {
             $this->errors[] = 'Data ma nieprawidłową wartość';
+        }
+        if ($this->payment_method == '') {
+            $this->errors[] = 'Wybierz metodę płatności';
+        }
+
+        if ($this->category == '') {
+            $this->errors[] = 'Wybierz kategorię wydatku';
         }
 
     }
