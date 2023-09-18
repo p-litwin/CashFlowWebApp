@@ -253,6 +253,29 @@ class User extends \Core\Model{
     }
 
     /**
+     * Get the user id from the database based on the pactivation token hash
+     * 
+     * @param string $password_reset_hash
+     * @return mixed User object of null if not found
+     */
+    public static function findByActivationToken($activation_token) {
+        
+        $token = new Token($activation_token);
+        $activation_token_hash = $token->getHash();
+        
+        $sql = 'SELECT * FROM users WHERE activation_token_hash = :activation_token_hash';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':activation_token_hash', $activation_token_hash, PDO::PARAM_STR);
+        $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $statement->execute();
+
+        return  $user = $statement->fetch();
+
+    }
+
+    /**
      * Find user with the given id in the database
      * @param string $email email address to search for
      * @return mixed User object if found
