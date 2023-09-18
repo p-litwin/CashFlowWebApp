@@ -3,7 +3,10 @@
 namespace App\Controllers;
 
 use App\Models\User;
-use Core\View; 
+use Core\View;
+use App\Models\IncomesCategories;
+use App\Models\ExpensesCategories;
+use App\Models\PaymentMethods;
 
 class Signup extends \Core\Controller {
 
@@ -53,7 +56,11 @@ class Signup extends \Core\Controller {
     public function activateAction() {
         
         $activation_token = $this->route_params['token'];
+        $user = User::findByActivationToken($activation_token);
         User::activate($activation_token);
+        IncomesCategories::copyDefaultIncomesCategoriesByUserId($user->userId);
+        ExpensesCategories::copyDefaultExpensesCategoriesByUserId($user->userId);
+        PaymentMethods::copyDefaultPaymentMethodsByUserId($user->userId);
         $this->redirect('/signup/activated');
     }
 
