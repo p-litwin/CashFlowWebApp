@@ -37,7 +37,7 @@ class Incomes extends \App\Controllers\Authenticated {
             if ($income->save()){
                 Flash::addMessage('Przychód został dodany');
                 View::renderTemplate('\Income\new.html', [
-                    'income'=>$income,
+                    'last_income_category'=>$income->category,
                     'incomes_categories'=> $_SESSION['incomes_categories']
                 ]);
             }  else {

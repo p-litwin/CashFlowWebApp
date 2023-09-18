@@ -39,7 +39,8 @@ class Expenses extends \App\Controllers\Authenticated {
             if ($expense->save()){
                 Flash::addMessage('Wydatek został dodany');
                 View::renderTemplate('\Expense\new.html', [
-                    'expense'=>$expense,
+                    'last_expense_category'=>$expense->category,
+                    'last_expense_payment_method'=>$expense->payment_method,
                     'expenses_categories'=> $_SESSION['expenses_categories'],
                     'payment_methods'=>$_SESSION['payment_methods']
                 ]);

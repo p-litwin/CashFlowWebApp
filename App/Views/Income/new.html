@@ -36,7 +36,11 @@
           <select class="form-select" id="incomeCategory" name="category">
             <option value=""></option>
             {% for category in incomes_categories %}
-            <option value="{{ category.id }}">{{ category.name }}</option>
+              {% if category.id == last_income_category %}
+                <option value="{{ category.id }}" selected>{{ category.name }}</option>
+              {% else %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+              {% endif %}
             {% endfor %}
           </select>
         </div>

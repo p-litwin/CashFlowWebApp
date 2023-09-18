@@ -37,7 +37,11 @@
                       <select class="form-control" id="paymentMethod" name="payment_method" placeholder="Sposób płatności">
                         <option value=""></option>
                         {% for method in payment_methods %}
-                        <option value="{{ method.id }}">{{ method.name }}</option>
+                          {% if method.id == last_expense_payment_method %}
+                            <option value="{{ method.id }}" selected>{{ method.name }}</option>
+                          {% else %}
+                            <option value="{{ method.id }}">{{ method.name }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                       <label class="form-label" for="paymentMethod">Sposób płatności:</label>
@@ -48,7 +52,11 @@
                       <select class="form-control" id="expenseCategory" placeholder="Kategoria" name="category">
                         <option value=""></option>
                         {% for category in expenses_categories %}
-                        <option value="{{ category.id }}">{{ category.name }}</option>
+                          {% if category.id == last_expense_category %}
+                            <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                          {% else %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                          {% endif %}
                         {% endfor %}
                       </select>
                       <label class="form-label" for="expenseCategory">Kategoria:</label>
