@@ -399,7 +399,7 @@ class User extends \Core\Model{
      * @param string $password_reset_hash
      * @return mixed
      */
-    public static function findByToken($reset_token) {
+    public static function findByResetToken($reset_token) {
         
         $token = new Token($reset_token);
         $password_reset_hash = $token->getHash();
