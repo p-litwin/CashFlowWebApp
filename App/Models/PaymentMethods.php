@@ -20,7 +20,8 @@ use PDO;
         
         $sql = 'SELECT id, name
                 FROM payment_methods_assigned_to_users
-                WHERE user_id = :user_id';
+                WHERE user_id = :user_id
+                ORDER BY name';
 
         $db = static::getDB();
         $statement = $db->prepare($sql);

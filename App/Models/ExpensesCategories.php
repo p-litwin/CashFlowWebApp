@@ -19,7 +19,8 @@ class ExpensesCategories extends Model {
         
         $sql = 'SELECT id, name
                 FROM expenses_category_assigned_to_users
-                WHERE user_id = :user_id';
+                WHERE user_id = :user_id
+                ORDER BY name' ;
 
         $db = static::getDB();
         $statement = $db->prepare($sql);
