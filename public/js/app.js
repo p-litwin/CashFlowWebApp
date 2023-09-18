@@ -17,3 +17,21 @@ $.validator.addMethod('validPassword',
             var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
             $(contentPanelId).remove();
         });
+
+flatpickr.localize(flatpickr.l10ns.pl);
+
+$('#expenseDate').flatpickr(
+    {
+        enableTime: false,
+        dateFormat: "Y-m-d"
+
+    }
+);
+
+$('#incomeDate').flatpickr(
+    {
+        enableTime: false,
+        dateFormat: "Y-m-d"
+
+    }
+);

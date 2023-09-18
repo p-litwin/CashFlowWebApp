@@ -66,7 +66,7 @@ class Password extends \Core\Controller {
      */
     protected function getUserOrExit($token) {
         
-        $user = User::findByToken($token);
+        $user = User::findByResetToken($token);
 
         if ($user) {
             return $user;

@@ -19,7 +19,16 @@ class Login extends \Core\Controller {
      * @return void
      */
     public function newAction() {
-        View::renderTemplate('Login/new.html');
+        
+        if (!isset($_SESSION['user_id'])) {
+        
+            View::renderTemplate('Login/new.html');
+        
+        } else {
+
+            $this->redirect('/');
+       
+        }
     }
 
     /**
