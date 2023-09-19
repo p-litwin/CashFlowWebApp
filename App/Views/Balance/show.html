@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block title %}CashFlowApp - Bilans{% endblock %}
+
+{% block body %}
+
+    {% include "/Home/navbar.html"  %}
+
+    <section id="content">
+        <div class="container-fluid main-content">
+            <div class="row site-title">
+                <h1 class="col-lg-8 col-md-7">Bilans przychodów i wydatków za okres: Ten miesiąc</h1>
+                <div class="col-lg-4 col-md-5 date-selector">
+                    <form class="form-inline">
+                        <label for="date-selector">Wybierz zakres dat:</label>
+                        <select class="form-inline" id="date-selector" name="date_selector">
+                            <option value="currentMonth">Ten miesiąc</option>
+                            <option value="lastMonth">Ubiegły miesiąc</option>
+                            <option value="thisYear">Ten rok</option>
+                            <option value="lastYear">Ubiegły rok</option>
+                            <option value="custom">Niestandardowy</option>
+                        </select>
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Przychody razem
+                        </div>
+                        <div class="card-body text-center text-success fs-4">
+                            6800
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Wydatki razem
+                        </div>
+                        <div class="card-body text-center text-danger fs-4">
+                            7500
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Bilans
+                        </div>
+                        <div class="card-body text-center text-danger fs-4">
+                            -700
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Przychody kategoriami
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="bg-success">
+                                        <th scope="col">Kategoria</th>
+                                        <th scope="col">Kwota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Etat</td>
+                                        <td>5200.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sprzedaż olx</td>
+                                        <td>1000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Praca dodatkowa</td>
+                                        <td>1500.00</td>
+                                    </tr>
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td>Razem:</td>
+                                        <td>6800.00</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Wydatki kategoriami
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="bg-danger">
+                                        <th scope="col">Kategoria</th>
+                                        <th scope="col">Kwota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Jedzenie</td>
+                                        <td>1000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mieszkanie</td>
+                                        <td>2000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transport</td>
+                                        <td>500.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rachunki</td>
+                                        <td>800.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Rozrywka</td>
+                                        <td>300.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Ubranie</td>
+                                        <td>400.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Zdrowie</td>
+                                        <td>200.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Oszczędności</td>
+                                        <td>1000.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Edukacja</td>
+                                        <td>500.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Inne</td>
+                                        <td>200.00</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Razem</td>
+                                        <td>7500.00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Wykres wydatków
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="https://www.tibco.com/sites/tibco/files/media_entity/2022-01/doughnut-chart-example.svg"
+                                class="pie-chart" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+{% endblock %}
