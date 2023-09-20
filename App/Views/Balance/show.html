@@ -30,8 +30,11 @@
                             Przychody razem
                         </div>
                         <div class="card-body text-center text-success fs-4">
-                            {{total_incomes.0}}
-
+                            {% if total_incomes.0 == null %}
+                                0.00 zł
+                            {% else %}
+                                {{total_incomes.0}} zł
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -41,7 +44,11 @@
                             Wydatki razem
                         </div>
                         <div class="card-body text-center text-danger fs-4">
-                            {{total_expenses.0}}
+                            {% if total_expenses.0 == null %}
+                                0.00 zł
+                            {% else %}
+                                {{total_expenses.0}} zł
+                            {% endif %}
 
                         </div>
                     </div>
@@ -76,7 +83,7 @@
                                     {% for income in incomes %}
                                     <tr>
                                         <td>{{income.name}}</td>
-                                        <td>{{income.Total_incomes}}</td>
+                                        <td>{{income.Total_incomes}} zł</td>
                                     </tr>
                                     {% endfor %}
                                 </tfoot>
