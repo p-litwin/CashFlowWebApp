@@ -30,7 +30,7 @@
                             Przychody razem
                         </div>
                         <div class="card-body text-center text-success fs-4">
-                            6800
+                            {{total_incomes.0}}
 
                         </div>
                     </div>
@@ -73,24 +73,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for income in incomes %}
                                     <tr>
-                                        <td>Etat</td>
-                                        <td>5200.00</td>
+                                        <td>{{income.name}}</td>
+                                        <td>{{income.Total_incomes}}</td>
                                     </tr>
-                                    <tr>
-                                        <td>Sprzedaż olx</td>
-                                        <td>1000.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Praca dodatkowa</td>
-                                        <td>1500.00</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td>Razem:</td>
-                                        <td>6800.00</td>
-                                    </tr>
+                                    {% endfor %}
                                 </tfoot>
                             </table>
                         </div>
