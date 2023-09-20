@@ -11,13 +11,14 @@
             <div class="row site-title">
                 <h1 class="col-lg-8 col-md-7">Bilans przychodów i wydatków za okres: Ten miesiąc</h1>
                 <div class="col-lg-4 col-md-5 date-selector">
-                    <form class="form-inline">
+                    <form id="balance-date-selector" class="form-inline" action="/balance/show" method="post">
                         <label for="date-selector">Wybierz zakres dat:</label>
                         <select class="form-inline" id="date-selector" name="date_selector">
                             <option value="currentMonth">Ten miesiąc</option>
                             <option value="lastMonth">Ubiegły miesiąc</option>
                             <option value="thisYear">Ten rok</option>
                             <option value="lastYear">Ubiegły rok</option>
+                            <option value="lastYear">Od początku</option>
                             <option value="custom">Niestandardowy</option>
                         </select>
                     </form>
