@@ -41,7 +41,7 @@
                             Wydatki razem
                         </div>
                         <div class="card-body text-center text-danger fs-4">
-                            7500
+                            {{total_expenses.0}}
 
                         </div>
                     </div>
@@ -110,50 +110,12 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {% for expense in expenses  %}
                                     <tr>
-                                        <td>Jedzenie</td>
-                                        <td>1000.00</td>
+                                        <td>{{expense.name}}</td>
+                                        <td>{{expense.Total_expenses}} zł</td>
                                     </tr>
-                                    <tr>
-                                        <td>Mieszkanie</td>
-                                        <td>2000.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Transport</td>
-                                        <td>500.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rachunki</td>
-                                        <td>800.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Rozrywka</td>
-                                        <td>300.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ubranie</td>
-                                        <td>400.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Zdrowie</td>
-                                        <td>200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Oszczędności</td>
-                                        <td>1000.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Edukacja</td>
-                                        <td>500.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Inne</td>
-                                        <td>200.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Razem</td>
-                                        <td>7500.00</td>
-                                    </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
 

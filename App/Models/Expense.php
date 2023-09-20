@@ -133,6 +133,60 @@ class Expense extends Model
 
     }
 
+    /**
+     * Get all expenses for the given period with cumulative values for expense categories.
+     * @param string $start_date starting date of the period to display balance
+     * @param string $end_date ending date of the period to  display balance
+     * @return array Associative array of the expenses and cumulative amount
+     */
+    public static function getAllExpensesForGivenPeriod($start_date, $end_date) {
+
+        $sql = "SELECT t2.name, SUM(t1.amount) as Total_expenses
+                FROM expenses as t1
+                JOIN expenses_category_assigned_to_users AS t2
+                ON t2.id = t1.expense_category_assigned_to_user_id
+                AND t2.user_id = :user_id AND t1.date_of_expense BETWEEN :start_date AND :end_date
+                GROUP BY t2.name
+                ORDER  BY t2.name";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+        $statement->bindValue(':end_date', $end_date, PDO::PARAM_STR);
+        $statement->execute();
+        
+        return $statement->fetchAll();
+
+
+    }
+
+    /**
+     * Summary of getTotalExpensesForGivenPeriod
+     * @param string $start_date Start date of period
+     * @param string $end_date End date of period
+     * @return array Associative array
+     */
+    public static function getTotalExpensesForGivenPeriod($start_date, $end_date) {
+
+        $sql = "SELECT SUM(amount) as Total_expenses
+                FROM  expenses
+                WHERE user_id = :user_id AND date_of_expense BETWEEN :start_date AND :end_date;";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+        $statement->bindValue(':end_date', $end_date, PDO::PARAM_STR);
+        $statement->execute();
+        return $statement->fetch();
+
+
+    }
+
 }
+
 
 ?>
