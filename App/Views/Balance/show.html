@@ -9,17 +9,17 @@
     <section id="content">
         <div class="container-fluid main-content">
             <div class="row site-title">
-                <h1 class="col-lg-8 col-md-7">Bilans przychodów i wydatków za okres: Ten miesiąc</h1>
+                <h1 class="col-lg-8 col-md-7">Bilans za okres: Obecny miesiąc</h1>
                 <div class="col-lg-4 col-md-5 date-selector">
                     <form id="balance-date-selector" class="form-inline" action="/balance/show" method="post">
                         <label for="date-selector">Wybierz zakres dat:</label>
                         <select class="form-inline" id="date-selector" name="date_selector">
-                            <option value="currentMonth">Ten miesiąc</option>
+                            <option value="currentMonth">Obecny miesiąc</option>
                             <option value="lastMonth">Ubiegły miesiąc</option>
                             <option value="thisYear">Ten rok</option>
                             <option value="lastYear">Ubiegły rok</option>
                             <option value="lastYear">Od początku</option>
-                            <option value="custom">Niestandardowy</option>
+                            <option value="custom" id="custom-date">Niestandardowy</option>
                         </select>
                     </form>
                 </div>
@@ -31,11 +31,7 @@
                             Przychody razem
                         </div>
                         <div class="card-body text-center text-success fs-4">
-                            {% if total_incomes.0 == null %}
-                                0.00 zł
-                            {% else %}
-                                {{total_incomes.0}} zł
-                            {% endif %}
+                             {{total_income}} zł
                         </div>
                     </div>
                 </div>
@@ -45,12 +41,7 @@
                             Wydatki razem
                         </div>
                         <div class="card-body text-center text-danger fs-4">
-                            {% if total_expenses.0 == null %}
-                                0.00 zł
-                            {% else %}
-                                {{total_expenses.0}} zł
-                            {% endif %}
-
+                                {{total_expense}} zł
                         </div>
                     </div>
                 </div>
@@ -59,10 +50,16 @@
                         <div class="card-header">
                             Bilans
                         </div>
-                        <div class="card-body text-center text-danger fs-4">
-                            -700
+                        {% if balance == null or balance < 0 %}
+                            <div class="card-body text-center text-danger fs-4">
+                                {{balance}} zł
+                            </div>
+                            {% else %}
+                            <div class="card-body text-center text-success fs-4">
+                                {{balance}} zł
+                            </div>
+                            {% endif %}
 
-                        </div>
                     </div>
                 </div>
             </div>

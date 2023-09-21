@@ -171,8 +171,13 @@ class Income extends Model
         $statement->bindValue(':end_date', $end_date, PDO::PARAM_STR);
         $statement->execute();
         $statement->setFetchMode(PDO::FETCH_NUM);
-        return $statement->fetch();
+        $total_income = $statement->fetch();
 
+        if ($total_income[0] == null) {
+            $total_income[0] = 0;
+        }
+
+        return $total_income;
 
     }
 

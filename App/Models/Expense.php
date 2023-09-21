@@ -182,7 +182,14 @@ class Expense extends Model
         $statement->bindValue(':end_date', $end_date, PDO::PARAM_STR);
         $statement->execute();
         $statement->setFetchMode(PDO::FETCH_NUM);
-        return $statement->fetch();
+        $total_expense = $statement->fetch();
+
+        if ($total_expense[0] == null) {
+            $total_expense[0] = 0;
+        }
+
+        return $total_expense;
+
 
 
     }
