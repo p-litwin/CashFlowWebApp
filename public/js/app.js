@@ -35,4 +35,3 @@ $('#incomeDate').flatpickr(
 
     }
 );
-$("#date-selector" ).bind( "change", ({ target }) => target.form.submit());

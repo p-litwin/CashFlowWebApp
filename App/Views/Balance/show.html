@@ -13,14 +13,15 @@
                 <div class="col-lg-4 col-md-5 date-selector">
                     <form id="balance-date-selector" class="form-inline" action="/balance/show" method="post">
                         <label for="date-selector">Wybierz zakres dat:</label>
-                        <select class="form-inline" id="date-selector" name="date_selector">
+                        <input type="text" name="time-frame" id="date-selector" readonly="readonly">
+                        <!-- <select class="form-inline" id="date-selector" name="date_selector">
                             <option value="currentMonth">Obecny miesiąc</option>
                             <option value="lastMonth">Ubiegły miesiąc</option>
                             <option value="thisYear">Ten rok</option>
                             <option value="lastYear">Ubiegły rok</option>
                             <option value="lastYear">Od początku</option>
                             <option value="custom" id="custom-date">Niestandardowy</option>
-                        </select>
+                        </select> -->
                     </form>
                 </div>
             </div>
@@ -130,5 +131,11 @@
         </div>
 
     </section>
+
+    {% block footer %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="/js/balance.js"></script>
+    {% endblock %}
 
 {% endblock %}
