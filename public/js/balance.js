@@ -1,19 +1,18 @@
 $(function() {
 
-    var start = moment().startOf('month');
-    var end = moment();
-
     function cb(start, end) {
-        $('input[name="time-frame"]').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+        $('input[name="balance-time-frame"]').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
     }
 
-    $('input[name="time-frame"]').daterangepicker({
+    $('input[name="balance-time-frame"]').daterangepicker({
+        autoUpdateInput:true,
+        showDropdowns:true,
         autoApply: true,
         locale: {
             cancelLabel: 'Anuluj',
             applyLabel: 'Zatwierdź',
             customRangeLabel: 'Dowolny zakres',
-            format: "YYYY/MM/DD",
+            format: "YYYY-MM-DD",
             daysOfWeek: [
                 "Pn",
                 "Wt",
@@ -38,8 +37,6 @@ $(function() {
                 "Gru"
             ],
         },
-        startDate: start,
-        endDate: end,
         ranges: {
             '7 ost. dni': [moment().subtract(6, 'days'), moment()],
             'Ten miesiąc': [moment().startOf('month'), moment().endOf('month')],
@@ -53,4 +50,4 @@ $(function() {
 
 });
 //Auto submit form when the range
-//$('input[name="time-frame"]').on('apply.daterangepicker', ({target}) =>  target.form.submit());
+$('input[name="balance-time-frame"]').on('apply.daterangepicker', ({target}) =>  target.form.submit());
