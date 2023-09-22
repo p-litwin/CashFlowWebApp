@@ -49,5 +49,5 @@ $(function() {
     cb(start, end);
 
 });
-//Auto submit form when the range
+//Auto submit form when the range is changed
 $('input[name="balance-time-frame"]').on('apply.daterangepicker', ({target}) =>  target.form.submit());

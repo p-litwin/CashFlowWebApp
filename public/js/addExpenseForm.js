@@ -40,3 +40,14 @@ $(document).ready(function () {
 
 });
 
+//Add date picker to the date input
+flatpickr.localize(flatpickr.l10ns.pl);
+
+$('#expenseDate').flatpickr(
+    {
+        enableTime: false,
+        dateFormat: "Y-m-d"
+
+    }
+);
+
