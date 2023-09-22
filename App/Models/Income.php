@@ -121,6 +121,65 @@ class Income extends Model
         }
 
     }
+    
+    /**
+     * Get all incomes for the given period with cumulative values for income categories.
+     * @param string $start_date starting date of the period to display balance
+     * @param string $end_date ending date of the period to  display balance
+     * @return array Associative array of the incomes and cumulative amount
+     */
+    public static function getAllIncomesForGivenPeriod($start_date, $end_date) {
+
+        $sql = "SELECT t2.name, SUM(t1.amount) as Total_incomes
+                FROM incomes as t1
+                JOIN incomes_category_assigned_to_users AS t2
+                ON t2.id = t1.income_category_assigned_to_user_id
+                AND t2.user_id = :user_id AND t1.date_of_income BETWEEN :start_date AND :end_date
+                GROUP BY t2.name
+                ORDER  BY t2.name";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+        $statement->bindValue(':end_date', $end_date, PDO::PARAM_STR);
+        $statement->execute();
+        
+        return $statement->fetchAll();
+
+
+    }
+
+    /**
+     * Get cumulative amount of all incomes in the given period
+     * @param string $start_date Start date of period
+     * @param string $end_date End date of period
+     * @return array Cumulative income
+     */
+    public static function getTotalIncomesForGivenPeriod($start_date, $end_date) {
+
+        $sql = "SELECT SUM(amount) as Total_incomes
+                FROM  incomes
+                WHERE user_id = :user_id AND date_of_income BETWEEN :start_date AND :end_date;";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':start_date', $start_date, PDO::PARAM_STR);
+        $statement->bindValue(':end_date', $end_date, PDO::PARAM_STR);
+        $statement->execute();
+        $statement->setFetchMode(PDO::FETCH_NUM);
+        $total_income = $statement->fetch();
+
+        if ($total_income[0] == null) {
+            $total_income[0] = 0;
+        }
+
+        return $total_income;
+
+    }
 
 }
 

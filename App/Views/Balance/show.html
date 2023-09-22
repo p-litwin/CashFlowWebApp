@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block title %}CashFlowApp - Bilans{% endblock %}
+
+{% block body %}
+
+    {% include "/Home/navbar.html"  %}
+
+    <section id="content">
+        <div class="container-fluid main-content">
+            <div class="row site-title">
+                <h1 class="col-lg-8 col-md-7">Bilans za okres: {{balance_time_frame}}</h1>
+                <div class="col-lg-4 col-md-5 date-selector">
+                    <form id="balance-date-selector" class="form-inline" action="/balance/show" method="post">
+                        <label for="date-selector">Zakres dat bilansu:</label>
+                        <input type="text" name="balance-time-frame" id="date-selector" readonly="readonly" value="{{balance_time_frame}}">
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Przychody razem
+                        </div>
+                        <div class="card-body text-center text-success fs-4">
+                             {{total_income}} zł
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Wydatki razem
+                        </div>
+                        <div class="card-body text-center text-danger fs-4">
+                                {{total_expense}} zł
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Bilans
+                        </div>
+                        {% if balance == null or balance < 0 %}
+                            <div class="card-body text-center text-danger fs-4">
+                                {{balance}} zł
+                            </div>
+                            {% else %}
+                            <div class="card-body text-center text-success fs-4">
+                                {{balance}} zł
+                            </div>
+                            {% endif %}
+
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Przychody kategoriami
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="bg-success">
+                                        <th scope="col">Kategoria</th>
+                                        <th scope="col">Kwota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for income in incomes %}
+                                    <tr>
+                                        <td>{{income.name}}</td>
+                                        <td>{{income.Total_incomes}} zł</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Wydatki kategoriami
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr class="bg-danger">
+                                        <th scope="col">Kategoria</th>
+                                        <th scope="col">Kwota</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for expense in expenses  %}
+                                    <tr>
+                                        <td>{{expense.name}}</td>
+                                        <td>{{expense.Total_expenses}} zł</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="card balance-card">
+                        <div class="card-header">
+                            Wykres wydatków
+                        </div>
+                        <div class="card-body text-center">
+                            <img src="https://www.tibco.com/sites/tibco/files/media_entity/2022-01/doughnut-chart-example.svg"
+                                class="pie-chart" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    {% block footer %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script src="/js/balance.js"></script>
+    {% endblock %}
+
+{% endblock %}
