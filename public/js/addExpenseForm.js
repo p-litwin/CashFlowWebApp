@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $("#incomeForm").validate({
+    $("#expenseForm").validate({
         errorClass: "is-invalid",
         errorElement: "span",
         highlight: function (element, errorClass, validClass) {
@@ -24,11 +24,9 @@ $(document).ready(function () {
             },
             category: {
                 required: true
-            }
-        },
-        messages: {
-            amount: {
-                pattern: 'Podaj liczbę całkowitą lub dziesiętną'
+            },
+            payment_method: {
+                required: true
             }
         }
     });
