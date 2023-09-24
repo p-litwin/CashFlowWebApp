@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Flash;
-use App\Models\User;
 use Core\View;
 use App\Models\IncomesCategories;
 use App\Models\Income;

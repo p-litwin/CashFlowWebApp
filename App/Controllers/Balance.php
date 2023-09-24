@@ -7,7 +7,7 @@ use App\Models\Expense;
 use App\Models\Income;
 
 /**
- * Display balance of expenses and incomes
+ * Get the data of expenses and incomes from the database, make the calculations and pass them to the Balance View
  */
 class Balance extends \App\Controllers\Authenticated {
 

@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Flash;
 use App\Models\PaymentMethods;
-use App\Models\User;
 use Core\View;
 use App\Models\ExpensesCategories;
 use App\Models\Expense;
