@@ -31,23 +31,4 @@ $(document).ready(function () {
         }
     });
 
-    function selectAllText(textbox) {
-        textbox.focus();
-        textbox.select();
-    }
-
-    $('#amount').click(function () { selectAllText(jQuery(this)) });
-
 });
-
-//Add date picker to the date input
-flatpickr.localize(flatpickr.l10ns.pl);
-
-$('#expenseDate').flatpickr(
-    {
-        enableTime: false,
-        dateFormat: "Y-m-d"
-
-    }
-);
-

@@ -4,6 +4,8 @@
 
 {% block footer %}
 <script type="text/javascript" src="/js/addIncomeForm.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 {% endblock %}
 
 {% block body %}
@@ -21,13 +23,13 @@
 
         <div class="form-outline  mb-4 has-validation">
           <label class="form-label" for="amount" id="inputGroup-sizing-default">Kwota</label>
-          <input class="form-control" type="number" id="amount" name="amount" step="0.01" value="{% if income.amount is not empty %}{{income.amount}}{% else %}0,00{% endif %}" min="0.00">
+          <input class="form-control auto-highlight" type="number" id="amount" name="amount" step="0.01" value="{% if income.amount is not empty %}{{income.amount}}{% else %}0,00{% endif %}" min="0.00">
         </div>
 
 
         <div class="form-outline  mb-4 has-validation">
           <label class="form-label" for="incomeDate">Data (RRRR-MM-DD)</label>
-          <input class="form-control" type="text" id="incomeDate" name="date" value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}">
+          <input class="form-control single-date-picker" type="text" id="incomeDate" name="date" value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}" readonly>
         </div>
 
 
