@@ -28,7 +28,7 @@
                     </div>
 
                     <div class="form-outline mb-4 has-validation">
-                      <input class="form-control sigle-date-picker" type="text" id="expenseDate" name="date"
+                      <input class="form-control single-date-picker" type="text" id="expenseDate" name="date"
                         value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}"
                         pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" readonly>
                       <label class="form-label" for="expenseDate">Data (RRRR-MM-DD)</label>
@@ -72,7 +72,7 @@
                   
                     <div class="row buttons">
                       <div class="col-6">
-                        <button class="btn btn-secondary btn-block btn-lg" type="button">Anuluj</button>
+                        <a href="\" class="btn btn-secondary btn-block btn-lg" role="button">Anuluj</a>
                       </div>
                       <div class="col-6">
                         <button class="btn btn-primary btn-block btn-lg" type="submit">Dodaj</button>
