@@ -3,12 +3,14 @@
 {% block title %}CashFlowApp - Dodaj przychód{% endblock %}
 
 {% block footer %}
-<script type="text/javascript" src="/js/addIncomeFormValidation.js"></script>
+<script type="text/javascript" src="/js/addIncomeForm.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 {% endblock %}
 
 {% block body %}
 
-{% include "/Home/navbar.html" %}
+{% include "navbar.html" %}
 <div class="container-fluid main-content pt-4 ps-4">
   <div class="card add-expense-income-card">
     <div class="card-header">
@@ -21,13 +23,13 @@
 
         <div class="form-outline  mb-4 has-validation">
           <label class="form-label" for="amount" id="inputGroup-sizing-default">Kwota</label>
-          <input class="form-control" type="number" id="amount" name="amount" step="0.01" value="{% if income.amount is not empty %}{{income.amount}}{% else %}0,00{% endif %}" min="0.00">
+          <input class="form-control auto-highlight" type="number" id="amount" name="amount" step="0.01" value="{% if income.amount is not empty %}{{income.amount}}{% else %}0,00{% endif %}" min="0.00">
         </div>
 
 
         <div class="form-outline  mb-4 has-validation">
           <label class="form-label" for="incomeDate">Data (RRRR-MM-DD)</label>
-          <input class="form-control" type="text" id="incomeDate" name="date" value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}">
+          <input class="form-control single-date-picker" type="text" id="incomeDate" name="date" value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}" readonly>
         </div>
 
 
@@ -53,7 +55,7 @@
 
         <div class="row buttons">
           <div class="col-6">
-            <button class="btn btn-secondary btn-block btn-lg" type="button">Anuluj</button>
+            <a href="/" class="btn btn-secondary btn-block btn-lg" role="button">Anuluj</a>
           </div>
           <div class="col-6">
             <button class="btn btn-primary btn-block btn-lg" type="submit">Dodaj</button>

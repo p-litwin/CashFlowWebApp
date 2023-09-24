@@ -28,20 +28,7 @@ $(document).ready(function () {
             payment_method: {
                 required: true
             }
-        },
-        messages: {
-            amount: {
-                pattern: 'Podaj liczbę całkowitą lub dziesiętną'
-            }
         }
     });
 
-    function selectAllText(textbox) {
-        textbox.focus();
-        textbox.select();
-    }
-
-    $('#amount').click(function () { selectAllText(jQuery(this)) });
-
 });
-

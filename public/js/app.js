@@ -1,37 +1,55 @@
-$.validator.addMethod('validPassword',
-            function(value, element, param) {
-                if (value != '') {
-                    if (value.match(/.*[a-z]+.*/i) == null) {
-                        return false;
-                    }
-                    if (value.match(/.*\d+.*/) == null) {
-                        return false;
-                    }
-                }
-                return true;
-            },
-            'At least one letter and one number'
-        );
-    
-        jQuery(".btn-close").click(function() {
-            var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
-            $(contentPanelId).remove();
-        });
+//Localization options for  date range picker
+let dateRangePickerLocale = {
+    customRangeLabel: 'Dowolny zakres',
+    format: "YYYY-MM-DD",
+    daysOfWeek: [
+        "Pn",
+        "Wt",
+        "Śr",
+        "Czw",
+        "Pt",
+        "Sob",
+        "Nd"
+    ],
+    monthNames: [
+        "Sty",
+        "Lut",
+        "Mar",
+        "Kwi",
+        "Maj",
+        "Cze",
+        "Lip",
+        "Sie",
+        "Wrz",
+        "Paź",
+        "Lis",
+        "Gru"
+    ]
+};
 
-flatpickr.localize(flatpickr.l10ns.pl);
+// Add single date picker to element with single-date-picker class
+$(document).ready(function() {
 
-$('#expenseDate').flatpickr(
-    {
-        enableTime: false,
-        dateFormat: "Y-m-d"
+    $('.single-date-picker').daterangepicker({
+        singleDatePicker: true,
+        autoUpdateInput:true,
+        showDropdowns:true,
+        autoApply: true,
+        locale: dateRangePickerLocale
+    });
 
-    }
-);
+});
 
-$('#incomeDate').flatpickr(
-    {
-        enableTime: false,
-        dateFormat: "Y-m-d"
+// Highlight text of the clicked textbox with auto-highlight class
+function autoHighlight(textbox) {
+    textbox.focus();
+    textbox.select();
+};
 
-    }
-);
+$('.auto-highlight').click(function () { autoHighlight(jQuery(this)) });
+
+//Close flash message if the 'x' is clicked
+jQuery(".btn-close").click(function() {
+    var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
+    $(contentPanelId).remove();
+});
