@@ -141,9 +141,9 @@ class Expense extends Model
      */
     public static function getAllExpensesForGivenPeriod($start_date, $end_date) {
 
-        $sql = "SELECT t2.name, SUM(t1.amount) as Total_expenses
+        $sql = "SELECT t2.name, COALESCE(SUM(t1.amount), 0) as Total_expenses
                 FROM expenses as t1
-                JOIN expenses_category_assigned_to_users AS t2
+                RIGHT JOIN expenses_category_assigned_to_users AS t2
                 ON t2.id = t1.expense_category_assigned_to_user_id
                 AND t2.user_id = :user_id AND t1.date_of_expense BETWEEN :start_date AND :end_date
                 GROUP BY t2.name
