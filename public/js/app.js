@@ -47,3 +47,9 @@ function autoHighlight(textbox) {
 };
 
 $('.auto-highlight').click(function () { autoHighlight(jQuery(this)) });
+
+//Close flash message if the 'x' is clicked
+jQuery(".btn-close").click(function() {
+    var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
+    $(contentPanelId).remove();
+});
