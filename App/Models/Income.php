@@ -130,7 +130,7 @@ class Income extends Model
      */
     public static function getAllIncomesForGivenPeriod($start_date, $end_date) {
 
-        $sql = "SELECT t2.name, SUM(t1.amount) as Total_incomes
+        $sql = "SELECT t2.name, COALESCE(SUM(t1.amount), 0) as Total_incomes
                 FROM incomes as t1
                 JOIN incomes_category_assigned_to_users AS t2
                 ON t2.id = t1.income_category_assigned_to_user_id
