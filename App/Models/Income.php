@@ -132,7 +132,7 @@ class Income extends Model
 
         $sql = "SELECT t2.name, COALESCE(SUM(t1.amount), 0) as Total_incomes
                 FROM incomes as t1
-                JOIN incomes_category_assigned_to_users AS t2
+                RIGHT JOIN incomes_category_assigned_to_users AS t2
                 ON t2.id = t1.income_category_assigned_to_user_id
                 AND t2.user_id = :user_id AND t1.date_of_income BETWEEN :start_date AND :end_date
                 GROUP BY t2.name
