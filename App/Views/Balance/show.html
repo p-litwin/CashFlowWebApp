@@ -62,18 +62,12 @@
                         <div class="card-header">
                             Przychody kategoriami
                         </div>
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr class="bg-success">
-                                        <th scope="col">Kategoria</th>
-                                        <th scope="col">Kwota</th>
-                                    </tr>
-                                </thead>
+                        <div class="card-body p-0">
+                            <table class="table table-striped m-0">
                                 <tbody>
                                     {% for income in incomes %}
                                     <tr>
-                                        <td>{{income.name}}</td>
+                                        <td class="ps-3">{{income.name}}</td>
                                         <td>{{income.Total_incomes}} zł</td>
                                     </tr>
                                     {% endfor %}
@@ -87,18 +81,12 @@
                         <div class="card-header">
                             Wydatki kategoriami
                         </div>
-                        <div class="card-body">
-                            <table class="table table-striped">
-                                <thead>
-                                    <tr class="bg-danger">
-                                        <th scope="col">Kategoria</th>
-                                        <th scope="col">Kwota</th>
-                                    </tr>
-                                </thead>
+                        <div class="card-body p-0">
+                            <table class="table table-striped m-0">
                                 <tbody>
                                     {% for expense in expenses  %}
                                     <tr>
-                                        <td>{{expense.name}}</td>
+                                        <td class="ps-3">{{expense.name}}</td>
                                         <td>{{expense.Total_expenses}} zł</td>
                                     </tr>
                                     {% endfor %}
