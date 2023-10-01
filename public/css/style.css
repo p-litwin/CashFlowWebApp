@@ -120,6 +120,13 @@ html {
     font-family: 'Roboto Slab', serif;
 }
 
+@media (max-width:387px) {
+    .navbar-brand {
+        font-size: 1.8rem;
+        font-family: 'Roboto Slab', serif;
+    }
+}
+
 .navbar-image {
     width: 32px;
     margin-bottom: 10px;

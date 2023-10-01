@@ -130,13 +130,15 @@ class Income extends Model
      */
     public static function getAllIncomesForGivenPeriod($start_date, $end_date) {
 
-        $sql = "SELECT t2.name, COALESCE(SUM(t1.amount), 0) as Total_incomes
-                FROM incomes as t1
-                RIGHT JOIN incomes_category_assigned_to_users AS t2
-                ON t2.id = t1.income_category_assigned_to_user_id
-                AND t2.user_id = :user_id AND t1.date_of_income BETWEEN :start_date AND :end_date
-                GROUP BY t2.name
-                ORDER  BY t2.name";
+        $sql = "SELECT user_categories.name, COALESCE(SUM(incomes.amount),0) as Total_incomes
+                FROM
+                (SELECT *
+                FROM incomes_category_assigned_to_users as icatu
+                WHERE icatu.user_id = :user_id) as user_categories
+                LEFT JOIN incomes
+                ON user_categories.id = incomes.income_category_assigned_to_user_id AND incomes.date_of_income BETWEEN :start_date AND :end_date
+                GROUP BY user_categories.name
+                ORDER BY user_categories.name";
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
