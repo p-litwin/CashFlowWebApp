@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Core\Model;
 
+/**
+ * Abstract model class for transaction.
+ */
 abstract class Transaction extends Model  {
     /**
      * Logged in user id
@@ -70,6 +73,22 @@ abstract class Transaction extends Model  {
      */
     protected function validate() {
         
+        if ($this->amount == '') {
+            $this->errors[] = 'Pole kwota nie może być puste';
+        }
+        if (!floatval($this->amount)) {
+            $this->errors[] = 'Nieprawidłowa wartość w polu kwota';
+        }
+        if ($this->amount <= 0) {
+            $this->errors[] = 'Kwota musi być większa od 0';
+        }
+        if (strtotime($this->date) === false) {
+            $this->errors[] = 'Data ma nieprawidłową wartość';
+        }
+
+        if ($this->category == '') {
+            $this->errors[] = 'Wybierz kategorię przychodu';
+        }
     }
 
 }

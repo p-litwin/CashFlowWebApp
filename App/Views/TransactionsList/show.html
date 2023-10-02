@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% include "navbar.html" %}
+<div class="container-fluid main-content">
+  <div class="row site-title">
+    <h1>Spis wydatków i przychodów</h1>
+  </div>
+  <!-- Button trigger modal -->
+  <!-- <div class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      +
+    </button>
+    <ul class="dropdown-menu">
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Dodaj wydatek
+      </button>
+      <li><button class="dropdown-item" type="button">Another action</button></li>
+      <li><button class="dropdown-item" type="button">Something else here</button></li>
+    </ul>
+  </div> -->
+  <!-- End button trigger -->
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form method="post" id="expenseForm" action="/expenses/add">
+            <input type="hidden" name="user_id" value="{{ current_user.userId }}">
+
+            <div class="form-outline  mb-4 has-validation">
+              <label class="form-label" for="amount">Kwota</label>
+              <input class="form-control auto-highlight" type="number" id="amount" min="0.00" step="0.01" name="amount"
+                value="{% if expense.amount is not empty %}{{expense.amount}}{% else %}0,00{% endif %}" required>
+            </div>
+
+            <div class="form-outline mb-4 has-validation">
+              <input class="form-control single-date-picker" type="text" id="expenseDate" name="date"
+                value="{% if expense.date is not empty %}{{expense.date}}{% else %}{{current_date}}{% endif %}"
+                pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" readonly>
+              <label class="form-label" for="expenseDate">Data (RRRR-MM-DD)</label>
+            </div>
+
+
+            <div class="form-outline mb-4 has-validation">
+              <select class="form-control" id="paymentMethod" name="payment_method" placeholder="Sposób płatności">
+                <option value=""></option>
+                {% for method in payment_methods %}
+                {% if method.id == last_expense_payment_method %}
+                <option value="{{ method.id }}" selected>{{ method.name }}</option>
+                {% else %}
+                <option value="{{ method.id }}">{{ method.name }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+              <label class="form-label" for="paymentMethod">Sposób płatności:</label>
+            </div>
+
+
+            <div class="form-outline mb-4 has-validation">
+              <select class="form-control" id="expenseCategory" placeholder="Kategoria" name="category">
+                <option value=""></option>
+                {% for category in expenses_categories %}
+                {% if category.id == last_expense_category %}
+                <option value="{{ category.id }}" selected>{{ category.name }}</option>
+                {% else %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+                {% endif %}
+                {% endfor %}
+              </select>
+              <label class="form-label" for="expenseCategory">Kategoria:</label>
+            </div>
+
+
+            <div class="form-outline mb-2 has-validation">
+              <textarea class="form-control" id="expenseComment" name="comment"></textarea>
+              <label class="form-label" for="expenseComment">Komentarz:</label>
+            </div>
+
+            <div class="row buttons">
+              <div class="col-6">
+                <a href="\" class="btn btn-secondary btn-block btn-lg" role="button">Anuluj</a>
+              </div>
+              <div class="col-6">
+                <button class="btn btn-primary btn-block btn-lg" type="submit">Dodaj</button>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal end -->
+
+  {% for transaction in transactions %}
+
+  <div class="card">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-3">{{transaction.category}}</div>
+        <div class="col-2">{{transaction.date}}</div>
+        <div class="col-5">{{transaction.comment}}</div>
+        <div class="col-1">{{transaction.amount}} zł</div>
+        <div class="col-1 text-end"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+      </div>
+    </div>
+  </div>
+
+  {% endfor %}
+
+  <!-- <nav>
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+      <li class="page-item"><a class="page-link" href="#">1</a></li>
+      <li class="page-item"><a class="page-link" href="#">2</a></li>
+      <li class="page-item"><a class="page-link" href="#">3</a></li>
+      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+    </ul>
+  </nav> -->
+
+
+
+</div>
+{% endblock %}
