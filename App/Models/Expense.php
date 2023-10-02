@@ -2,39 +2,10 @@
 
 namespace App\Models;
 
-use Core\Model;
+use App\Models\Transaction;
 use PDO;
 
-class Expense extends Model
-{
-
-    /**
-     * Logged in user id
-     * 
-     * @var integer
-     */
-    public $user_id;
-
-    /**
-     * Expense amount with dot or comma
-     * 
-     * @var float
-     */
-    public $amount;
-
-    /**
-     * Expense date in format 'Y-m-d'
-     * 
-     * @var string
-     */
-    public $date;
-
-    /**
-     * Expense category id assigned to user id
-     * 
-     * @var integer
-     */
-    public $category;
+class Expense extends Transaction {
 
     /**
      * Payment method id assigned to user id
@@ -44,40 +15,15 @@ class Expense extends Model
     public $payment_method;
 
     /**
-     * Expense comment
-     * 
-     * @var string
-     */
-    public $comment;
-
-    /**
-     * Server-side validation errors
-     * 
-     * @var array
-     */
-    public $errors = [];
-
-    /**
-     * Constructor of the Expense model class
-     * 
-     * @param array $expense_data Associative array containing the expense data
-     */
-    public function __construct($expense_data = [])
-    {
-        foreach ($expense_data as $key => $value) {
-            $this->$key = $value;
-        }
-    }
-
-    /**
      * Save new expense to the database
      * 
-     * @return boolean false if the expense was succesfully written to the database, fals otherwise
+     * @return boolean true if the expense was succesfully written to the database, false otherwise
      */
     public function save()
     {
 
         $this->validate();
+        $this->validatePaymentMethod();
 
         if (empty($this->errors)) {
 
@@ -109,26 +55,11 @@ class Expense extends Model
      * 
      * @return void
      */
-    private function validate()
+    protected function validatePaymentMethod()
     {
-        if ($this->amount == '') {
-            $this->errors[] = 'Pole kwota nie może być puste';
-        }
-        if (!floatval($this->amount)) {
-            $this->errors[] = 'Nieprawidłowa wartość w polu kwota';
-        }
-        if ($this->amount <= 0) {
-            $this->errors[] = 'Kwota musi być większa od 0';
-        }
-        if (strtotime($this->date) === false) {
-            $this->errors[] = 'Data ma nieprawidłową wartość';
-        }
+
         if ($this->payment_method == '') {
             $this->errors[] = 'Wybierz metodę płatności';
-        }
-
-        if ($this->category == '') {
-            $this->errors[] = 'Wybierz kategorię wydatku';
         }
 
     }
