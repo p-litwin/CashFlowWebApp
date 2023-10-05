@@ -142,14 +142,26 @@ class Transactions extends Model {
     public static function getAllTransactions() {
         
         
-        $sql = "SELECT expense_category_assigned_to_user_id as category, date_of_expense as date, expense_comment as comment, amount
+        $sql = "SELECT name, date, comment, amount
+                FROM
+                (SELECT expense_category_assigned_to_user_id as category, date_of_expense as date, expense_comment as comment, amount
                 FROM expenses
                 WHERE user_id = :user_id
                 UNION
                 SELECT income_category_assigned_to_user_id as category, date_of_income as date, income_comment as comment, amount
                 FROM incomes
                 WHERE user_id = :user_id
-                ORDER BY date DESC";
+                ORDER BY date DESC) as list_with_category_ids
+                LEFT JOIN
+                (SELECT *
+                FROM expenses_category_assigned_to_users
+                WHERE user_id = :user_id
+                UNION
+                SELECT *
+                FROM incomes_category_assigned_to_users
+                WHERE user_id = :user_id) as all_categories
+                ON all_categories.id = list_with_category_ids.category
+                LIMIT 8;";
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
