@@ -29,6 +29,7 @@ require '../vendor/autoload.php';
 
 $router = new Core\Router();
 
+$router->add('transactions-list/show/{page:[\d]+}', ['controller'=>'TransactionsList', 'action'=>'show']);
 $router->add('', ['controller'=>'TransactionsList', 'action'=>'show']);
 $router->add('login', ['controller'=>'Login', 'action'=>'new']);
 $router->add('signup', ['controller'=>'Signup', 'action'=>'create']);

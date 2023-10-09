@@ -171,7 +171,82 @@ class Transactions extends Model {
         
         return $statement->fetchAll();
         
+    }
+
+    /**
+     * Get number of transactions for logged in user
+     * @return integer number of transactions or false if user has 0 transactions
+     */
+    public static function getTransactionsCount() {
         
+        $sql = "SELECT COUNT(amount) as transactions
+        FROM
+        (SELECT expense_category_assigned_to_user_id as category, date_of_expense as date, expense_comment as comment, amount
+        FROM expenses
+        WHERE user_id = :user_id
+        UNION
+        SELECT income_category_assigned_to_user_id as category, date_of_income as date, income_comment as comment, amount
+        FROM incomes
+        WHERE user_id = :user_id) AS transacions_list;";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->setFetchMode(PDO::FETCH_NUM);
+        $statement->execute();
+        
+        $transactions = $statement->fetch();
+        
+        if ($transactions[0] == null) {
+            $transactions[0] = 0;
+        }
+
+        return $transactions[0];
+    
+    }
+
+    /**
+     * Get paginated transactions list
+     * @param integer $offset offset for query
+     * @param integer $limit number of transactions to display on single page
+     * @return mixed - transactions of the logged in user or false if there are no transactions in the database
+     */
+    public static function getTransactionsWithPagination($offset, $limit) {
+        
+        
+        $sql = "SELECT name, date, comment, amount
+                FROM
+                (SELECT expense_category_assigned_to_user_id as category, date_of_expense as date, expense_comment as comment, amount
+                FROM expenses
+                WHERE user_id = :user_id
+                UNION
+                SELECT income_category_assigned_to_user_id as category, date_of_income as date, income_comment as comment, amount
+                FROM incomes
+                WHERE user_id = :user_id
+                ORDER BY date DESC) as list_with_category_ids
+                LEFT JOIN
+                (SELECT *
+                FROM expenses_category_assigned_to_users
+                WHERE user_id = :user_id
+                UNION
+                SELECT *
+                FROM incomes_category_assigned_to_users
+                WHERE user_id = :user_id) as all_categories
+                ON all_categories.id = list_with_category_ids.category
+                LIMIT :limit
+                OFFSET :offset;";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+        $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $statement->execute();
+        
+        return $statement->fetchAll();
+
     }
 
 }

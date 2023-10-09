@@ -1,11 +1,13 @@
 {% extends "base.html" %}
 
+{% block title %}CashFlowApp - Lista transakcji{% endblock %}
+
 {% block body %}
 
 {% include "navbar.html" %}
 <div class="container-fluid main-content">
   <div class="row site-title">
-    <h1>Spis wydatków i przychodów</h1>
+    <h1>Lista transakcji</h1>
   </div>
   <!-- Button trigger modal -->
   <!-- <div class="dropdown">
@@ -102,7 +104,7 @@
     </div>
   </div>
   <!-- Modal end -->
-
+  {% if transactions %}
   {% for transaction in transactions %}
 
   <div class="card">
@@ -118,16 +120,35 @@
   </div>
 
   {% endfor %}
+  {% else %}
+  No transactions to show
+  {% endif %}
 
-  <!-- <nav>
+  <nav class="mt-4">
     <ul class="pagination justify-content-center">
-      <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
-      <li class="page-item"><a class="page-link" href="#">Next</a></li>
+      {% if page == 1 %}
+        <li class="page-item page-link"><i class="fa-solid fa-angles-left" style="color: #c0c0c0;"></i></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" sr-only="Pierwsza strona" title="Pierwsza strona" href="/transactions-list/show/1"><i class="fa-solid fa-angles-left"></i></a></li>
+      {% endif %}
+      {% if page == 1 %}
+        <li class="page-item page-link"><i class="fa-solid fa-angle-left" style="color: #c0c0c0;"></i></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" sr-only="Poprzednia strona" title="Poprzednia strona" href="/transactions-list/show/{{previous_page}}"><i class="fa-solid fa-angle-left"></i></a></li>
+      {% endif %}
+      <li class="page-item"><span class="page-link">Strona {{page}} z {{last_page}}</span></li>
+      {% if page >= last_page %}
+        <li class="page-item page-link"><i class="fa-solid fa-angle-right" style="color: #c0c0c0;" ></i></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" sr-only="Następna strona" title="Następna strona" href="/transactions-list/show/{{next_page}}"><i class="fa-solid fa-angle-right"></i></a></li>
+      {% endif %}
+      {% if page == last_page %}
+        <li class="page-item page-link"><i class="fa-solid fa-angles-right" style="color: #c0c0c0;" ></i></li>
+      {% else %}
+        <li class="page-item"><a class="page-link" sr-only="Ostatnia strona" title="Ostatnia strona" href="/transactions-list/show/{{last_page}}"><i class="fa-solid fa-angles-right"></i></a></li>
+      {% endif %}
     </ul>
-  </nav> -->
+  </nav>
 
 
 
