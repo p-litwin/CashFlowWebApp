@@ -210,7 +210,6 @@ html {
 
 @media (max-width:767px) {
     .site-title h1 {
-        text-align: center;
         font-size: 1.5rem;
     }
 
@@ -345,4 +344,14 @@ input.error {
     background: #fff;
     color: #3498DB;
     cursor: pointer;
+}
+
+.transaction-item {
+width:1200px;
+}
+
+.no-wrap-text {
+    white-space: nowrap;
+    overflow:hidden;
+    text-overflow: ellipsis;
 }

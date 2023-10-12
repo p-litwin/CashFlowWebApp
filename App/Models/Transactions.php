@@ -243,6 +243,7 @@ class Transactions extends Model {
         $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
         $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
         $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->execute();
         
         return $statement->fetchAll();

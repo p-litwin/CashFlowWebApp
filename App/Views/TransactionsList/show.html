@@ -104,22 +104,51 @@
     </div>
   </div>
   <!-- Modal end -->
-  {% if transactions %}
-  {% for transaction in transactions %}
+  <!-- {% if transactions %}
+      <div class="mt-0 mb-0 bg-white shadow-sm   fluid-container text-left">
+          <div class="row pt-1 pb-1 border-end fw-bold border-bottom">
+              <div class="col-sm-3 ps-4 pe-2 no-wrap-text border-end">Kategoria</div>
+              <div class="col-sm-2 ps-2 pe-2 border-end">Data</div>
+              <div class="col-sm-5 ps-4 pe-2 no-wrap-text border-end">Opis</div>
+              <div class="col-sm-2 ps-4 pe-2 amount-text border-end">Kwota</div>
+          </div>
 
-  <div class="card">
-    <div class="card-body p-2">
-      <div class="row">
-        <div class="col-3">{{transaction.name}}</div>
-        <div class="col-2">{{transaction.date}}</div>
-        <div class="col-5">{{transaction.comment}}</div>
-        <div class="col-1">{{transaction.amount}} zł</div>
-        <div class="col-1 text-end"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+    {% for transaction in transactions %}
+        <div class="row pt-1 pb-1 border-bottom">
+          <div class="col-sm-3 ps-4 pe-2 no-wrap-text border-end" title="{{transaction.name}}">{{transaction.name}}</div>
+          <div class="col-sm-2 ps-2 pe-2 border-end">{{transaction.date}}</div>
+          <div class="col-sm-5 ps-4 pe-2 no-wrap-text border-end" title="{{transaction.comment}}">{{transaction.comment}}</div>
+          <div class="col-sm-2 ps-4 pe-2 amount-text border-end">{{transaction.amount}} zł</div>
+          
+        </div>
+        {% endfor %}
       </div>
-    </div>
-  </div>
+  {% else %}
+  No transactions to show
+  {% endif %} -->
 
-  {% endfor %}
+  {% if transactions %}
+        {% for transaction in transactions %}
+        <div class="card shadow mb-1">
+          <div class="card-body row ps-2 pt-2 pb-2 pe-0">
+            <div class="col-lg-10 col-md-9 col-9 row">
+              {% if transaction.comment is empty %}
+                <div class="col-sm-3 col-md-5 no-wrap-text text-body-secondary" title="Brak opisu">(Brak opisu)</div>
+              {% else %}
+                <div class="col-sm-5 col-md-5  no-wrap-text" title="{{transaction.comment}}">{{transaction.comment}}</div>
+              {% endif %}
+              <div class="col-sm-2 col-md-2 ">{{transaction.date}}</div>
+              <div class="col-sm-5 col-md-5  no-wrap-text" title="{{transaction.name}}">{{transaction.name}}</div>
+            </div>
+            <div class="col-lg-2 col-md-3 col-3 align-middle">
+              <div class="row ">  
+                <div class="col-11 amount-text text-center">{{transaction.amount}} zł</div>
+                <div class="col-1 ps-0 pe-0 text-end"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
   {% else %}
   No transactions to show
   {% endif %}
