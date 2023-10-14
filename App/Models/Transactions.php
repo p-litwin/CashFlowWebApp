@@ -215,13 +215,13 @@ class Transactions extends Model {
     public static function getTransactionsWithPagination($offset, $limit) {
         
         
-        $sql = "SELECT name, date, comment, amount
+        $sql = "SELECT transaction_id, name, date, comment, amount, type
                 FROM
-                (SELECT expense_category_assigned_to_user_id as category, date_of_expense as date, expense_comment as comment, amount
-                FROM expenses
+                (SELECT id as transaction_id, expense_category_assigned_to_user_id as category, date_of_expense as date, expense_comment as comment, amount, 'expense' as type
+                FROM expenses 
                 WHERE user_id = :user_id
                 UNION
-                SELECT income_category_assigned_to_user_id as category, date_of_income as date, income_comment as comment, amount
+                SELECT id as transaction_id, income_category_assigned_to_user_id as category, date_of_income as date, income_comment as comment, amount, 'income' as type
                 FROM incomes
                 WHERE user_id = :user_id
                 ORDER BY date DESC) as list_with_category_ids

@@ -15,11 +15,10 @@
       +
     </button>
     <ul class="dropdown-menu">
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Dodaj wydatek
-      </button>
-      <li><button class="dropdown-item" type="button">Another action</button></li>
-      <li><button class="dropdown-item" type="button">Something else here</button></li>
+      <li><button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <i class="fa-solid fa-trash-can" style="color: #f00006;"></i> Delete
+      </button></li>li
+      <li><button class="dropdown-item" type="button"><i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
     </ul>
   </div> -->
   <!-- End button trigger -->
@@ -128,22 +127,40 @@
   {% endif %} -->
 
   {% if transactions %}
+        {% set previous = false %}      
         {% for transaction in transactions %}
-        <div class="card shadow mb-1">
-          <div class="card-body row ps-2 pt-2 pb-2 pe-0">
-            <div class="col-lg-10 col-md-9 col-9 row">
-              {% if transaction.comment is empty %}
-                <div class="col-sm-3 col-md-5 no-wrap-text text-body-secondary" title="Brak opisu">(Brak opisu)</div>
-              {% else %}
-                <div class="col-sm-5 col-md-5  no-wrap-text" title="{{transaction.comment}}">{{transaction.comment}}</div>
-              {% endif %}
-              <div class="col-sm-2 col-md-2 ">{{transaction.date}}</div>
-              <div class="col-sm-5 col-md-5  no-wrap-text" title="{{transaction.name}}">{{transaction.name}}</div>
+          {% if previous == false  %}
+            <div class="date-container">
+              <p class="transaction-date">{{transaction.date}}</p>
+              <hr>
             </div>
-            <div class="col-lg-2 col-md-3 col-3 align-middle">
-              <div class="row ">  
-                <div class="col-11 amount-text text-center">{{transaction.amount}} zł</div>
-                <div class="col-1 ps-0 pe-0 text-end"><i class="fa-solid fa-ellipsis-vertical"></i></div>
+            {% set previous = transaction %}
+          {% else %}
+            {% if transaction.date == previous.date %}
+            {% else %}
+            <div class="date-container">
+              <p class="transaction-date">{{transaction.date}}</p>
+              <hr>
+            </div>
+            {% set previous = transaction %}
+            {% endif %}
+          {% endif %}
+        <div class="card shadow-sm mb-1">
+          <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex justify-content-between">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-7">
+              <div class="row">
+              <div class="col-sm-6 col-12 no-wrap-text transaction-category" title="{{transaction.name}}">{{transaction.name}}</div>
+              {% if transaction.comment is empty %}
+                <div class="col-sm-6 col-12 no-wrap-text text-body-secondary" title="Brak opisu">(Brak opisu)</div>
+              {% else %}
+                <div class="col-sm-6 col-12 no-wrap-text transaction-comment" title="{{transaction.comment}}">{{transaction.comment}}</div>
+              {% endif %}
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-5 justify-content-end">
+              <div class="row ps-4 pe-3 h-100">  
+                <div class="col-11 amount {{transaction.type}}-amount">{{transaction.amount}} zł</div>
+                <div class="col-1 ps-0 pe-0 transaction-ellipsis text-end"><i class="fa-solid fa-ellipsis-vertical"></i></div>
               </div>
             </div>
           </div>

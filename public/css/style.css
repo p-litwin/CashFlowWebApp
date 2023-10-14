@@ -355,3 +355,55 @@ width:1200px;
     overflow:hidden;
     text-overflow: ellipsis;
 }
+
+.expense-amount {
+    color:red;
+}
+
+.income-amount {
+    color: green;
+}
+.transaction-ellipsis {
+    margin: auto 0;
+}
+
+@media (max-width:928px) {
+    .transaction-details {
+        font-size:0.8em;
+        margin: auto 0;
+    }
+}
+
+.date-container {
+    position: relative;
+    margin-top:1.5em;
+}
+
+.transaction-date {
+    font-size:0.8em;
+    font-weight:600;
+    text-align:center;
+    position: absolute;
+    left: 0;
+    top:-0.8em;
+    background-color: #f0f0f0;
+    z-index:999;
+    padding-right: 10px;
+    
+}
+
+.transaction-category {
+    color:blue;
+}
+
+.amount {
+    padding-left:0;
+    padding-right:0;
+    margin:auto 0;
+}
+
+@media (max-width:575px) {
+    .amount {
+        padding-left:0.5em;
+    }
+}
