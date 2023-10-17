@@ -215,25 +215,29 @@ class Transactions extends Model {
     public static function getTransactionsWithPagination($offset, $limit) {
         
         
-        $sql = "SELECT transaction_id, name, date, comment, amount, type
+        $sql = "SELECT transaction_id, all_categories.id as category_id, list_with_category_ids.payment_method, payment_methods.name, all_categories.name, date, comment, amount, type
                 FROM
-                (SELECT id as transaction_id, expense_category_assigned_to_user_id as category, date_of_expense as date, expense_comment as comment, amount, 'expense' as type
+                (SELECT id as transaction_id, expense_category_assigned_to_user_id as category, payment_method_assigned_to_user_id as payment_method, date_of_expense as date, expense_comment as comment, amount, 'expenses' as type
                 FROM expenses 
                 WHERE user_id = :user_id
                 UNION
-                SELECT id as transaction_id, income_category_assigned_to_user_id as category, date_of_income as date, income_comment as comment, amount, 'income' as type
+                SELECT id as transaction_id, income_category_assigned_to_user_id as category, null as payment_method, date_of_income as date, income_comment as comment, amount, 'incomes' as type
                 FROM incomes
                 WHERE user_id = :user_id
                 ORDER BY date DESC) as list_with_category_ids
                 LEFT JOIN
-                (SELECT *
+                (SELECT id, user_id, name, 'expenses' as transaction_type
                 FROM expenses_category_assigned_to_users
                 WHERE user_id = :user_id
                 UNION
-                SELECT *
+                SELECT id, user_id, name, 'incomes' as transaction_type
                 FROM incomes_category_assigned_to_users
                 WHERE user_id = :user_id) as all_categories
-                ON all_categories.id = list_with_category_ids.category
+                ON all_categories.id = list_with_category_ids.category AND all_categories.transaction_type = list_with_category_ids.type
+                LEFT JOIN
+                (SELECT id, user_id, name
+                FROM payment_methods_assigned_to_users) as payment_methods
+                ON payment_methods.id = list_with_category_ids.payment_method   
                 LIMIT :limit
                 OFFSET :offset;";
 
