@@ -54,6 +54,10 @@ class Incomes extends \App\Controllers\Authenticated {
     
     }
 
+    public static function updateAction() {
+        echo "Action to update the Income";
+    }
+
 }
 
 ?>
