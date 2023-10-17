@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Models\Transaction;
 use PDO;
 
+/**
+ * Income model class. Class to save, edit and delete single incomes in the database.
+ */
 class Income extends Transaction
 {
 

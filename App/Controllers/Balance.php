@@ -3,8 +3,7 @@
 namespace App\Controllers;
 
 use Core\View;
-use App\Models\Expense;
-use App\Models\Income;
+use App\Models\Transactions;
 
 /**
  * Get the data of expenses and incomes from the database, make the calculations and pass them to the Balance View
@@ -28,10 +27,10 @@ class Balance extends \App\Controllers\Authenticated {
         $balance_time_frame_start = substr($balance_time_frame,0,10);
         $balance_time_frame_end = substr($balance_time_frame, 13, 10);
 
-        $expenses = Expense::getAllExpensesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
-        $total_expense =  Expense::getTotalExpensesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
-        $incomes = Income::getAllIncomesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
-        $total_income = Income::getTotalIncomesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
+        $expenses = Transactions::getAllExpensesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
+        $total_expense =  Transactions::getTotalExpensesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
+        $incomes = Transactions::getAllIncomesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
+        $total_income = Transactions::getTotalIncomesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
         $balance = $total_income[0] - $total_expense[0];
         
         $total_income = number_format($total_income[0], 2, ".", " ");
