@@ -46,7 +46,8 @@
 </head>
 
 <body>
-
+    {% block body_begin %}
+    {% endblock %}
     {% if flash_messages %}
     <div class="flash-messages-container">
         {% for message in flash_messages %}
@@ -67,7 +68,6 @@
     {% endif %}
 
     {% block body %}
-
     {% endblock %}
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js "></script>
@@ -85,7 +85,6 @@
     <script type="text/javascript" src="/js/app.js"></script>
 
     {% block footer %}
-
     {% endblock %}
 
 </body>
