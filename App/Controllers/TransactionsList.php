@@ -44,7 +44,7 @@ class TransactionsList extends Authenticated {
         if (!isset($_SESSION['payment_methods'])) {
             $_SESSION['payment_methods'] = PaymentMethods::getPaymentMethodsByUserId($_SESSION['user_id']);
         }
-
+        $_SESSION['return_to'] = $_SERVER['REQUEST_URI'];
         View::renderTemplate('TransactionsList/show.html', [
             'transactions' => $transactions,
             'page' => $page,

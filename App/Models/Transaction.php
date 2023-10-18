@@ -9,9 +9,14 @@ use Core\Model;
  */
 abstract class Transaction extends Model  {
     /**
+     * Transaction id
+     * @var int
+     */
+    public $id;
+    /**
      * Logged in user id
      * 
-     * @var integer
+     * @var int
      */
     public $user_id;
 
@@ -32,7 +37,7 @@ abstract class Transaction extends Model  {
     /**
      * Expense category id assigned to user id
      * 
-     * @var integer
+     * @var int
      */
     public $category;
 

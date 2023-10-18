@@ -60,6 +60,7 @@ if (expensesEditModal) {
     // Button that triggered the modal
     const button = event.relatedTarget
     // Extract info from data-bs-* attributes
+    const id = button.getAttribute('data-bs-id')
     const amount = button.getAttribute('data-bs-amount')
     const date = button.getAttribute('data-bs-date')
     const category = button.getAttribute('data-bs-category')
@@ -68,6 +69,8 @@ if (expensesEditModal) {
     // If necessary, you could initiate an Ajax request here
     // and then do the updating in a callback.
     // Update the modal's content.
+    var idInput = document.getElementById("transactionId");
+    idInput.value = id;
     var dateInput = document.getElementById("expenseDate");
     dateInput.value = date;
     var categorySelect = document.getElementById("expenseCategory");

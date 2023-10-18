@@ -28,6 +28,7 @@
         <div class="modal-body">
           <form method="post" id="expenseForm" action="/expenses/update">
             <input type="hidden" name="user_id" value="{{ current_user.userId }}">
+            <input type="hidden" id="transactionId" name="id" value="{{ transaction.transaction_id }}">
             <div class="form-outline  mb-4 has-validation">
               <label class="form-label" for="expenseAmount">Kwota</label>
               <input class="form-control auto-highlight" type="number" id="expenseAmount" min="0.00" step="0.01" name="amount"
@@ -177,9 +178,9 @@
                       <i class="fa-solid fa-ellipsis-vertical"></i>
                     </a>
                     <ul class="dropdown-menu ellipsis-menu">
-                      <li><button id="delete-{{transaction.transaction_id}}" class="btn btn-block" href="/transactions-list/delete" data-bs-target="#exampleModal">
+                      <li><button class="btn btn-block" href="/transactions-list/delete" data-bs-target="#exampleModal">
                         <i class="fa-solid fa-trash-can" style="color: #f00006;"></i> Delete</button></li>
-                        <li><button id="edit-{{transaction.transaction_id}}" class="btn btn-block" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
+                        <li><button class="btn btn-block" data-bs-id="{{transaction.transaction_id}}" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
                     </ul>
                   </div>
                 </div>

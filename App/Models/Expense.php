@@ -67,6 +67,39 @@ class Expense extends Transaction {
 
     }
 
+    public function update()
+    {
+
+        $this->validate();
+        $this->validatePaymentMethod();
+
+        if (empty($this->errors)) {
+
+            $sql = "UPDATE expenses
+                    SET expense_category_assigned_to_user_id = :expense_category_assigned_to_user_id, payment_method_assigned_to_user_id = :payment_method_assigned_to_user_id,
+                    amount = :amount, date_of_expense = :date_of_expense, expense_comment = :expense_comment
+                    WHERE id = :id AND user_id = :user_id";
+
+            $db        = static::getDB();
+            $statement = $db->prepare($sql);
+            $statement->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+            $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+            $statement->bindValue(':expense_category_assigned_to_user_id', $this->category, PDO::PARAM_INT);
+            $statement->bindValue(':payment_method_assigned_to_user_id', $this->payment_method, PDO::PARAM_INT);
+            $statement->bindValue(':amount', $this->amount, PDO::PARAM_STR);
+            $statement->bindValue(':date_of_expense', $this->date, PDO::PARAM_STR);
+            $statement->bindValue(':expense_comment', $this->comment, PDO::PARAM_STR);
+
+
+            return $statement->execute();
+
+        } else {
+
+            return false;
+
+        }
+    }
+
 }
 
 
