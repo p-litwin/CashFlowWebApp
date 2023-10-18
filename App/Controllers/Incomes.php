@@ -54,8 +54,27 @@ class Incomes extends \App\Controllers\Authenticated {
     
     }
 
-    public static function updateAction() {
-        echo "Action to update the Income";
+    public function updateAction() {
+        
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $income = new Income($_POST);
+        }
+        
+        if ($income->update()){
+            Flash::addMessage('Przychód został zaktualizowany');
+            if (isset($_SESSION['return_to'])){
+                $this->redirect($_SESSION['return_to']);
+            } else {
+                $this->redirect('/transactions-list/show');
+            }
+        } else {
+            Flash::addMessage('Wystąpił błąd. Przychód nie został zaktualizowany', Flash::WARNING);
+            if (isset($_SESSION['return_to'])){
+                $this->redirect($_SESSION['return_to']);
+            } else {
+                $this->redirect('/transactions-list/show');
+            }
+        }
     }
 
 }

@@ -28,7 +28,7 @@
         <div class="modal-body">
           <form method="post" id="expenseForm" action="/expenses/update">
             <input type="hidden" name="user_id" value="{{ current_user.userId }}">
-            <input type="hidden" id="transactionId" name="id" value="{{ transaction.transaction_id }}">
+            <input type="hidden" id="expenseId" name="id" value="{{ transaction.transaction_id }}">
             <div class="form-outline  mb-4 has-validation">
               <label class="form-label" for="expenseAmount">Kwota</label>
               <input class="form-control auto-highlight" type="number" id="expenseAmount" min="0.00" step="0.01" name="amount"
@@ -99,6 +99,7 @@
         <div class="modal-body">
           <form method="post" id="incomeForm" action="/incomes/update">
             <input type="hidden" name="user_id" value="{{ current_user.userId }}">
+            <input type="hidden" id="incomeId" name="id" value="{{transactions.transactions_id}}">
             <div class="form-outline  mb-4 has-validation">
               <label class="form-label" for="incomeAmount">Kwota</label>
               <input class="form-control auto-highlight" type="number" id="incomeAmount" min="0.00" step="0.01" name="amount"

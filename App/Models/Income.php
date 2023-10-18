@@ -105,6 +105,42 @@ class Income extends Transaction
         return $total_income;
 
     }
+    
+    /**
+     * Update income details in the database
+     * 
+     * @return bool true if the income has been successfully updated, false otherwise
+     */
+    public function update()
+    {
+
+        $this->validate();
+
+        if (empty($this->errors)) {
+
+            $sql = "UPDATE incomes
+                    SET income_category_assigned_to_user_id = :income_category_assigned_to_user_id,
+                    amount = :amount, date_of_income = :date_of_income, income_comment = :income_comment
+                    WHERE id = :id AND user_id = :user_id";
+
+            $db        = static::getDB();
+            $statement = $db->prepare($sql);
+            $statement->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+            $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+            $statement->bindValue(':income_category_assigned_to_user_id', $this->category, PDO::PARAM_INT);
+            $statement->bindValue(':amount', $this->amount, PDO::PARAM_STR);
+            $statement->bindValue(':date_of_income', $this->date, PDO::PARAM_STR);
+            $statement->bindValue(':income_comment', $this->comment, PDO::PARAM_STR);
+
+
+            return $statement->execute();
+
+        } else {
+
+            return false;
+
+        }
+    }
 
 }
 
