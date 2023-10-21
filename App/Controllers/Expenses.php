@@ -85,6 +85,25 @@ class Expenses extends \App\Controllers\Authenticated
         }
 
     }
+    
+    /**
+     * Action to delete expenses from the database
+     * 
+     * @return void
+     */
+    public function deleteAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $expense = new Expense($_POST);
+            if ( $expense->delete()) {
+                Flash::addMessage('Wydatek został usunięty pomyślnie.', Flash::SUCCESS);
+            } else {
+                Flash::addMessage('Wystąpił błąd w trakcie usuwania wydatku.', Flash::WARNING);
+            }
+            $this->redirect($_SESSION['return_to']);
+        }
+    }
+    
 }
 
 ?>

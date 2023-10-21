@@ -100,6 +100,25 @@ class Expense extends Transaction {
         }
     }
 
+    /**
+     * Delete selected expense from the database
+     * 
+     * @return bool true if the income has been deleted sucessfully, false otherwise
+     */
+    public function delete() {
+        
+        $sql = "DELETE FROM expenses
+                WHERE id = :id AND user_id = :user_id";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+        $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+
+        return $statement->execute();
+
+    }
+
 }
 
 
