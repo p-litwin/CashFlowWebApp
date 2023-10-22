@@ -224,7 +224,7 @@ class Transactions extends Model {
                 SELECT id as transaction_id, income_category_assigned_to_user_id as category, null as payment_method, date_of_income as date, income_comment as comment, amount, 'incomes' as type
                 FROM incomes
                 WHERE user_id = :user_id
-                ORDER BY date DESC) as list_with_category_ids
+                ORDER BY date DESC, transaction_id DESC) as list_with_category_ids
                 LEFT JOIN
                 (SELECT id, user_id, name, 'expenses' as transaction_type
                 FROM expenses_category_assigned_to_users

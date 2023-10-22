@@ -1,0 +1,51 @@
+<div class="modal fade" id="expensesEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Edytuj wydatek</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" id="expenseForm" action="/expenses/update">
+            {% include "Transaction/Expense/edit_expense_form_body.html" %}
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="incomesEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Edytuj przychód</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" id="incomeForm" action="/incomes/update">
+            {% include "Transaction/Income/edit_income_form_body.html" %}
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="transactionDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Usuwanie transakcji</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" id="transactionDeleteForm" action="">
+            <input type="hidden" name="user_id" value="{{ current_user.userId }}">
+            <input type="hidden" id="transactionDeleteId" name="id" value="">
+            <p>Czy jesteś pewien, że chcesz usunąć transakcję?</p>
+            <div class="modal-footer">
+                <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+                <button type="submit" class="btn btn-danger">Usuń</button>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
