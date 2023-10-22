@@ -38,22 +38,15 @@ class Incomes extends \App\Controllers\Authenticated
 
             if ($income->save()) {
                 Flash::addMessage('Przychód został dodany');
-                View::renderTemplate('\Income\new.html', [
-                    'last_income_category' => $income->category,
-                    'incomes_categories'   => $_SESSION['incomes_categories']
-                ]);
             } else {
                 foreach ($income->errors as $error) {
                     Flash::addMessage($error, Flash::WARNING);
                 }
-                View::renderTemplate('\Income\new.html', [
-                    'income'             => $income,
-                    'incomes_categories' => $_SESSION['incomes_categories']
-                ]);
             }
-        } else {
-            $this->redirect("/incomes/new");
+            $this->redirect($_SESSION['return_to']);
         }
+        Flash::addMessage('Dane nowego przychodu nie zostały podane', Flash::WARNING);
+        $this->redirect($_SESSION['return_to']);
 
     }
 

@@ -40,25 +40,15 @@ class Expenses extends \App\Controllers\Authenticated
 
             if ($expense->save()) {
                 Flash::addMessage('Wydatek został dodany');
-                View::renderTemplate('\Expense\new.html', [
-                    'last_expense_category'       => $expense->category,
-                    'last_expense_payment_method' => $expense->payment_method,
-                    'expenses_categories'         => $_SESSION['expenses_categories'],
-                    'payment_methods'             => $_SESSION['payment_methods']
-                ]);
             } else {
                 foreach ($expense->errors as $error) {
                     Flash::addMessage($error, Flash::WARNING);
                 }
-                View::renderTemplate('\Expense\new.html', [
-                    'expense'             => $expense,
-                    'expenses_categories' => $_SESSION['expenses_categories'],
-                    'payment_methods'     => $_SESSION['payment_methods']
-                ]);
             }
-        } else {
-            $this->redirect("/expenses/new");
+            $this->redirect($_SESSION['return_to']);
         }
+        Flash::addMessage('Dane nowego wydatku nie zostały podane', Flash::WARNING);
+        $this->redirect($_SESSION['return_to']);
 
     }
 
@@ -67,17 +57,17 @@ class Expenses extends \App\Controllers\Authenticated
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense = new Expense($_POST);
         }
-        
-        if ($expense->update()){
+
+        if ($expense->update()) {
             Flash::addMessage('Wydatek został zaktualizowany');
-            if (isset($_SESSION['return_to'])){
+            if (isset($_SESSION['return_to'])) {
                 $this->redirect($_SESSION['return_to']);
             } else {
                 $this->redirect('/transactions-list/show');
             }
         } else {
             Flash::addMessage('Wydatek nie został zaktualizowany', Flash::WARNING);
-            if (isset($_SESSION['return_to'])){
+            if (isset($_SESSION['return_to'])) {
                 $this->redirect($_SESSION['return_to']);
             } else {
                 $this->redirect('/transactions-list/show');
@@ -85,7 +75,7 @@ class Expenses extends \App\Controllers\Authenticated
         }
 
     }
-    
+
     /**
      * Action to delete expenses from the database
      * 
@@ -95,7 +85,7 @@ class Expenses extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense = new Expense($_POST);
-            if ( $expense->delete()) {
+            if ($expense->delete()) {
                 Flash::addMessage('Wydatek został usunięty pomyślnie.', Flash::SUCCESS);
             } else {
                 Flash::addMessage('Wystąpił błąd w trakcie usuwania wydatku.', Flash::WARNING);
@@ -103,7 +93,7 @@ class Expenses extends \App\Controllers\Authenticated
             $this->redirect($_SESSION['return_to']);
         }
     }
-    
+
 }
 
 ?>
