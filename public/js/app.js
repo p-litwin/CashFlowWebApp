@@ -41,6 +41,12 @@ jQuery(".btn-close").click(function() {
     $(contentPanelId).remove();
 });
 
+$(".btn-close").show(function() {
+    var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
+    setTimeout(function() {$(contentPanelId).remove();}, 2500);
+});
+
+
 const transactionDeleteModal = document.getElementById('transactionDeleteModal')
 if (transactionDeleteModal) {
     transactionDeleteModal.addEventListener('show.bs.modal', event => {
