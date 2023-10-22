@@ -44,16 +44,14 @@ class TransactionsList extends Authenticated {
         if (!isset($_SESSION['payment_methods'])) {
             $_SESSION['payment_methods'] = PaymentMethods::getPaymentMethodsByUserId($_SESSION['user_id']);
         }
+        
         $_SESSION['return_to'] = $_SERVER['REQUEST_URI'];
         View::renderTemplate('TransactionsList/show.html', [
             'transactions' => $transactions,
             'page' => $page,
             'next_page' => $paginator->next,
             'previous_page' => $paginator->previous,
-            'last_page' => $paginator->total_pages,
-            'expenses_categories' => $_SESSION['expenses_categories'],
-            'incomes_categories' => $_SESSION['incomes_categories'],
-            'payment_methods' => $_SESSION['payment_methods'],
+            'last_page' => $paginator->total_pages
         ]);
     }
 
