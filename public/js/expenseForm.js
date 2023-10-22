@@ -27,6 +27,9 @@ $(document).ready(function () {
             },
             payment_method: {
                 required: true
+            },
+            comment: {
+                maxlength: 100
             }
         }
     });
@@ -37,6 +40,7 @@ $(document).ready(function () {
 
 const expensesEditModal = document.getElementById('expensesEditModal')
 if (expensesEditModal) {
+    const modalAmountInput = expensesEditModal.querySelector('#expenseAmount');
     expensesEditModal.addEventListener('show.bs.modal', event => {
     // Button that triggered the modal
     const button = event.relatedTarget;
@@ -61,11 +65,13 @@ if (expensesEditModal) {
     paymentSelect.value = payment;
     var commentTexarea = document.getElementById("expenseComment");
     commentTexarea.textContent = comment;
-    const modalAmountInput = expensesEditModal.querySelector('#expenseAmount');
     modalAmountInput.value = amount;
     var form = document.getElementById("expenseForm");
     form.action = "/expenses/" + action;
   })
+  expensesEditModal.addEventListener('shown.bs.modal', event => {
+    modalAmountInput.focus();
+})
 };
 
 $('.transaction-form-button').on('click', function() {
