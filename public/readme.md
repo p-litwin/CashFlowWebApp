@@ -1,0 +1,22 @@
+# CashFlowWebApp
+## Design
+### Login screen (desktop)
+![CashFlowApp_desktop_01_login_screen](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/554cf0c1-ed49-49f7-aede-3f2e7f79a4d9)
+### Login screen (mobile)
+![CashFlowApp_mobile_01_login_screen](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/9a17bcfe-1805-4163-a0d8-835251c4e625)
+### Signup screen (desktop)
+![CashFlowApp_desktop_02_signup_screen](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/25625cb2-f486-42e2-8d54-a210907d79ef)
+### Singup screen desktop
+![CashFlowApp_mobile_02_signup_screen](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/d5317b23-b427-4171-9c78-4f948a4fd21b)
+### Transactions list (desktop)
+![CashFlowApp_desktop_03_transactions_list](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/f3a33b94-46da-4957-a24b-ddb7931c3c02)
+### Transacrtions list (mobile)
+![CashFlowApp_mobile_03_transactions_list](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/f9da6adc-93a4-403e-bc5d-99ffb0a1981f)
+### Add transaction form (desktop)
+![CashFlowApp_desktop_04_add_transaction](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/7c9f7e2b-f930-4bcb-908a-8d744edbabf6)
+### Add transaction form (mobile)
+![CashFlowApp_mobile_04_add_transaction](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/bd0cd814-8026-40f6-9432-991d15a4bf38)
+### 404 page (desktop)
+![CashFlowApp_desktop_05_404](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/face6c75-ab96-4561-a463-359d8e320c44)
+### 404 page (mobile)
+![CashFlowApp_mobile_05_404](https://github.com/p-litwin/CashFlowWebApp/assets/27732762/b42d542d-4d50-4333-8b55-b95f432b823a)
