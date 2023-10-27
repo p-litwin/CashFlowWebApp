@@ -53,12 +53,12 @@
                 <div class="col-1 ps-0 pe-0 transaction-ellipsis text-end">
                   <div class="dropdown">
                     <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                      <i class="bi bi-three-dots-vertical"></i>
                     </a>
                     <ul class="dropdown-menu ellipsis-menu">
                       <li><button class="btn btn-block" href="/transactions-list/delete" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal" data-bs-id="{{transaction.transaction_id}}" data-bs-type="{{transaction.type}}">
-                        <i class="fa-solid fa-trash-can" style="color: #f00006;"></i> Delete</button></li>
-                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{transaction.transaction_id}}" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
+                        <i class="bi bi-trash text-danger"></i> Delete</button></li>
+                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{transaction.transaction_id}}" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
                     </ul>
                   </div>
                 </div>
@@ -75,25 +75,25 @@
   <nav class="mt-4">
     <ul class="pagination justify-content-center">
       {% if page == 1 %}
-        <li class="page-item page-link"><i class="fa-solid fa-angles-left" style="color: #c0c0c0;"></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-bar-left" style="color: #c0c0c0;"></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Pierwsza strona" title="Pierwsza strona" href="/transactions-list/show/1"><i class="fa-solid fa-angles-left"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Pierwsza strona" title="Pierwsza strona" href="/transactions-list/show/1"><i class="bi bi-chevron-bar-left"></i></a></li>
       {% endif %}
       {% if page == 1 %}
-        <li class="page-item page-link"><i class="fa-solid fa-angle-left" style="color: #c0c0c0;"></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-left" style="color: #c0c0c0;"></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Poprzednia strona" title="Poprzednia strona" href="/transactions-list/show/{{previous_page}}"><i class="fa-solid fa-angle-left"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Poprzednia strona" title="Poprzednia strona" href="/transactions-list/show/{{previous_page}}"><i class="bi bi-chevron-left"></i></a></li>
       {% endif %}
       <li class="page-item"><span class="page-link">Strona {{page}} z {{last_page}}</span></li>
       {% if page >= last_page %}
-        <li class="page-item page-link"><i class="fa-solid fa-angle-right" style="color: #c0c0c0;" ></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-right" style="color: #c0c0c0;" ></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Następna strona" title="Następna strona" href="/transactions-list/show/{{next_page}}"><i class="fa-solid fa-angle-right"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Następna strona" title="Następna strona" href="/transactions-list/show/{{next_page}}"><i class="bi bi-chevron-right"></i></a></li>
       {% endif %}
       {% if page == last_page %}
-        <li class="page-item page-link"><i class="fa-solid fa-angles-right" style="color: #c0c0c0;" ></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-bar-right" style="color: #c0c0c0;" ></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Ostatnia strona" title="Ostatnia strona" href="/transactions-list/show/{{last_page}}"><i class="fa-solid fa-angles-right"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Ostatnia strona" title="Ostatnia strona" href="/transactions-list/show/{{last_page}}"><i class="bi bi-chevron-bar-right"></i></a></li>
       {% endif %}
     </ul>
   </nav>
