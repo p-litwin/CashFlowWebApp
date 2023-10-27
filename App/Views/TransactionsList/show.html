@@ -53,12 +53,12 @@
                 <div class="col-1 ps-0 pe-0 transaction-ellipsis text-end">
                   <div class="dropdown">
                     <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="fa-solid fa-ellipsis-vertical"></i>
+                      <i class="bi bi-three-dots-vertical"></i>
                     </a>
                     <ul class="dropdown-menu ellipsis-menu">
                       <li><button class="btn btn-block" href="/transactions-list/delete" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal" data-bs-id="{{transaction.transaction_id}}" data-bs-type="{{transaction.type}}">
-                        <i class="fa-solid fa-trash-can" style="color: #f00006;"></i> Delete</button></li>
-                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{transaction.transaction_id}}" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="fa-solid fa-pen-to-square"></i> Edit</button></li>
+                        <i class="bi bi-trash text-danger"></i> Delete</button></li>
+                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{transaction.transaction_id}}" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
                     </ul>
                   </div>
                 </div>
