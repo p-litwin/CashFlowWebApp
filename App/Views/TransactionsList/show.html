@@ -75,25 +75,25 @@
   <nav class="mt-4">
     <ul class="pagination justify-content-center">
       {% if page == 1 %}
-        <li class="page-item page-link"><i class="fa-solid fa-angles-left" style="color: #c0c0c0;"></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-bar-left" style="color: #c0c0c0;"></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Pierwsza strona" title="Pierwsza strona" href="/transactions-list/show/1"><i class="fa-solid fa-angles-left"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Pierwsza strona" title="Pierwsza strona" href="/transactions-list/show/1"><i class="bi bi-chevron-bar-left"></i></a></li>
       {% endif %}
       {% if page == 1 %}
-        <li class="page-item page-link"><i class="fa-solid fa-angle-left" style="color: #c0c0c0;"></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-left" style="color: #c0c0c0;"></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Poprzednia strona" title="Poprzednia strona" href="/transactions-list/show/{{previous_page}}"><i class="fa-solid fa-angle-left"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Poprzednia strona" title="Poprzednia strona" href="/transactions-list/show/{{previous_page}}"><i class="bi bi-chevron-left"></i></a></li>
       {% endif %}
       <li class="page-item"><span class="page-link">Strona {{page}} z {{last_page}}</span></li>
       {% if page >= last_page %}
-        <li class="page-item page-link"><i class="fa-solid fa-angle-right" style="color: #c0c0c0;" ></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-right" style="color: #c0c0c0;" ></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Następna strona" title="Następna strona" href="/transactions-list/show/{{next_page}}"><i class="fa-solid fa-angle-right"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Następna strona" title="Następna strona" href="/transactions-list/show/{{next_page}}"><i class="bi bi-chevron-right"></i></a></li>
       {% endif %}
       {% if page == last_page %}
-        <li class="page-item page-link"><i class="fa-solid fa-angles-right" style="color: #c0c0c0;" ></i></li>
+        <li class="page-item page-link"><i class="bi bi-chevron-bar-right" style="color: #c0c0c0;" ></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Ostatnia strona" title="Ostatnia strona" href="/transactions-list/show/{{last_page}}"><i class="fa-solid fa-angles-right"></i></a></li>
+        <li class="page-item"><a class="page-link" sr-only="Ostatnia strona" title="Ostatnia strona" href="/transactions-list/show/{{last_page}}"><i class="bi bi-chevron-bar-right"></i></a></li>
       {% endif %}
     </ul>
   </nav>
