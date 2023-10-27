@@ -1,12 +1,12 @@
-<div class="modal fade" id="expensesEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" aria-label="Okno dialogowe edycji wydatku." id="expensesEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
             <h1 class="modal-title fs-5">Dane wydatku</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe edycji wydatku."></button>
         </div>
         <div class="modal-body">
-            <form method="post" id="expenseForm" action="">
+            <form method="post" id="expenseForm" action="" aria-label="Formularz edycji wydatku.">
                 <input type="hidden" name="user_id" value="{{ current_user.userId }}">
                 {% include "Transaction/Expense/edit_expense_form_body.html" %}
             </form>
@@ -14,15 +14,15 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="incomesEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" aria-label="Okno dialogowe edycji wydatku." id="incomesEditModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
             <h1 class="modal-title fs-5">Dane przychodu</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe edycji przychodu."></button>
         </div>
         <div class="modal-body">
-            <form method="post" id="incomeForm" action="">
+            <form method="post" id="incomeForm" action="" aria-label="Formularz edycji przychodu.">
                 <input type="hidden" name="user_id" value="{{ current_user.userId }}">
                 {% include "Transaction/Income/edit_income_form_body.html" %}
             </form>

@@ -18,21 +18,21 @@
 
         <div class="col-lg-6 col-md-6">
             <div class="right-wrapper">
-                <form id="signupForm" method="post" action="/signup/create">
+                <form id="signupForm" aria-label="Formularz rejestracji nowego użytkownika" method="post" action="/signup/create">
                     <h3 class="font-weight-normal">Załóż konto</h3>
                     <div class="pb-3">
-                        <label for="inputName" class="form-label sr-only">Imię</label>
-                        <input type="text" name="name" id="inputName" class="form-control" placeholder="Imię" value="{{ user.name }}" required
+                        <label for="inputName" class="visually-hidden">Imię</label>
+                        <input type="text" name="name" id="inputName" aria-label="Imię" class="form-control" placeholder="Imię" value="{{ user.name }}" required
                             autofocus>
                     </div>
                     <div class="pb-3">
-                        <label for="inputEmail" class="sr-only">Adres email (login)</label>
-                        <input type="email" name="email" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Email (login)"
+                        <label for="inputEmail" class="visually-hidden">Adres email (login)</label>
+                        <input type="email" name="email" aria-label="Adres email (login)" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Email (login)"
                             required>
                     </div>
                     <div class="pb-3">
-                        <label for="inputPassword" class="sr-only">Password</label>
-                        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Hasło"
+                        <label for="inputPassword" class="visually-hidden">Password</label>
+                        <input type="password" name="password" aria-label="Hasło, przynajmniej 8 znaków. Litery i cyfry." id="inputPassword" class="form-control" placeholder="Hasło"
                             required>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Załóż konto</button>
