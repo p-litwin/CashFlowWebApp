@@ -4,9 +4,9 @@ namespace App\Controllers;
 
 use App\Models\User;
 use Core\View;
-use App\Models\IncomesCategories;
-use App\Models\ExpensesCategories;
-use App\Models\PaymentMethods;
+use App\Models\IncomeCategory;
+use App\Models\ExpenseCategory;
+use App\Models\PaymentMethod;
 
 class Signup extends \Core\Controller {
 
@@ -58,9 +58,9 @@ class Signup extends \Core\Controller {
         $activation_token = $this->route_params['token'];
         $user = User::findByActivationToken($activation_token);
         User::activate($activation_token);
-        IncomesCategories::copyDefaultIncomesCategoriesByUserId($user->userId);
-        ExpensesCategories::copyDefaultExpensesCategoriesByUserId($user->userId);
-        PaymentMethods::copyDefaultPaymentMethodsByUserId($user->userId);
+        IncomeCategory::copyDefaultIncomeCategoryByUserId($user->userId);
+        ExpenseCategory::copyDefaultExpensesCategoriesByUserId($user->userId);
+        PaymentMethod::copyDefaultPaymentMethodByUserId($user->userId);
         $this->redirect('/signup/activated');
     }
 

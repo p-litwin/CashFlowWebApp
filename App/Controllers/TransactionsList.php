@@ -3,9 +3,9 @@
 namespace App\Controllers;
 
 use App\Flash;
-use App\Models\ExpensesCategories;
-use App\Models\IncomesCategories;
-use App\Models\PaymentMethods;
+use App\Models\ExpenseCategory;
+use App\Models\IncomeCategory;
+use App\Models\PaymentMethod;
 use App\Paginator;
 use \Core\View;
 use App\Models\Transactions;
@@ -34,15 +34,15 @@ class TransactionsList extends Authenticated {
         $transactions = Transactions::getTransactionsWithPagination($paginator->offset, $paginator->limit);
 
         if (!isset($_SESSION['expenses_categories'])) {
-            $_SESSION['expenses_categories'] = ExpensesCategories::getExpensesCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['expenses_categories'] = ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']);
         }
 
         if (!isset($_SESSION['incomes_categories'])) {
-            $_SESSION['incomes_categories'] = IncomesCategories::getIncomesCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']);
         }
 
         if (!isset($_SESSION['payment_methods'])) {
-            $_SESSION['payment_methods'] = PaymentMethods::getPaymentMethodsByUserId($_SESSION['user_id']);
+            $_SESSION['payment_methods'] = PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']);
         }
         
         $_SESSION['return_to'] = $_SERVER['REQUEST_URI'];

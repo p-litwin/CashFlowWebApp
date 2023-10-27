@@ -9,8 +9,29 @@ use PDO;
  * Model to handle the payment methods
  */
 
- class PaymentMethods extends Model {
+ class PaymentMethod extends Model {
+    /**
+     * Payment method id in the database
+     * @var int
+     */
+    public $id;
 
+    /**
+     * Payment method name in the database
+     * @var string
+     */
+    public $name;
+
+    /**
+     * Summary of __construct
+     * 
+     * @param array $data Associative array containing the payment method data
+     */
+    public function __construct($data =[]){
+        foreach ($data as $key => $value) {
+            $this->$key = $value;
+        }
+    }
     /**
      * Get payment methods from the database
      * @param integer $user_id Id of logged in user

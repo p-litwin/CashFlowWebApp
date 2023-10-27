@@ -415,3 +415,16 @@ width:1200px;
 .dropdown-menu .btn {
     --bs-btn-font-size:0.85rem;
 }
+
+.main-menu-dropdown {
+    font-size: 1em;
+    border:none;
+}
+
+.main-menu-dropdown-item {
+    padding: 0.8em 0;
+}
+
+.main-menu-dropdown-item:hover {
+    background:none;
+}

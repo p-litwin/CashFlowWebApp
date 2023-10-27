@@ -55,9 +55,9 @@ class View {
             $twig->addGlobal('flash_messages', \App\Flash::getMessage());
             $twig->addGlobal('current_date', Date('Y-m-d'));
             if (isset($_SESSION['user_id'])) {
-                $twig->addGlobal('expenses_categories', \App\Models\ExpensesCategories::getExpensesCategoriesByUserId($_SESSION['user_id']));
-                $twig->addGlobal('incomes_categories', \App\Models\IncomesCategories::getIncomesCategoriesByUserId($_SESSION['user_id']));
-                $twig->addGlobal('payment_methods', \App\Models\PaymentMethods::getPaymentMethodsByUserId($_SESSION['user_id']));
+                $twig->addGlobal('expenses_categories', \App\Models\ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']));
+                $twig->addGlobal('incomes_categories', \App\Models\IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']));
+                $twig->addGlobal('payment_methods', \App\Models\PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']));
             }
         }
  
