@@ -52,13 +52,13 @@
                 <div class="col-11 amount {{transaction.type}}-amount">{{transaction.amount}} zł</div>
                 <div class="col-1 ps-0 pe-0 transaction-ellipsis text-end">
                   <div class="dropdown">
-                    <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="" role="button" href="#" aria-label="Menu podręczne transakcji. Usuwanie i edycja." data-bs-toggle="dropdown" aria-expanded="false">
                       <i class="bi bi-three-dots-vertical"></i>
                     </a>
                     <ul class="dropdown-menu ellipsis-menu">
-                      <li><button class="btn btn-block" href="/transactions-list/delete" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal" data-bs-id="{{transaction.transaction_id}}" data-bs-type="{{transaction.type}}">
-                        <i class="bi bi-trash text-danger"></i> Delete</button></li>
-                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{transaction.transaction_id}}" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
+                      <li><button class="btn btn-block" href="/transactions-list/delete" aria-label="Usuń transakcję" data-bs-toggle="modal" data-bs-target="#transactionDeleteModal" data-bs-id="{{transaction.transaction_id}}" data-bs-type="{{transaction.type}}">
+                        <i class="bi bi-trash text-danger"></i> Usuń</button></li>
+                        <li><button class="btn btn-block transaction-form-button" aria-label="Edytuj transakcję" data-bs-action="update" data-bs-id="{{transaction.transaction_id}}" data-bs-toggle="modal" data-bs-target="#{{transaction.type}}EditModal" data-bs-amount="{{transaction.amount}}" data-bs-category="{{transaction.category_id}}" data-bs-payment="{{transaction.payment_method}}" data-bs-date="{{transaction.date}}" data-bs-comment="{{transaction.comment}}"><i class="bi bi-pencil-square"></i> Edytuj</button></li>
                     </ul>
                   </div>
                 </div>
@@ -72,28 +72,28 @@
   {% endif %}
 <!-- Transactions list end -->
 <!-- Pagination -->
-  <nav class="mt-4">
-    <ul class="pagination justify-content-center">
+  <nav class="mt-4" aria-label="Nawigacja po stronach transakcji">
+    <ul class="pagination justify-content-center" aria-label="">
       {% if page == 1 %}
         <li class="page-item page-link"><i class="bi bi-chevron-bar-left" style="color: #c0c0c0;"></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Pierwsza strona" title="Pierwsza strona" href="/transactions-list/show/1"><i class="bi bi-chevron-bar-left"></i></a></li>
+        <li class="page-item"><a class="page-link" aria-label="Pierwsza strona" title="Pierwsza strona" href="/transactions-list/show/1"><i class="bi bi-chevron-bar-left"></i></a></li>
       {% endif %}
       {% if page == 1 %}
         <li class="page-item page-link"><i class="bi bi-chevron-left" style="color: #c0c0c0;"></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Poprzednia strona" title="Poprzednia strona" href="/transactions-list/show/{{previous_page}}"><i class="bi bi-chevron-left"></i></a></li>
+        <li class="page-item"><a class="page-link" aria-label="Poprzednia strona" title="Poprzednia strona" href="/transactions-list/show/{{previous_page}}"><i class="bi bi-chevron-left"></i></a></li>
       {% endif %}
       <li class="page-item"><span class="page-link">Strona {{page}} z {{last_page}}</span></li>
       {% if page >= last_page %}
         <li class="page-item page-link"><i class="bi bi-chevron-right" style="color: #c0c0c0;" ></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Następna strona" title="Następna strona" href="/transactions-list/show/{{next_page}}"><i class="bi bi-chevron-right"></i></a></li>
+        <li class="page-item"><a class="page-link" aria-label="Następna strona" title="Następna strona" href="/transactions-list/show/{{next_page}}"><i class="bi bi-chevron-right"></i></a></li>
       {% endif %}
       {% if page == last_page %}
         <li class="page-item page-link"><i class="bi bi-chevron-bar-right" style="color: #c0c0c0;" ></i></li>
       {% else %}
-        <li class="page-item"><a class="page-link" sr-only="Ostatnia strona" title="Ostatnia strona" href="/transactions-list/show/{{last_page}}"><i class="bi bi-chevron-bar-right"></i></a></li>
+        <li class="page-item"><a class="page-link" aria-label="Ostatnia strona" title="Ostatnia strona" href="/transactions-list/show/{{last_page}}"><i class="bi bi-chevron-bar-right"></i></a></li>
       {% endif %}
     </ul>
   </nav>

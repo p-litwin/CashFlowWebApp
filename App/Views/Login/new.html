@@ -16,18 +16,18 @@
 
             <div class="col-lg-6 col-md-6">
                 <div class="right-wrapper">
-                    <form action="/login/create" method="post">
+                    <form action="/login/create" aria-label="Formularz logowania." method="post">
                         <h3 class="font-weight-normal">Zaloguj się</h3>
                         <div class="pb-4">
-                            <label for="inputEmail" class="sr-only">Email (login)</label>
-                            <input type="text" id="inputEmail" name="email" class="form-control" placeholder="Email (login)" value="{{ email }}" required autofocus>
+                            <label for="inputEmail" class="visually-hidden">Email (login)</label>
+                            <input type="text" id="inputEmail" aria-label="Adres email (login)" name="email" class="form-control" placeholder="Email (login)" value="{{ email }}" required autofocus>
                         </div>
                         <div class="pb-2">
-                            <label for="inputPassword" class="sr-only">Password</label>
-                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Hasło" required>
+                            <label for="inputPassword" class="visually-hidden">Password</label>
+                            <input type="password" aria-label="Hasło." name="password" id="inputPassword" class="form-control" placeholder="Hasło" required>
                         </div>
                         <div class="form-check pt-1 pb-2">
-                            <input id="inputRememberMe" name="remember_me" class="form-check-input" type="checkbox">
+                            <input id="inputRememberMe" aria-label="Pamiętaj logowanie" name="remember_me" class="form-check-input" type="checkbox">
                             <label class="form-check-label" for="inputRememberMe">Pamiętaj mnie</label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się</button>
