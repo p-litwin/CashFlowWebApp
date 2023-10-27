@@ -49,6 +49,42 @@ class IncomeCategory extends TransactionCategory {
 
     }
 
+    /**
+     * Update the income category in the database
+     * 
+     * @return boolean True if the category has been updated, false otherwise
+     */
+    public function update() {
+        
+        $sql = 'UPDATE incomes_category_assigned_to_users
+                SET name = :name
+                WHERE id=:id AND user_id=:user_id;';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        return $statement->execute();
+    }
+
+    /**
+     * Delete the income category from the database
+     * 
+     * @return boolean True if the category has been removed, false otherwise
+     */
+    public function delete() {
+        
+        $sql = 'DELETE FROM incomes_category_assigned_to_users
+                WHERE id=:id AND user_id=:user_id;';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        return $statement->execute();
+    }
+
 }
 
 ?>

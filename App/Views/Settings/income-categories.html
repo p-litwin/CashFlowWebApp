@@ -1,19 +1,19 @@
 {% extends "authorized.html" %}
 
-{% block title %}CashFlowApp - Ustawienia|Kategorie wydatków{% endblock %}
+{% block title %}CashFlowApp - Ustawienia|Kategorie przychodów{% endblock %}
 
 {% block body %}
 
 {% if expenses_categories %}
 <div class="container-fluid main-content ms-auto mf-auto">
     <div class="row site-title">
-      <h1>Ustawienia - Kategorie wydatków</h1>
+      <h1>Ustawienia - Kategorie przychodów</h1>
     </div>
-        {% for expense_category in expenses_categories %}
+        {% for income_category in incomes_categories %}
         <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
           <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex">
             <div class="col-lg-10 col-md-10 col-sm-10 col-7">
-                {{expense_category.name}}
+                {{income_category.name}}
             </div>
             <div class="col-lg-2 col-md-2 col-sm-2 col-5">
                   <div class="dropdown text-end">
@@ -21,9 +21,9 @@
                       <i class="bi bi-three-dots-vertical"></i>
                     </a>
                     <ul class="dropdown-menu ellipsis-menu">
-                      <li><button class="btn btn-block" href="" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal" data-bs-id="{{expense_category.id}}">
+                      <li><button class="btn btn-block" href="" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal" data-bs-id="{{income_category.id}}">
                         <i class="bi bi-trash text-danger"></i> Delete</button></li>
-                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{expense_category.id}}" data-bs-toggle="modal" data-bs-target="#categoryEditModal" data-bs-category="{{expense_category.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
+                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{income_category.id}}" data-bs-toggle="modal" data-bs-target="#categoryEditModal" data-bs-category="{{income_category.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
                     </ul>
                 </div>
             </div>
@@ -31,18 +31,18 @@
         </div>
         {% endfor %}
   {% else %}
-  No expenses categories to show
+  No incomes categories to show
   {% endif %}
 <!-- Modal -->
-<div class="modal fade" id="categoryEditModal" aria-label="Okno formularza edycji kategorii wydatków" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<div class="modal fade" id="categoryEditModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
-            <h1 class="modal-title fs-5">Nazwa kategorii wydatku</h1>
+            <h1 class="modal-title fs-5">Nazwa kategorii przychodu</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
         </div>
         <div class="modal-body">
-            <form method="post" aria-label="Formularz edycji kategorii wydatków" id="expenseCategoryForm" action="\settings\expense-category-update">
+            <form method="post" aria-label="Formularz edycji kategorii przychodów" id="incomeCategoryForm" action="\settings\income-category-update">
                 <input type="hidden" id="categoryId" name="id" value="">
                 <div class="form-outline  mb-4 has-validation">
                     <label class="form-label" for="categoryName">Nazwa kategorii</label>
@@ -62,11 +62,11 @@
   <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
       <div class="modal-header">
-          <h1 class="modal-title fs-5">Usuwanie kategorii wydatku</h1>
+          <h1 class="modal-title fs-5">Usuwanie kategorii przychodu</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
       </div>
       <div class="modal-body">
-          <form method="post" id="expenseCategoryDeleteForm" action="\settings\expense-category-delete">
+          <form method="post" id="incomeCategoryDeleteForm" action="\settings\income-category-delete">
           <input type="hidden" id="categoryDeleteId" name="id" value="">
           <p>Czy jesteś pewien, że chcesz usunąć kategorię?</p>
           <div class="modal-footer">
@@ -83,5 +83,5 @@
 {% endblock %}
 
 {% block footer %}
-<script type="text/javascript" src="/js/expenseCategoryForm.js"></script>
+<script type="text/javascript" src="/js/incomeCategoryForm.js"></script>
 {% endblock %}
