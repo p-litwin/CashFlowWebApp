@@ -7,7 +7,7 @@
 {% if expenses_categories %}
 <div class="container-fluid main-content ms-auto mf-auto">
     <div class="row site-title">
-      <h1>Ustawienia</h1>
+      <h1>Ustawienia - Kategorie wydatków</h1>
     </div>
         {% for expense_category in expenses_categories %}
         <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
@@ -21,7 +21,7 @@
                       <i class="bi bi-three-dots-vertical"></i>
                     </a>
                     <ul class="dropdown-menu ellipsis-menu">
-                      <li><button class="btn btn-block" href="/transactions-list/delete" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal" data-bs-id="{{transaction.transaction_id}}" data-bs-type="{{transaction.type}}">
+                      <li><button class="btn btn-block" href="/transactions-list/delete" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal" data-bs-id="{{expense_category.id}}">
                         <i class="bi bi-trash text-danger"></i> Delete</button></li>
                         <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{expense_category.id}}" data-bs-toggle="modal" data-bs-target="#categoryEditModal" data-bs-category="{{expense_category.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
                     </ul>
@@ -39,10 +39,10 @@
         <div class="modal-content">
         <div class="modal-header">
             <h1 class="modal-title fs-5">Nazwa kategorii wydatku</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
         </div>
         <div class="modal-body">
-            <form method="post" aria-label="Formularz edycji kategorii wydatków" id="categoryForm" action="\settings\expense-category-update">
+            <form method="post" aria-label="Formularz edycji kategorii wydatków" id="expenseCategoryForm" action="\settings\expense-category-update">
                 <input type="hidden" id="categoryId" name="id" value="">
                 <div class="form-outline  mb-4 has-validation">
                     <label class="form-label" for="categoryName">Nazwa kategorii</label>
@@ -63,11 +63,11 @@
       <div class="modal-content">
       <div class="modal-header">
           <h1 class="modal-title fs-5">Usuwanie kategorii wydatku</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
       </div>
       <div class="modal-body">
-          <form method="post" id="transactionDeleteForm" action="">
-          <input type="hidden" id="transactionDeleteId" name="id" value="">
+          <form method="post" id="expenseCategoryDeleteForm" action="\settings\expense-category-delete">
+          <input type="hidden" id="categoryDeleteId" name="id" value="">
           <p>Czy jesteś pewien, że chcesz usunąć kategorię?</p>
           <div class="modal-footer">
               <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>

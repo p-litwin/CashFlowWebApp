@@ -68,6 +68,23 @@ class ExpenseCategory extends TransactionCategory {
         return $statement->execute();
     }
 
+    /**
+     * Delete the expense category from the database
+     * 
+     * @return boolean True if the category has been removed, false otherwise
+     */
+    public function delete() {
+        
+        $sql = 'DELETE FROM expenses_category_assigned_to_users
+                WHERE id=:id AND user_id=:user_id;';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+        return $statement->execute();
+    }
+
 }
 
 ?>

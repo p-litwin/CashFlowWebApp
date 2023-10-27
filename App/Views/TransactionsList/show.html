@@ -39,7 +39,11 @@
           <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex justify-content-between">
             <div class="col-lg-10 col-md-10 col-sm-10 col-7">
               <div class="row">
-              <div class="col-sm-6 col-12 no-wrap-text transaction-category" title="{{transaction.name}}">{{transaction.name}}</div>
+              {% if transaction.name is empty %}
+                <div class="col-sm-6 col-12 no-wrap-text text-body-secondary" title="Bez kategorii">(Bez kategorii)</div>
+              {% else %}
+                <div class="col-sm-6 col-12 no-wrap-text transaction-category" title="{{transaction.name}}">{{transaction.name}}</div>
+              {% endif %}
               {% if transaction.comment is empty %}
                 <div class="col-sm-6 col-12 no-wrap-text text-body-secondary" title="Brak opisu">(Brak opisu)</div>
               {% else %}
