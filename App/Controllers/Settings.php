@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 
 use App\Models\IncomeCategory;
+use App\Models\PaymentMethod;
 use Core\View;
 use App\Models\ExpenseCategory;
 use App\Flash;
@@ -63,5 +64,33 @@ class Settings extends Authenticated {
             }
         }
         $this->redirect('\settings\income-categories');
+    }
+
+    public function paymentMethodsAction() {
+        View::renderTemplate('Settings\payment-methods.html',);
+    }
+
+    public function paymentMethodUpdateAction() {
+        if ($_SERVER['REQUEST_METHOD']=='POST') {
+        $payment_method = new PaymentMethod($_POST);
+            if ($payment_method->update()){
+                Flash::addMessage('Metoda płatności została zmieniona.');
+            } else {
+                Flash::addMessage('Nie udało się zmienić metody płatności', Flash::WARNING);
+            }
+        }
+        $this->redirect('\settings\payment-methods');
+    }
+
+    public function paymentMethodDeleteAction() {
+        if ($_SERVER['REQUEST_METHOD']=='POST') {
+        $payment_method = new PaymentMethod($_POST);
+            if ($payment_method->delete()){
+                Flash::addMessage('Metoda płatności usunięta z bazy i z wszystkich transakcji, do których była przypisana.');
+            } else {
+                Flash::addMessage('Nie udało się usunąć metody płatności', Flash::WARNING);
+            }
+        }
+        $this->redirect('\settings\payment-methods');
     }
 }

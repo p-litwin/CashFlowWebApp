@@ -58,9 +58,9 @@ class Signup extends \Core\Controller {
         $activation_token = $this->route_params['token'];
         $user = User::findByActivationToken($activation_token);
         User::activate($activation_token);
-        IncomeCategory::copyDefaultIncomeCategoryByUserId($user->userId);
+        IncomeCategory::copyDefaultIncomesCategoriesByUserId($user->userId);
         ExpenseCategory::copyDefaultExpensesCategoriesByUserId($user->userId);
-        PaymentMethod::copyDefaultPaymentMethodByUserId($user->userId);
+        PaymentMethod::copyDefaultPaymentMethodsByUserId($user->userId);
         $this->redirect('/signup/activated');
     }
 
