@@ -23,7 +23,7 @@ use PDO;
     public $name;
 
     /**
-     * Summary of __construct
+     * Payment method object constructor
      * 
      * @param array $data Associative array containing the payment method data
      */
@@ -72,9 +72,9 @@ use PDO;
     }
 
     /**
-     * Update the income category in the database
+     * Update the payment method in the database
      * 
-     * @return boolean True if the category has been updated, false otherwise
+     * @return boolean True if the payment method has been updated, false otherwise
      */
     public function update() {
         
@@ -91,9 +91,9 @@ use PDO;
     }
 
     /**
-     * Delete the income category from the database
+     * Delete the payment method from the database
      * 
-     * @return boolean True if the category has been removed, false otherwise
+     * @return boolean True if the payment method has been removed, false otherwise
      */
     public function delete() {
         
