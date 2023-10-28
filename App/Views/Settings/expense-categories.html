@@ -4,11 +4,11 @@
 
 {% block body %}
 
-{% if expenses_categories %}
 <div class="container-fluid main-content ms-auto mf-auto">
     <div class="row site-title">
-      <h1>Ustawienia - Kategorie wydatków</h1>
+        <h1>Ustawienia - Kategorie wydatków</h1>
     </div>
+    {% if expenses_categories %}
         {% for expense_category in expenses_categories %}
         <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
           <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex">
