@@ -10,6 +10,11 @@ use App\Models\ExpenseCategory;
 use App\Flash;
 
 class Settings extends Authenticated {
+    
+    public function userAccountAction() {
+        View::renderTemplate('Settings\user-account.html');
+    }
+    
     /**
      * Controller to display expenses categories list
      * 
