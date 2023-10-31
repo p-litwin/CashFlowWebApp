@@ -26,12 +26,12 @@
                 <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
             </div>
         </form>
-        <form class="row pb-3" action="">
+        <form class="row pb-3" id="passwordChangeForm" method="post" action="/settings/user-password-update">
             <div class="col-md-9 col-sm-5">
-                <input class="form-control col-10" type="password" value="">
+                <input class="form-control col-10" type="password" id="inputPassword" name="password" value="">
             </div>
             <div class="col-md-3 col-sm-5">
-                <button class="btn btn-primary btn-sm btn-block h-100">Aktualizuj</button>
+                <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
             </div>
         </form>
         <a href="#" class="text-danger">Usuń konto wraz z danymi</a>
@@ -41,4 +41,6 @@
 
 {% block footer %}
 <script type="text/javascript" src="/js/userAccount.js"></script>
+<script src="/js/hideShowPassword.min.js"></script>
+<script type="text/javascript" src="/js/hideShowPasswordToggle.js"></script>
 {% endblock %}
