@@ -8,56 +8,37 @@
     <div class="row site-title">
         <h1>Ustawienia - Konto użytkownika</h1>
     </div>
-
-<!-- Modal -->
-<div class="modal fade" id="categoryEditModal" aria-label="Okno formularza edycji kategorii wydatków" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5">Nazwa kategorii wydatku</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
-        </div>
-        <div class="modal-body">
-            <form method="post" aria-label="Formularz edycji kategorii wydatków" id="expenseCategoryForm" action="\settings\expense-category-update">
-                <input type="hidden" id="categoryId" name="id" value="">
-                <div class="form-outline  mb-4 has-validation">
-                    <label class="form-label" for="categoryName">Nazwa kategorii</label>
-                    <input class="form-control" aria-label="Podaj nazwę kategorii" type="text" id="categoryName" name="name" required autofocus>
-                </div>
-                <div class="modal-footer">
-                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
-                    <button type="submit" class="btn btn-primary">Zapisz kategorię</button>
-                </div>
-            </form>
-        </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="categoryDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      <div class="modal-header">
-          <h1 class="modal-title fs-5">Usuwanie kategorii wydatku</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
-      </div>
-      <div class="modal-body">
-          <form method="post" id="expenseCategoryDeleteForm" action="\settings\expense-category-delete">
-          <input type="hidden" id="categoryDeleteId" name="id" value="">
-          <p>Czy jesteś pewien, że chcesz usunąć kategorię?</p>
-          <div class="modal-footer">
-              <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
-              <button type="submit" class="btn btn-danger">Usuń</button>
-          </div>
-          </form>
-      </div>
-      </div>
-  </div>
-</div>
-
+    <div class="col-md-6 col-sm-12">
+        <form class="row pb-3" id="userNameChangeForm" method="post" action="/settings/user-name-update">
+            <div class="col-md-9 col-sm-5">
+                <input class="form-control" type="text" name="userName" id="name" value="{{current_user.name}}">
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
+            </div>
+        </form>
+        <form class="row pb-3" id="userEmailChangeForm" method="post" action="/settings/user-email-update">
+            <div class="col-md-9 col-sm-5">
+                <input type="hidden" id="userId" value="{{current_user.userId}}">
+                <input class="form-control" type="text" name="email" id="email" value="{{current_user.email}}">
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
+            </div>
+        </form>
+        <form class="row pb-3" action="">
+            <div class="col-md-9 col-sm-5">
+                <input class="form-control col-10" type="password" value="">
+            </div>
+            <div class="col-md-3 col-sm-5">
+                <button class="btn btn-primary btn-sm btn-block h-100">Aktualizuj</button>
+            </div>
+        </form>
+        <a href="#" class="text-danger">Usuń konto wraz z danymi</a>
+    </div> 
 </div>
 {% endblock %}
 
 {% block footer %}
-<script type="text/javascript" src="/js/expenseCategoryForm.js"></script>
+<script type="text/javascript" src="/js/userAccount.js"></script>
 {% endblock %}

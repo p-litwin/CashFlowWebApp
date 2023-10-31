@@ -568,6 +568,40 @@ class User extends \Core\Model{
 
     }
 
+    public function updateName($newName) {
+        
+        $this->name = $newName;
+        
+        $sql = 'UPDATE users
+                SET name = :name
+                WHERE userId = :userId';
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
+        
+        return $statement->execute();
+    }
+
+    public function updateEmail($newEmail) {
+        
+        $this->email = $newEmail;
+        
+        $sql = 'UPDATE users
+                SET email = :email
+                WHERE userId = :userId';
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
+        
+        return $statement->execute();
+    }
+
 }
 
 ?>
