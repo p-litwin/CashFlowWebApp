@@ -95,6 +95,24 @@ class RememberedLogin extends Model {
         
     }
 
+    /**
+     * Delete all remembered logins for logged in user
+     * 
+     * @param int $user_id id of the user in the database
+     * @return boolean True if the remembered logins has been deleted, false otherwise
+     */
+    public static function deleteAll($user_id) {
+        
+        $sql = "DELETE FROM remembered_login
+        WHERE userId = :user_id";
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $user_id, PDO::PARAM_STR);
+
+        return $statement->execute();
+    }
+
 }
 
 ?>

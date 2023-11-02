@@ -623,6 +623,23 @@ class User extends \Core\Model
         }
     }
 
+    /**
+     * Delete user from the database
+     * 
+     * @return boolean True if the user has been deleted,  false otherwise
+     */
+    public function delete() {
+        
+        $sql = 'DELETE FROM users
+                WHERE userId=:user_id';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $this->userId, PDO::PARAM_INT);
+        return $statement->execute();
+
+    }
+
 }
 
 ?>

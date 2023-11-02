@@ -118,6 +118,24 @@ class Expense extends Transaction {
         return $statement->execute();
 
     }
+    
+    /**
+     * Delete all expenses assigned to logged in user
+     * 
+     * @return boolean True if the expenses has been deleted, false otherwise
+     */
+    public static function deleteAll($user_id) {
+        
+        $sql = "DELETE FROM expenses
+                WHERE user_id = :user_id";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+
+        return $statement->execute();
+
+    }
 
 }
 

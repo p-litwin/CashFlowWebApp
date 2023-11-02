@@ -3,8 +3,11 @@
 namespace App\Controllers;
 
 
+use App\Models\Expense;
+use App\Models\Income;
 use App\Models\IncomeCategory;
 use App\Models\PaymentMethod;
+use App\Models\RememberedLogin;
 use Core\View;
 use App\Models\ExpenseCategory;
 use App\Flash;
@@ -219,6 +222,25 @@ class Settings extends Authenticated
             }
             $this->redirect('/settings/user-account');
         }
+    }
+
+    public function userAccountDeleteAction() {
+
+        $user = new User(Auth::getUser());
+        
+        if ($user->delete()) {
+            ExpenseCategory::deleteAll($user->userId);
+            IncomeCategory::deleteAll($user->userId);
+            PaymentMethod::deleteAll($user->userId);
+            Expense::deleteAll($user->userId);
+            Income::deleteAll($user->userId);
+            RememberedLogin::deleteAll($user->userId);
+            Auth::logout();
+        } else {
+            Flash::addMessage('Usunięcie użytkownika nie powiodło się.', Flash::WARNING);
+            $this->redirect('/settings/user-account');
+        }
+        View::renderTemplate('DeleteUser\success.html');
     }
 
 }

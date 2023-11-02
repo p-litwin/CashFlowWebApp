@@ -85,6 +85,23 @@ class ExpenseCategory extends TransactionCategory {
         return $statement->execute();
     }
 
+    /**
+     * Delete all expenses categories assigned to logged in user
+     * 
+     * @return boolean True if the expenses categories has been deleted, false otherwise
+     */
+    public static function deleteAll($user_id) {
+        
+        $sql = 'DELETE FROM expenses_category_assigned_to_users
+                WHERE user_id=:user_id';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+
+        return $statement->execute();
+    }
+
 }
 
 ?>

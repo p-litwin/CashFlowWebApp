@@ -107,4 +107,20 @@ use PDO;
         return $statement->execute();
     }
 
+    /**
+     * Delete all payment methods assigned to logged in user
+     * 
+     * @return boolean True if the payment methods has been deleted, false otherwise
+     */
+    public static function deleteAll($user_id) {
+        
+        $sql = 'DELETE FROM payment_methods_assigned_to_users
+                WHERE user_id=:user_id;';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+        return $statement->execute();
+    }
+
  }
