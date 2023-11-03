@@ -640,6 +640,18 @@ class User extends \Core\Model
 
     }
 
+    /**
+     * Verify if the user password matches the data stored in the database
+     * 
+     * @return boolean True if the password is verified, false otherwise
+     */
+    public function verifyPassword() {
+        if (password_verify($this->password, $this->password_hash)) {
+            return true;
+        }
+        return false;
+    }
+
 }
 
 ?>

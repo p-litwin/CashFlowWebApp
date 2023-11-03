@@ -88,6 +88,7 @@ class ExpenseCategory extends TransactionCategory {
     /**
      * Delete all expenses categories assigned to logged in user
      * 
+     * @param int $user_id id of the user in the database
      * @return boolean True if the expenses categories has been deleted, false otherwise
      */
     public static function deleteAll($user_id) {

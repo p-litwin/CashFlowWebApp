@@ -224,23 +224,36 @@ class Settings extends Authenticated
         }
     }
 
-    public function userAccountDeleteAction() {
+    /**
+     * Action to delete user and all associated data from the database
+     * 
+     * @return void
+     */
 
-        $user = new User(Auth::getUser());
-        
-        if ($user->delete()) {
-            ExpenseCategory::deleteAll($user->userId);
-            IncomeCategory::deleteAll($user->userId);
-            PaymentMethod::deleteAll($user->userId);
-            Expense::deleteAll($user->userId);
-            Income::deleteAll($user->userId);
-            RememberedLogin::deleteAll($user->userId);
-            Auth::logout();
-        } else {
-            Flash::addMessage('Usunięcie użytkownika nie powiodło się.', Flash::WARNING);
-            $this->redirect('/settings/user-account');
+     public function userAccountDeleteAction() {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $user = new User(Auth::getUser());
+            $user->password = $_POST['password'];
+            if ($user->verifyPassword()) {
+            if ($user->delete()) {
+                ExpenseCategory::deleteAll($user->userId);
+                IncomeCategory::deleteAll($user->userId);
+                PaymentMethod::deleteAll($user->userId);
+                Expense::deleteAll($user->userId);
+                Income::deleteAll($user->userId);
+                RememberedLogin::deleteAll($user->userId);
+                Auth::logout();
+            } else {
+                Flash::addMessage('Usunięcie użytkownika nie powiodło się.', Flash::WARNING);
+                $this->redirect('/settings/user-account');
+            }
+            View::renderTemplate('DeleteUser\success.html');
+            } else {
+                Flash::addMessage('Nieprawidłowe hasło.', Flash::WARNING);
+                $this->redirect('/settings/user-account');
+            }
         }
-        View::renderTemplate('DeleteUser\success.html');
-    }
+        }
 
 }

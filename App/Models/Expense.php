@@ -122,6 +122,7 @@ class Expense extends Transaction {
     /**
      * Delete all expenses assigned to logged in user
      * 
+     * @param int $user_id id of the user in the database
      * @return boolean True if the expenses has been deleted, false otherwise
      */
     public static function deleteAll($user_id) {
