@@ -1,26 +1,44 @@
 $(document).ready(function () {
 
-  $("#incomeCategoryForm").validate({
-      errorClass: "is-invalid",
-      errorElement: "span",
-      highlight: function (element, errorClass, validClass) {
-          $(element).addClass(errorClass).removeClass(validClass);
-          $(element.form).find("label[for=" + element.id + "]")
-              .addClass(errorClass);
-      },
-      unhighlight: function (element, errorClass, validClass) {
-          $(element).removeClass(errorClass).addClass(validClass);
-          $(element.form).find("label[for=" + element.id + "]")
-              .removeClass(errorClass);
-      },
-      rules: {
-          name: {
-            maxlength: 50
-          }
-      }
+  $("#incomeCategoryEditForm").validate({
+    errorClass: "is-invalid",
+    errorElement: "span",
+    highlight: function (element, errorClass, validClass) {
+        $(element).addClass(errorClass).removeClass(validClass);
+        $(element.form).find("label[for=" + element.id + "]")
+            .addClass(errorClass);
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass(errorClass).addClass(validClass);
+        $(element.form).find("label[for=" + element.id + "]")
+            .removeClass(errorClass);
+    },
+    rules: {
+        name: {
+          maxlength: 50
+        }
+    }
   });
 
-  
+  $("#incomeCategoryAddForm").validate({
+    errorClass: "is-invalid",
+    errorElement: "span",
+    highlight: function (element, errorClass, validClass) {
+        $(element).addClass(errorClass).removeClass(validClass);
+        $(element.form).find("label[for=" + element.id + "]")
+            .addClass(errorClass);
+    },
+    unhighlight: function (element, errorClass, validClass) {
+        $(element).removeClass(errorClass).addClass(validClass);
+        $(element.form).find("label[for=" + element.id + "]")
+            .removeClass(errorClass);
+    },
+    rules: {
+        name: {
+          maxlength: 50
+        }
+    }
+  });
 
 });
 

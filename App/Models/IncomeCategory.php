@@ -6,9 +6,38 @@ use App\Models\TransactionCategory;
 use PDO;
 
 /**
- * Model to handle the expenses categories
+ * Model to handle the incomes categories
  */
 class IncomeCategory extends TransactionCategory {
+
+    /**
+     * Save new income category in the database
+     * @return mixed
+     */
+    public function save()
+    {
+
+        $this->validate();
+
+        if (empty($this->errors)) {
+
+            $sql = "INSERT INTO incomes_category_assigned_to_users (user_id, name)
+                VALUES (:user_id, :name)";
+
+            $db        = static::getDB();
+            $statement = $db->prepare($sql);
+
+            $statement->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+            $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+
+            return $statement->execute();
+
+        } else {
+
+            return false;
+
+        }
+    }
 
     /**
      * Get expense categories from the database

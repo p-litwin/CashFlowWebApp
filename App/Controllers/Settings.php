@@ -295,4 +295,23 @@ class Settings extends Authenticated
         }
     }
 
+    /**
+     * Action to add new income category
+     * 
+     * @return void
+     */
+    public function incomeCategoryAddAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $income_category = new IncomeCategory($_POST);
+            if ($income_category->save()) {
+                Flash::addMessage('Kategoria przychodu została dodana.');
+                
+            } else {
+                Flash::addMessage('Wystąpił błąd w trakcie dodawania kategorii przychodu.', Flash::WARNING);
+            }
+            $this->redirect('/settings/income-categories');
+        }
+    }
+
 }
