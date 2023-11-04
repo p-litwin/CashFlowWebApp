@@ -1,6 +1,6 @@
 {% extends "authorized.html" %}
 
-{% block title %}CashFlowApp - Ustawienia|Metody płatności{% endblock %}
+{% block title %}CashFlowApp - Ustawienia | Metody płatności{% endblock %}
 
 {% block body %}
 
@@ -8,6 +8,10 @@
     <div class="row site-title">
         <h1>Ustawienia - Metody płatności</h1>
     </div>
+    <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
+        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#paymentMethodAddModal">Dodaj nową metodę płatności</button>
+    </div>
+    <h2>Lista metod płatności</h2>
     {% if payment_methods %}
         {% for payment_method in payment_methods %}
         <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
@@ -31,9 +35,33 @@
         </div>
         {% endfor %}
   {% else %}
-  No payment methods to show
+<p>Brak  metod płatności.</p>
   {% endif %}
-<!-- Modal -->
+<!-- Payment method add modal -->
+<div class="modal fade" id="paymentMethodAddModal" aria-label="Okno formularza edycji metody płatności" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Metoda płatności</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" class="payment-method-form" aria-label="Formularz edycji metody płatności" id="paymentMethodAddForm" action="\settings\payment-method-add">
+                <input type="hidden" id="user_id" name="user_id" value="{{current_user.userId}}">
+                <div class="form-outline  mb-4 has-validation">
+                    <label class="form-label" for="paymentMethodAddName">Metoda płatności</label>
+                    <input class="form-control" aria-label="Podaj nazwę metody płatności" type="text" id="paymentMethodAddName" name="name" value="" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+                    <button type="submit" class="btn btn-primary">Zapisz metodę płatności</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Payment method edit Modal -->
 <div class="modal fade" id="paymentMethodEditModal" aria-label="Okno formularza edycji metody płatności" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -42,11 +70,11 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
         </div>
         <div class="modal-body">
-            <form method="post" aria-label="Formularz edycji metody płatności" id="paymentMethodForm" action="\settings\payment-method-update">
-                <input type="hidden" id="paymentMethodId" name="id" value="">
+            <form method="post" class="payment-method-form" aria-label="Formularz edycji metody płatności" id="paymentMethodEditForm" action="\settings\payment-method-update">
+                <input type="hidden" id="paymentMethodEditId" name="id" value="">
                 <div class="form-outline  mb-4 has-validation">
-                    <label class="form-label" for="paymentMethodName">Nazwa kategorii</label>
-                    <input class="form-control" aria-label="Podaj nazwę metody płatności" type="text" id="paymentMethodName" name="name" required autofocus>
+                    <label class="form-label" for="paymentMethodEditName">Metoda płatności</label>
+                    <input class="form-control" aria-label="Podaj nazwę metody płatności" type="text" id="paymentMethodEditName" name="name" value="" required autofocus>
                 </div>
                 <div class="modal-footer">
                     <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
@@ -58,11 +86,13 @@
     </div>
 </div>
 
+
+<!-- Payment method delete modal -->
 <div class="modal fade" id="paymentMethodDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
       <div class="modal-header">
-          <h1 class="modal-title fs-5">Usuwanie kategorii przychodu</h1>
+          <h1 class="modal-title fs-5">Usuwanie metody płatności</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
       </div>
       <div class="modal-body">

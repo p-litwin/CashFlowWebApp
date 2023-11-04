@@ -25,9 +25,9 @@ $(document).ready(function () {
 });
 
 const categoryEditModal = document.getElementById('categoryEditModal')
-if (categoryEditModal) {
-    const nameInput = categoryEditModal.querySelector('#categoryName');
-    categoryEditModal.addEventListener('show.bs.modal', event => {
+if (paymentMethodEditModal) {
+    const nameInput = paymentMethodEditModal.querySelector('#categoryName');
+    paymentMethodEditModal.addEventListener('show.bs.modal', event => {
     // Button that triggered the modal
     const button = event.relatedTarget;
     // Extract info from data-bs-* attributes
@@ -44,7 +44,7 @@ if (categoryEditModal) {
     categorySelect.value = category;
     }
   })
-  categoryEditModal.addEventListener('shown.bs.modal', event => {
+  paymentMethodEditModal.addEventListener('shown.bs.modal', event => {
     nameInput.focus();
 })
 };
