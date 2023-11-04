@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Flash;
 use App\Models\User;
 use Core\View;
 use App\Models\IncomeCategory;
@@ -57,11 +58,16 @@ class Signup extends \Core\Controller {
         
         $activation_token = $this->route_params['token'];
         $user = User::findByActivationToken($activation_token);
-        User::activate($activation_token);
-        IncomeCategory::copyDefaultIncomesCategoriesByUserId($user->userId);
-        ExpenseCategory::copyDefaultExpensesCategoriesByUserId($user->userId);
-        PaymentMethod::copyDefaultPaymentMethodsByUserId($user->userId);
-        $this->redirect('/signup/activated');
+        if ($user) {
+            User::activate($activation_token);
+            IncomeCategory::copyDefaultIncomesCategoriesByUserId($user->userId);
+            ExpenseCategory::copyDefaultExpensesCategoriesByUserId($user->userId);
+            PaymentMethod::copyDefaultPaymentMethodsByUserId($user->userId);
+            $this->redirect('/signup/activated');
+        } else {
+            Flash::addMessage('Nieprawidłowy link aktywacyjny lub konto zostało już aktywowane.');
+            $this->redirect('\login');
+        }
     }
 
     /**
