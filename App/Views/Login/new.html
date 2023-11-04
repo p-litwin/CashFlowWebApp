@@ -2,12 +2,6 @@
 
 {% block title %}CashFlowApp - Zaloguj się{% endblock %}
 
-{% block footer %}
-<!-- Hide/Show password -->
-<script src="/js/hideShowPassword.min.js"></script>
-<script type="text/javascript" src="/js/hideShowPasswordToggle.js"></script>
-{% endblock %}
-
 {% block body %}
     <div class="container-fluid">
         <div class="row align-items-center">
@@ -24,7 +18,7 @@
                         </div>
                         <div class="pb-2">
                             <label for="inputPassword" class="visually-hidden">Password</label>
-                            <input type="password" aria-label="Hasło." name="password" id="inputPassword" class="form-control" placeholder="Hasło" required>
+                            <input type="password" class="form-control hide-show-password" aria-label="Hasło." name="password" id="inputPassword" placeholder="Hasło" required>
                         </div>
                         <div class="form-check pt-1 pb-2">
                             <input id="inputRememberMe" aria-label="Pamiętaj logowanie" name="remember_me" class="form-check-input" type="checkbox">
@@ -39,4 +33,10 @@
         </div>
     </div>
 
+{% endblock %}
+
+{% block footer %}
+<!-- Hide/Show password -->
+<script src="/js/hideShowPassword.min.js"></script>
+<script type="text/javascript" src="/js/hideShowPasswordToggle.js"></script>
 {% endblock %}

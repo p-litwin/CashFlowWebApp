@@ -41,6 +41,7 @@ jQuery(".btn-close").click(function() {
     $(contentPanelId).remove();
 });
 
+//Close flash message after 2,5 seconds
 $(".btn-close").show(function() {
     var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
     setTimeout(function() {$(contentPanelId).remove();}, 2500);
@@ -81,42 +82,7 @@ $.validator.addMethod('validPassword',
             'At least one letter and one number'
         );
 
-$(document).ready(function(){
-    $('.hide-show-password').hideShowPassword(false, true, {
-        toggle: {
-            verticalAlign:'top'
-        },
-        states: {
-            shown: {
-                className: 'hideShowPassword-shown',
-                changeEvent: 'passwordShown',
-                props: { type: 'text' },
-                toggle: {
-                    className: 'hideShowPassword-toggle-hide',
-                    content: 'Hide',
-                    attr: {
-                        'aria-pressed': 'true',
-                        title: 'Ukryj hasło',
-                    }
-                }
-            },
-            hidden: {
-                className: 'hideShowPassword-hidden',
-                changeEvent: 'passwordHidden',
-                props: { type: 'password' },
-                toggle: {
-                    className: 'hideShowPassword-toggle-show',
-                    content: 'Show',
-                    attr: {
-                        'aria-pressed': 'false',
-                        title: 'Pokaż hasło',
-                    }
-                }
-            }
-        }
-    });
-    
-})
+
 
 $(document).ready(function(){
     $('.modal').modal({

@@ -2,14 +2,6 @@
 
 {% block title %}CashFlowApp - Zarejestruj się {% endblock %}
 
-{% block footer %}
-<!-- Hide/Show password -->
-<script src="/js/hideShowPassword.min.js"></script>
-<script type="text/javascript" src="/js/hideShowPasswordToggle.js"></script>
-<!-- Signup form validation -->
-<script type="text/javascript" src="/js/signupFormValidation.js"></script>
-{% endblock %}
-
 {% block body %}
 <div class="container-fluid">
     <div class="row align-items-center">
@@ -27,12 +19,12 @@
                     </div>
                     <div class="pb-3">
                         <label for="inputEmail" class="visually-hidden">Adres email (login)</label>
-                        <input type="email" name="email" aria-label="Adres email (login)" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Email (login)"
+                        <input type="email" name="email" aria-label="Adres email (login)" id="inputEmail" class="form-control" value="{{ user.email }}" placeholder="Email (login)" autocomplete="email"
                             required>
                     </div>
                     <div class="pb-3">
                         <label for="inputPassword" class="visually-hidden">Password</label>
-                        <input type="password" name="password" aria-label="Hasło, przynajmniej 8 znaków. Litery i cyfry." id="inputPassword" class="form-control" placeholder="Hasło"
+                        <input type="password" class="form-control hide-show-password" name="password" aria-label="Hasło, przynajmniej 8 znaków. Litery i cyfry." id="inputPassword" placeholder="Hasło"
                             required>
                     </div>
                     <button class="btn btn-lg btn-primary btn-block" type="submit">Załóż konto</button>
@@ -43,4 +35,13 @@
     </div>
 </div>
 
+{% endblock %}
+
+{% block footer %}
+<!-- Hide/Show password -->
+<script type="text/javascript" src="/js/hideShowPassword.min.js"></script>
+<script type="text/javascript" src="/js/hideShowPasswordToggle.js"></script>
+<!-- Signup form validation -->
+<script type="text/javascript" src="/js/password-validator.js"></script>
+<script type="text/javascript" src="/js/signupFormValidation.js"></script>
 {% endblock %}
