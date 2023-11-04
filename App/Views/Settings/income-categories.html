@@ -1,0 +1,116 @@
+{% extends "authorized.html" %}
+
+{% block title %}CashFlowApp - Ustawienia|Kategorie przychodów{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid main-content ms-auto mf-auto">
+    <div class="row site-title">
+        <h1>Ustawienia - Kategorie przychodów</h1>
+    </div>
+    <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
+        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#categoryAddModal">Dodaj nową kategorię przychodów</button>
+    </div>
+    <h2>Lista kategorii wydatków</h2>
+    {% if expenses_categories %}
+        {% for income_category in incomes_categories %}
+        <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
+          <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-7">
+                {{income_category.name}}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-5">
+                  <div class="dropdown text-end">
+                    <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <ul class="dropdown-menu ellipsis-menu">
+                      <li><button class="btn btn-block" href="" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal" data-bs-id="{{income_category.id}}">
+                        <i class="bi bi-trash text-danger"></i> Delete</button></li>
+                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{income_category.id}}" data-bs-toggle="modal" data-bs-target="#categoryEditModal" data-bs-category="{{income_category.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+  {% else %}
+  No incomes categories to show
+  {% endif %}
+<!--Category add modal -->
+<div class="modal fade" id="categoryAddModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Nazwa kategorii przychodu</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" aria-label="Formularz edycji kategorii przychodów" id="incomeCategoryAddForm" action="\settings\income-category-add">
+                <input type="hidden" name="user_id" value="{{current_user.userId}}">
+                <div class="form-outline  mb-4 has-validation">
+                    <label class="form-label" for="categoryAddName">Nazwa kategorii</label>
+                    <input class="form-control" aria-label="Podaj nazwę kategorii" type="text" id="categoryAddName" name="name" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+                    <button type="submit" class="btn btn-primary">Zapisz kategorię</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+  <!--Category edit modal -->
+<div class="modal fade" id="categoryEditModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Nazwa kategorii przychodu</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" aria-label="Formularz edycji kategorii przychodów" id="incomeCategoryEditForm" action="\settings\income-category-update">
+                <input type="hidden" id="categoryId" name="id" value="">
+                <div class="form-outline  mb-4 has-validation">
+                    <label class="form-label" for="categoryName">Nazwa kategorii</label>
+                    <input class="form-control" aria-label="Podaj nazwę kategorii" type="text" id="categoryName" name="name" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+                    <button type="submit" class="btn btn-primary">Zapisz kategorię</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="categoryDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="modal-title fs-5">Usuwanie kategorii przychodu</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
+      </div>
+      <div class="modal-body">
+          <form method="post" id="incomeCategoryDeleteForm" action="\settings\income-category-delete">
+          <input type="hidden" id="categoryDeleteId" name="id" value="">
+          <p>Czy jesteś pewien, że chcesz usunąć kategorię?</p>
+          <div class="modal-footer">
+              <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+              <button type="submit" class="btn btn-danger">Usuń</button>
+          </div>
+          </form>
+      </div>
+      </div>
+  </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript" src="/js/incomeCategoryForm.js"></script>
+{% endblock %}

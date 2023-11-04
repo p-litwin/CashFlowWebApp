@@ -40,6 +40,7 @@ $router->add('signup/activate/{token:[\da-f]+}', ['controller'=>'Signup', 'actio
 $router->add('{controller}/{action}');
 $router->add('{controller}/{id:\d+}/{action}');
 $router->add('balance', ['controller'=>'Balance', 'action'=>'show']);
+$router->add('settings', ['controller'=> 'settings', 'action'=>'show']);
 
 
 $router->dispatch($_SERVER['QUERY_STRING']);

@@ -10,7 +10,8 @@ use PDO;
 /**
  * User class
  */
-class User extends \Core\Model{
+class User extends \Core\Model
+{
 
 
     /**
@@ -24,7 +25,7 @@ class User extends \Core\Model{
      * @var integer
      */
     public $userId;
-    
+
     /**
      * Name of the user
      * @var string
@@ -42,7 +43,7 @@ class User extends \Core\Model{
      * @var string
      */
     public $password;
-    
+
     /**
      * Password_hash
      * @var string
@@ -62,13 +63,13 @@ class User extends \Core\Model{
      * @param array $data Initial property values   
      */
 
-     /**
+    /**
      * expiry timestamp for remembered login
      *  
      * @param int
      */
     private $expiry_timestamp;
-    
+
     /**
      * Reset token
      * 
@@ -76,13 +77,13 @@ class User extends \Core\Model{
      */
 
     private $reset_token;
-    
+
     /**
      * $password_reset_hash
      * 
      * @var string
      */
-    
+
     private $password_reset_hash;
 
     /**
@@ -113,7 +114,8 @@ class User extends \Core\Model{
      * Summary of __construct
      * @param mixed $data
      */
-    public function __construct($data =[]){
+    public function __construct($data = [])
+    {
         foreach ($data as $key => $value) {
             $this->$key = $value;
         }
@@ -124,15 +126,16 @@ class User extends \Core\Model{
      * 
      * @return mixed
      */
-    public function save(){
-        
+    public function save()
+    {
+
         $this->validate();
 
         if (empty($this->errors)) {
-            $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
-            $activation_token = new Token();
+            $password_hash               = password_hash($this->password, PASSWORD_DEFAULT);
+            $activation_token            = new Token();
             $this->activation_token_hash = $activation_token->getHash();
-            $this->activation_token = $activation_token->getValue();
+            $this->activation_token      = $activation_token->getValue();
 
             $sql = "INSERT INTO users (name, email, password_hash, activation_token_hash, is_active)
                 VALUES (:name, :email, :password_hash, :activation_token_hash, :is_active)";
@@ -150,7 +153,7 @@ class User extends \Core\Model{
 
         } else {
 
-        return false;
+            return false;
 
         }
 
@@ -161,7 +164,8 @@ class User extends \Core\Model{
      * @return void
      */
 
-    protected function validate(){
+    protected function validate()
+    {
         if ($this->name == '') {
             $this->errors[] = 'Pole imię jest obowiązkowe';
         }
@@ -175,24 +179,25 @@ class User extends \Core\Model{
         }
 
         $this->validatePassword();
-        
+
     }
 
     /**
      * Validate password from the form
      * @return void
      */
-    protected function validatePassword(){
+    protected function validatePassword()
+    {
         if (isset($this->password)) {
             if (strlen($this->password) < 6) {
                 $this->errors[] = 'Minimalna długość hasła: 6 znaków';
             }
-            
-            if (preg_match('/[a-z]+/i',  $this->password) == 0) {
+
+            if (preg_match('/[a-z]+/i', $this->password) == 0) {
                 $this->errors[] = 'Hasło musi zawierać przynajmniej 1 literę';
             }
-            
-            if (preg_match('/[\d]+/i',  $this->password) == 0) {
+
+            if (preg_match('/[\d]+/i', $this->password) == 0) {
                 $this->errors[] = 'Hasło musi zawierać przynajmniej 1 cyfrę';
             }
         }
@@ -203,8 +208,9 @@ class User extends \Core\Model{
      * @param string $email user login in the form of email
      * @return bool
      */
-    public static function emailExists($email, $ignore_id = null) {
-        
+    public static function emailExists($email, $ignore_id = null)
+    {
+
         $user = static::findByEmail($email);
 
         if ($user) {
@@ -222,10 +228,11 @@ class User extends \Core\Model{
      * @param string $email email address to search for
      * @return mixed User object if found
      */
-    public static function findByEmail($email) {
+    public static function findByEmail($email)
+    {
         $sql = 'SELECT * FROM users WHERE email = :email';
 
-        $db = static::getDB();
+        $db        = static::getDB();
         $statement = $db->prepare($sql);
         $statement->bindValue(':email', $email, PDO::PARAM_STR);
         $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
@@ -240,14 +247,15 @@ class User extends \Core\Model{
      * @param string $password password
      * @return mixed if login successful return object of the User class otherwise returns false.
      */
-    public static function authenticate($email, $password) {
-        
+    public static function authenticate($email, $password)
+    {
+
         $user = static::findByEmail($email);
 
         if ($user && $user->is_active) {
-            
-            if(password_verify($password, $user->password_hash))
-            return $user;
+
+            if (password_verify($password, $user->password_hash))
+                return $user;
         }
         return false;
     }
@@ -258,20 +266,21 @@ class User extends \Core\Model{
      * @param string $password_reset_hash
      * @return mixed User object of null if not found
      */
-    public static function findByActivationToken($activation_token) {
-        
-        $token = new Token($activation_token);
+    public static function findByActivationToken($activation_token)
+    {
+
+        $token                 = new Token($activation_token);
         $activation_token_hash = $token->getHash();
-        
+
         $sql = 'SELECT * FROM users WHERE activation_token_hash = :activation_token_hash';
 
-        $db = static::getDB();
+        $db        = static::getDB();
         $statement = $db->prepare($sql);
         $statement->bindValue(':activation_token_hash', $activation_token_hash, PDO::PARAM_STR);
         $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $statement->execute();
 
-        return  $user = $statement->fetch();
+        return $user = $statement->fetch();
 
     }
 
@@ -280,10 +289,11 @@ class User extends \Core\Model{
      * @param string $email email address to search for
      * @return mixed User object if found
      */
-    public static function findById($userId) {
+    public static function findById($userId)
+    {
         $sql = 'SELECT * FROM users WHERE userId = :userId';
 
-        $db = static::getDB();
+        $db        = static::getDB();
         $statement = $db->prepare($sql);
         $statement->bindValue(':userId', $userId, PDO::PARAM_INT);
         $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
@@ -296,26 +306,27 @@ class User extends \Core\Model{
      * Summary of rememberLogin
      * @return mixed
      */
-    public function rememberLogin() {
-        
-        $token = new Token();
-        $token_hash = $token->getHash();
+    public function rememberLogin()
+    {
+
+        $token                = new Token();
+        $token_hash           = $token->getHash();
         $this->remember_token = $token->getValue();
 
         $this->expiry_timestamp = time() + 60 * 60 * 24 * 30; // 30 days expiry time;
-        
+
 
         $sql = "INSERT INTO remembered_login (token_hash, userId, expires_at)
                 VALUES (:token_hash, :userId, :expires_at)";
 
-            $db = static::getDB();
-            $statement = $db->prepare($sql);
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
 
-            $statement->bindValue(':token_hash', $token_hash, PDO::PARAM_STR);
-            $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
-            $statement->bindValue(':expires_at', date('Y-m-d H:i:s', $this->expiry_timestamp), PDO::PARAM_STR);
+        $statement->bindValue(':token_hash', $token_hash, PDO::PARAM_STR);
+        $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
+        $statement->bindValue(':expires_at', date('Y-m-d H:i:s', $this->expiry_timestamp), PDO::PARAM_STR);
 
-            return $statement->execute();
+        return $statement->execute();
     }
 
 
@@ -324,31 +335,34 @@ class User extends \Core\Model{
      * 
      * @return string
      */
-	public function getRemember_token() {
-		return $this->remember_token;
-	}
+    public function getRemember_token()
+    {
+        return $this->remember_token;
+    }
 
-	/**
-	 * Get Expiry timestamp
-	 * 
-	 * @return int
-	 */
-	public function getExpiry_timestamp() {
-		return $this->expiry_timestamp;
-	}
-	
+    /**
+     * Get Expiry timestamp
+     * 
+     * @return int
+     */
+    public function getExpiry_timestamp()
+    {
+        return $this->expiry_timestamp;
+    }
+
     /**
      * Find the user by email send the password reset message when found in the database
      * 
      * @param mixed $email email (login) of the user which wants to reset password
      * @return void
      */
-    public static function sendPasswordReset($email) {
+    public static function sendPasswordReset($email)
+    {
         $user = static::findByEmail($email);
 
         if ($user) {
-            
-            if($user->startPasswordReset()){
+
+            if ($user->startPasswordReset()) {
 
                 $user->sendPasswordResetEmail();
 
@@ -364,9 +378,10 @@ class User extends \Core\Model{
      * 
      * @return mixed
      */
-    protected function startPasswordReset() {
-        $reset_token = new Token();
-        $reset_token_hash = $reset_token->getHash();
+    protected function startPasswordReset()
+    {
+        $reset_token       = new Token();
+        $reset_token_hash  = $reset_token->getHash();
         $this->reset_token = $reset_token->getValue();
 
         $expiry_timestamp = time() + 60 * 60 * 2; // 2 hours expiry time;
@@ -375,12 +390,12 @@ class User extends \Core\Model{
                 SET password_reset_hash = :reset_token_hash, password_reset_expiry = :password_reset_expiry
                 WHERE userId = :userId';
 
-        $db = static::getDB();
+        $db        = static::getDB();
         $statement = $db->prepare($sql);
         $statement->bindValue(':reset_token_hash', $reset_token_hash, PDO::PARAM_STR);
         $statement->bindValue(':password_reset_expiry', date('Y-m-d H:i:s', $expiry_timestamp), PDO::PARAM_STR);
         $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
-        
+
         return $statement->execute();
 
     }
@@ -390,12 +405,13 @@ class User extends \Core\Model{
      * 
      * @return void
      */
-    protected function sendPasswordResetEmail() {
+    protected function sendPasswordResetEmail()
+    {
 
         $url = 'http://' . $_SERVER['HTTP_HOST'] . '/password/reset/' . $this->reset_token;
-        
-        $text = View::getTemplate('Password\reset_email.txt', ['url'=>$url]);
-        $html = View::getTemplate('Password\reset_email.html', ['url'=>$url]);
+
+        $text = View::getTemplate('Password\reset_email.txt', ['url' => $url]);
+        $html = View::getTemplate('Password\reset_email.html', ['url' => $url]);
 
         Mail::send($this->email, 'CashFlowApp - Zmiana hasła', $text, $html);
 
@@ -405,12 +421,13 @@ class User extends \Core\Model{
      * Summary of sendActivationEmail
      * @return void
      */
-    public function sendActivationEmail() {
+    public function sendActivationEmail()
+    {
 
         $url = 'http://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
-        
-        $text = View::getTemplate('Signup\activate.txt', ['url'=>$url]);
-        $html = View::getTemplate('Signup\activate.html', ['url'=>$url]);
+
+        $text = View::getTemplate('Signup\activate.txt', ['url' => $url]);
+        $html = View::getTemplate('Signup\activate.html', ['url' => $url]);
 
         Mail::send($this->email, 'CashFlowApp - Aktywuj swoje konto', $text, $html);
 
@@ -422,14 +439,15 @@ class User extends \Core\Model{
      * @param string $password_reset_hash
      * @return mixed
      */
-    public static function findByResetToken($reset_token) {
-        
-        $token = new Token($reset_token);
+    public static function findByResetToken($reset_token)
+    {
+
+        $token               = new Token($reset_token);
         $password_reset_hash = $token->getHash();
-        
+
         $sql = 'SELECT * FROM users WHERE password_reset_hash = :password_reset_hash';
 
-        $db = static::getDB();
+        $db        = static::getDB();
         $statement = $db->prepare($sql);
         $statement->bindValue(':password_reset_hash', $password_reset_hash, PDO::PARAM_STR);
         $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
@@ -446,13 +464,14 @@ class User extends \Core\Model{
     }
 
 
-	/**
-	 * Get password reset expiry value
-	 * @return string password reset expriry in format 'Y-m-d H:i:s'
-	 */
-	public function getPassword_reset_expiry() {
-		return $this->password_reset_expiry;
-	}
+    /**
+     * Get password reset expiry value
+     * @return string password reset expriry in format 'Y-m-d H:i:s'
+     */
+    public function getPassword_reset_expiry()
+    {
+        return $this->password_reset_expiry;
+    }
 
     /**
      * Summary of changePassword
@@ -460,17 +479,18 @@ class User extends \Core\Model{
      * @param mixed $new_password
      * @return mixed
      */
-    public function changePassword($reset_token, $new_password) {
-        
+    public function changePassword($reset_token, $new_password)
+    {
+
         $this->password = $new_password;
         $this->validatePassword();
-        
-        $token = new Token($reset_token);
+
+        $token               = new Token($reset_token);
         $password_reset_hash = $token->getHash();
-        
+
         if (empty($this->errors)) {
-            
-            $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+            $password_hash       = password_hash($new_password, PASSWORD_DEFAULT);
             $this->password_hash = $password_hash;
 
             $sql = 'UPDATE users
@@ -489,7 +509,7 @@ class User extends \Core\Model{
 
         } else {
 
-        return false;
+            return false;
 
         }
 
@@ -502,16 +522,17 @@ class User extends \Core\Model{
      * 
      * @return void
      */
-    public static function activate($activation_token) {
+    public static function activate($activation_token)
+    {
 
-        $activation_token = new Token($activation_token);
+        $activation_token      = new Token($activation_token);
         $activation_token_hash = $activation_token->getHash();
 
         $sql = 'UPDATE users
                 SET activation_token_hash = NULL,
                 is_active = true
                 WHERE activation_token_hash = :activation_token_hash';
-        
+
         $db        = static::getDB();
         $statement = $db->prepare($sql);
 
@@ -521,51 +542,114 @@ class User extends \Core\Model{
 
     }
 
-    public function updateProfile($data) {
-        
-        $this->name = $data['name'];
-        $this->email = $data['email'];
-        
-        if ($data['password'] != '') {
-            $this->password = $data['password'];
-        }
+    /**
+     * Update the name for logged in user
+     * 
+     * @param string $newEmail new name
+     * @return boolean True if the name has been updated, false otherwise
+     */
+    public function updateName($newName)
+    {
 
-        $this->validate();
-            
+        $this->name = $newName;
+
+        $sql = 'UPDATE users
+                SET name = :name
+                WHERE userId = :userId';
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
+
+        return $statement->execute();
+    }
+
+    /**
+     * Update the email for logged in user
+     * 
+     * @param string $newEmail new email (login)
+     * @return boolean True if the email has been updated, false otherwise
+     */
+    public function updateEmail($newEmail)
+    {
+
+        $this->email = $newEmail;
+
+        $sql = 'UPDATE users
+                SET email = :email
+                WHERE userId = :userId';
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+
+        $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
+        $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
+
+        return $statement->execute();
+    }
+
+    /**
+     * Update the password for logged in user
+     * 
+     * @param string $newPassword New password
+     * @return boolean true if the password has been changed, false otherwise
+     */
+    public function updatePassword($newPassword)
+    {
+        $this->password = $newPassword;
+        $this->validatePassword();
         if (empty($this->errors)) {
-        
-            $sql = "UPDATE users
-                    SET name = :name,
-                    email = :email";
 
-            if (isset($this->password)) {
-        
-                $sql .= ", password_hash = :password_hash";
-                
-            }
-            
-            $sql .= "\nWHERE userId = :userId";
-            
+            $password_hash       = password_hash($this->password, PASSWORD_DEFAULT);
+            $this->password_hash = $password_hash;
+
+            $sql = 'UPDATE users
+                    SET password_hash = :password_hash
+                    WHERE userId = :userId';
+
             $db        = static::getDB();
             $statement = $db->prepare($sql);
 
-            $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
-            $statement->bindValue(':email', $this->email, PDO::PARAM_STR);
-            $statement->bindValue(':userId', $this->userId, PDO::PARAM_INT);
-            
-            if (isset($this->password)) {
-                
-                $password_hash = password_hash($this->password, PASSWORD_DEFAULT);
-                $statement->bindvalue(':password_hash', $this->password_hash, PDO::PARAM_STR);
-
-            }
+            $statement->bindValue(':password_hash', $this->password_hash, PDO::PARAM_STR);
+            $statement->bindValue('userId', $this->userId, PDO::PARAM_INT);
 
             return $statement->execute();
 
+        } else {
+
+            return false;
         }
+    }
 
+    /**
+     * Delete user from the database
+     * 
+     * @return boolean True if the user has been deleted,  false otherwise
+     */
+    public function delete() {
+        
+        $sql = 'DELETE FROM users
+                WHERE userId=:user_id';
+
+        $db = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $this->userId, PDO::PARAM_INT);
+        return $statement->execute();
+
+    }
+
+    /**
+     * Verify if the user password matches the data stored in the database
+     * 
+     * @return boolean True if the password is verified, false otherwise
+     */
+    public function verifyPassword() {
+        if (password_verify($this->password, $this->password_hash)) {
+            return true;
+        }
         return false;
-
     }
 
 }

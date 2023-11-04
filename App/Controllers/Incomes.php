@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 use App\Flash;
 use Core\View;
-use App\Models\IncomesCategories;
+use App\Models\IncomeCategory;
 use App\Models\Income;
 
 /**
@@ -19,7 +19,7 @@ class Incomes extends \App\Controllers\Authenticated
      */
     public function newAction()
     {
-        $_SESSION['incomes_categories'] = IncomesCategories::getIncomesCategoriesByUserId($_SESSION['user_id']);
+        $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']);
 
 
         View::renderTemplate('\Income\new.html', [

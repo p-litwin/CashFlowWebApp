@@ -12,12 +12,6 @@ $.validator.addMethod('validPassword',
             },
             'At least one letter and one number'
         );
-    
-        jQuery(".btn-close").click(function() {
-            var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
-            $(contentPanelId).remove();
-        });
-
 
 $(document).ready(function () {
 

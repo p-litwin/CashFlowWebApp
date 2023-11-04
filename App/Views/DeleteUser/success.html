@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}CashFlowApp - Dane usunięte{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row align-items-center">
+            
+            {% include 'splash_screen_left.html' %}
+
+            <div class="col-lg-6 col-md-6">
+                <div class="right-wrapper">
+                    <h1>Sukces</h1>
+                    <p>Konto użytkownika zostało pomyślnie usunięte. <a href="/login/new">Wróć na stronę logowania</a>.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,117 @@
+{% extends "authorized.html" %}
+
+{% block title %}CashFlowApp - Ustawienia | Metody płatności{% endblock %}
+
+{% block body %}
+
+<div class="container-fluid main-content ms-auto mf-auto">
+    <div class="row site-title">
+        <h1>Ustawienia - Metody płatności</h1>
+    </div>
+    <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
+        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#paymentMethodAddModal">Dodaj nową metodę płatności</button>
+    </div>
+    <h2>Lista metod płatności</h2>
+    {% if payment_methods %}
+        {% for payment_method in payment_methods %}
+        <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
+          <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex">
+            <div class="col-lg-10 col-md-10 col-sm-10 col-7">
+                {{payment_method.name}}
+            </div>
+            <div class="col-lg-2 col-md-2 col-sm-2 col-5">
+                  <div class="dropdown text-end">
+                    <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <ul class="dropdown-menu ellipsis-menu">
+                      <li><button class="btn btn-block" href="" data-bs-toggle="modal" data-bs-target="#paymentMethodDeleteModal" data-bs-id="{{payment_method.id}}">
+                        <i class="bi bi-trash text-danger"></i> Delete</button></li>
+                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{payment_method.id}}" data-bs-toggle="modal" data-bs-target="#paymentMethodEditModal" data-bs-method="{{payment_method.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
+                    </ul>
+                </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+  {% else %}
+<p>Brak  metod płatności.</p>
+  {% endif %}
+<!-- Payment method add modal -->
+<div class="modal fade" id="paymentMethodAddModal" aria-label="Okno formularza edycji metody płatności" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Metoda płatności</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" class="payment-method-form" aria-label="Formularz edycji metody płatności" id="paymentMethodAddForm" action="\settings\payment-method-add">
+                <input type="hidden" id="user_id" name="user_id" value="{{current_user.userId}}">
+                <div class="form-outline  mb-4 has-validation">
+                    <label class="form-label" for="paymentMethodAddName">Metoda płatności</label>
+                    <input class="form-control" aria-label="Podaj nazwę metody płatności" type="text" id="paymentMethodAddName" name="name" value="" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+                    <button type="submit" class="btn btn-primary">Zapisz metodę płatności</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- Payment method edit Modal -->
+<div class="modal fade" id="paymentMethodEditModal" aria-label="Okno formularza edycji metody płatności" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5">Metoda płatności</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" class="payment-method-form" aria-label="Formularz edycji metody płatności" id="paymentMethodEditForm" action="\settings\payment-method-update">
+                <input type="hidden" id="paymentMethodEditId" name="id" value="">
+                <div class="form-outline  mb-4 has-validation">
+                    <label class="form-label" for="paymentMethodEditName">Metoda płatności</label>
+                    <input class="form-control" aria-label="Podaj nazwę metody płatności" type="text" id="paymentMethodEditName" name="name" value="" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+                    <button type="submit" class="btn btn-primary">Zapisz metodę płatności</button>
+                </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Payment method delete modal -->
+<div class="modal fade" id="paymentMethodDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="modal-title fs-5">Usuwanie metody płatności</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
+      </div>
+      <div class="modal-body">
+          <form method="post" id="paymentMethedDeleteForm" action="\settings\payment-method-delete">
+          <input type="hidden" id="paymentMethodDeleteId" name="id" value="">
+          <p>Czy jesteś pewien, że chcesz usunąć metodę płatności?</p>
+          <div class="modal-footer">
+              <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
+              <button type="submit" class="btn btn-danger">Usuń</button>
+          </div>
+          </form>
+      </div>
+      </div>
+  </div>
+</div>
+
+</div>
+{% endblock %}
+
+{% block footer %}
+<script type="text/javascript" src="/js/paymentMethodForm.js"></script>
+{% endblock %}
