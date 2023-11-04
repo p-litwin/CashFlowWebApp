@@ -11,6 +11,35 @@ use PDO;
 class ExpenseCategory extends TransactionCategory {
 
     /**
+     * Save new expense category in the database
+     * @return mixed
+     */
+    public function save()
+    {
+
+        $this->validate();
+
+        if (empty($this->errors)) {
+
+            $sql = "INSERT INTO expenses_category_assigned_to_users (user_id, name)
+                VALUES (:user_id, :name)";
+
+            $db        = static::getDB();
+            $statement = $db->prepare($sql);
+
+            $statement->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
+            $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+
+            return $statement->execute();
+
+        } else {
+
+            return false;
+
+        }
+    }
+
+    /**
      * Get expense categories from the database
      * @param integer $user_id Id of logged in user
      * @return array Associative array of the expense category id and expense category name

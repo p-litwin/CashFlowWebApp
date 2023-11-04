@@ -46,8 +46,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
         </div>
         <div class="modal-body">
-            <form method="post" aria-label="Formularz edycji kategorii wydatków" id="expenseCategoryAddForm" action="\settings\expense-category-update">
-                
+            <form method="post" aria-label="Formularz edycji kategorii wydatków" id="expenseCategoryAddForm" action="\settings\expense-category-add">
+                <input type="hidden" value="{{current_user.userId}}" name="user_id">
                 <div class="form-outline  mb-4 has-validation">
                     <label class="form-label" for="categoryAddName">Nazwa kategorii</label>
                     <input class="form-control" aria-label="Podaj nazwę kategorii" type="text" id="categoryAddName" name="name" required autofocus>

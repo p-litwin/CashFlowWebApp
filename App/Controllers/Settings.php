@@ -257,6 +257,11 @@ class Settings extends Authenticated
         }
     }
 
+    /**
+     * Action to add new payment method
+     * 
+     * @return void
+     */
     public function paymentMethodAddAction()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -268,6 +273,25 @@ class Settings extends Authenticated
                 Flash::addMessage('Wystąpił błąd w trakcie dodawania metody płatności.', Flash::WARNING);
             }
             $this->redirect('/settings/payment-methods');
+        }
+    }
+
+    /**
+     * Action to add new expense category
+     * 
+     * @return void
+     */
+    public function expenseCategoryAddAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $expense_category = new ExpenseCategory($_POST);
+            if ($expense_category->save()) {
+                Flash::addMessage('Kategoria wydatku została dodana.');
+                
+            } else {
+                Flash::addMessage('Wystąpił błąd w trakcie dodawania kategorii wydatku.', Flash::WARNING);
+            }
+            $this->redirect('/settings/expense-categories');
         }
     }
 
