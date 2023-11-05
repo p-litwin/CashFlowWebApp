@@ -428,3 +428,7 @@ width:1200px;
 .main-menu-dropdown-item:hover {
     background:none;
 }
+
+textarea {
+    resize: none;
+  }

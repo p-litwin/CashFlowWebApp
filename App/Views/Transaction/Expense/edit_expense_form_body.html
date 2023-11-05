@@ -12,27 +12,18 @@
     <label class="form-label single-date-picker" for="expenseDate">Data (RRRR-MM-DD)</label>
 </div>
 <div class="form-outline mb-4 has-validation">
-    <select class="form-control" aria-label="Metoda płatności" id="paymentMethod" name="payment_method" placeholder="Sposób płatności">
-    <option value="">Wybierz opcję</option>
+    <select class="form-select" size="3" aria-label="Metoda płatności" id="paymentMethod" name="payment_method" placeholder="Sposób płatności">
     {% for method in payment_methods %}
-    {% if method.id == last_expense_payment_method %}
-    <option value="{{ method.id }}" selected>{{ method.name }}</option>
-    {% else %}
     <option value="{{ method.id }}">{{ method.name }}</option>
-    {% endif %}
     {% endfor %}
     </select>
     <label class="form-label" for="paymentMethod">Sposób płatności:</label>
 </div>
 <div class="form-outline mb-4 has-validation">
-    <select class="form-control" aria-label="Kategoria wydatku" id="expenseCategory" placeholder="Kategoria" name="category">
-    <option value=""></option>
+    <select class="form-select" aria-label="Kategoria wydatku" id="expenseCategory" placeholder="Kategoria" name="category">
+    <option value="" class="text-secondary">Wybierz kategorię...</option>
     {% for category in expenses_categories %}
-    {% if category.id == last_expense_category %}
-    <option  value="{{ category.id }}" selected>{{ category.name }}</option>
-    {% else %}
-    <option value="{{ category.id }}">{{ category.name }}</option>
-    {% endif %}
+    <option  value="{{ category.id }}">{{ category.name }}</option>
     {% endfor %}
     </select>
     <label class="form-label" for="expenseCategory">Kategoria:</label>
