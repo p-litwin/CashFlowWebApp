@@ -4,6 +4,10 @@ html {
     min-height: 100%;
 }
 
+.cashflowapp-primary-bg {
+    background-color: #59c6ed;
+}
+
 /* Block buttons */
 
 .btn-block {
@@ -167,6 +171,7 @@ html {
     left: 0.7rem;
     font-size: 0.85rem;
     padding: 0px 8px 0px 2px;
+    color: var(--bs-secondary);
   }
 
 .buttons {
@@ -431,4 +436,9 @@ width:1200px;
 
 textarea {
     resize: none;
+  }
+
+  .form-label-two-columns {
+    top: 10px;
+    position: relative;
   }
