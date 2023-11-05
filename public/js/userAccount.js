@@ -2,6 +2,7 @@ $(document).ready(function () {
 
     $("#userNameChangeForm").validate({
         errorClass: "is-invalid",
+        validClass:"is-valid",
         errorElement: "span",
         highlight: function (element, errorClass, validClass) {
             $(element).addClass(errorClass).removeClass(validClass);
@@ -18,6 +19,7 @@ $(document).ready(function () {
 
     $("#userEmailChangeForm").validate({
         errorClass: "is-invalid",
+        validClass:"is-valid",
         errorElement: "span",
         highlight: function (element, errorClass, validClass) {
             $(element).addClass(errorClass).removeClass(validClass);
