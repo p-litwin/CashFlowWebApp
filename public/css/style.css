@@ -442,3 +442,7 @@ textarea {
     top: 10px;
     position: relative;
   }
+
+  .save-button {
+    border-radius:0 0 5px 5px;
+  }

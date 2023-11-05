@@ -5,7 +5,7 @@
             <h1 class="modal-title fs-5">Dane wydatku</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe edycji wydatku."></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body p-0">
             <form method="post" id="expenseForm" action="" aria-label="Formularz edycji wydatku.">
                 <input type="hidden" name="user_id" value="{{ current_user.userId }}">
                 {% include "Transaction/Expense/edit_expense_form_body.html" %}
