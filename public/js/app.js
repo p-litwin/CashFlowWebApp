@@ -47,43 +47,7 @@ $(".btn-close").show(function() {
     setTimeout(function() {$(contentPanelId).remove();}, 2500);
 });
 
-
-const transactionDeleteModal = document.getElementById('transactionDeleteModal')
-if (transactionDeleteModal) {
-    transactionDeleteModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    const id = button.getAttribute('data-bs-id');
-    const type = button.getAttribute('data-bs-type');
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
-    // Update the modal's content.
-    var idInput = document.getElementById("transactionDeleteId");
-    idInput.value = id;
-    var form = document.getElementById("transactionDeleteForm");
-    form.action = "/" + type + "/delete";
-  })
-};
-
-// Password validator
-$.validator.addMethod('validPassword',
-            function(value, element, param) {
-                if (value != '') {
-                    if (value.match(/.*[a-z]+.*/i) == null) {
-                        return false;
-                    }
-                    if (value.match(/.*\d+.*/) == null) {
-                        return false;
-                    }
-                }
-                return true;
-            },
-            'At least one letter and one number'
-        );
-
-
-
+//Close modal when Esc button is pressed
 $(document).ready(function(){
     $('.modal').modal({
         keyboard: true
