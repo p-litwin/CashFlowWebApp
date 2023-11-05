@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $("#signupForm").validate({
+    $("#passwordChangeForm").validate({
         errorClass: "is-invalid",
         validClass:"is-valid",
         errorElement: "span",
@@ -15,25 +15,10 @@ $(document).ready(function () {
                 .removeClass(errorClass);
         },
         rules: {
-            name: {
-                required: true,
-                maxlength:50
-            },
-            email: {
-                required: true,
-                email: true,
-                maxlength:50,
-                remote: '/account/validate-email'
-            },
-            password: {
+                password: {
                 required: true,
                 minlength: 6,
                 validPassword: true
-            }
-        },
-        messages: {
-            email: {
-                remote: 'Email jest już zajęty',
             }
         }
     });

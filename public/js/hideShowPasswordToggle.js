@@ -1,4 +1,4 @@
-$('#inputPassword').hideShowPassword(false, true, {
+$('.hide-show-password').hideShowPassword(false, true, {
     toggle: {
         verticalAlign:'top'
     },
