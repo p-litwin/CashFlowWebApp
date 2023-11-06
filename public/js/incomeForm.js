@@ -36,32 +36,42 @@ $(document).ready(function () {
 
 });
 
-const incomesEditModal = document.getElementById('incomesEditModal')
+let incomesEditModal = document.getElementById('incomesEditModal')
 if (incomesEditModal) {
     const modalAmountInput = incomesEditModal.querySelector('#incomeAmount');
     incomesEditModal.addEventListener('show.bs.modal', event => {
         // Button that triggered the modal
         const button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
-        const id = button.getAttribute('data-bs-id');
-        const amount = button.getAttribute('data-bs-amount');
-        const date = button.getAttribute('data-bs-date');
-        const category = button.getAttribute('data-bs-category');
-        const comment = button.getAttribute('data-bs-comment');
-        const action = button.getAttribute('data-bs-action');
-        // If necessary, you could initiate an Ajax request here
-        // and then do the updating in a callback.
-        // Update the modal's content.
-        var idInput = document.getElementById("incomeId");
+        // Extract action from data-bs-* attributes
+        let action = button.getAttribute('data-bs-action');
+        let id = "";
+        let amount = 0.01;
+        let date = "";
+        let category = "";
+        let comment = "";
+        if (action == 'update') {
+            id = button.getAttribute('data-bs-id');
+            amount = button.getAttribute('data-bs-amount');
+            date = button.getAttribute('data-bs-date');
+            category = button.getAttribute('data-bs-category');
+            comment = button.getAttribute('data-bs-comment');
+        } else {
+            const today = new Date();
+            let day = today.getDate();
+            let month = today.getMonth() + 1;
+            let year = today.getFullYear();
+            date = `${year}-${month}-${day}`;
+        }
+        let idInput = document.getElementById("incomeId");
         idInput.value = id;
-        var dateInput = document.getElementById("incomeDate");
+        let dateInput = document.getElementById("incomeDate");
         dateInput.value = date;
-        var categorySelect = document.getElementById("incomeCategory");
+        let categorySelect = document.getElementById("incomeCategory");
         categorySelect.value = category;
-        var commentTexarea = document.getElementById("incomeComment");
+        let commentTexarea = document.getElementById("incomeComment");
         commentTexarea.textContent = comment;
         modalAmountInput.value = amount;
-        var form = document.getElementById("incomeForm");
+        let form = document.getElementById("incomeForm");
         form.action = "/incomes/" + action;
     })
     incomesEditModal.addEventListener('shown.bs.modal', event => {
