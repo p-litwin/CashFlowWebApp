@@ -165,8 +165,8 @@ html {
 
 .form-label {
     margin-bottom: 0;
-    top: -12px;
-    position: absolute;
+    top: 9px;
+    position: relative;
     background: white;
     left: 0.7rem;
     font-size: 0.85rem;
@@ -445,4 +445,15 @@ textarea {
 
   .save-button {
     border-radius:0 0 5px 5px;
+  }
+
+  .cashflowapp-input {
+    padding: 0.6em;
+    font-size: 0.95rem;
+  }
+
+  .cashflowapp-input option {
+    padding-bottom: 0.6em;
+    padding-left:0;
+    font-size: 0.95em;
   }
