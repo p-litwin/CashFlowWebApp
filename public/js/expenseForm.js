@@ -40,37 +40,46 @@ $(document).ready(function () {
 
 });
 
-const expensesEditModal = document.getElementById('expensesEditModal')
+let expensesEditModal = document.getElementById('expensesEditModal')
 if (expensesEditModal) {
     const modalAmountInput = expensesEditModal.querySelector('#expenseAmount');
     expensesEditModal.addEventListener('show.bs.modal', event => {
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
-        const action = button.getAttribute('data-bs-action');
+        let action = button.getAttribute('data-bs-action');
+        let id = "";
+        let amount = 0.01;
+        let date = "";
+        let category = "";
+        let payment = "";
+        let comment = "";
         if (action == 'update') {
-            const id = button.getAttribute('data-bs-id');
-            const amount = button.getAttribute('data-bs-amount');
-            const date = button.getAttribute('data-bs-date');
-            const category = button.getAttribute('data-bs-category');
-            const payment = button.getAttribute('data-bs-payment');
-            const comment = button.getAttribute('data-bs-comment');
-            // If necessary, you could initiate an Ajax request here
-            // and then do the updating in a callback.
-            // Update the modal's content.
-            var idInput = document.getElementById("expenseId");
-            idInput.value = id;
-            var dateInput = document.getElementById("expenseDate");
-            dateInput.value = date;
-            var categorySelect = document.getElementById("expenseCategory");
-            categorySelect.value = category;
-            var paymentSelect = document.getElementById("paymentMethod");
-            paymentSelect.value = payment;
-            var commentTexarea = document.getElementById("expenseComment");
-            commentTexarea.textContent = comment;
-            modalAmountInput.value = amount;
+            id = button.getAttribute('data-bs-id');
+            amount = button.getAttribute('data-bs-amount');
+            date = button.getAttribute('data-bs-date');
+            category = button.getAttribute('data-bs-category');
+            payment = button.getAttribute('data-bs-payment');
+            comment = button.getAttribute('data-bs-comment');
+        } else {
+            const today = new Date();
+            let day = today.getDate();
+            let month = today.getMonth() + 1;
+            let year = today.getFullYear();
+            date = `${year}-${month}-${day}`;
         }
-        var form = document.getElementById("expenseForm");
+        let idInput = document.getElementById("expenseId");
+        idInput.value = id;
+        let dateInput = document.getElementById("expenseDate");
+        dateInput.value = date;
+        let categorySelect = document.getElementById("expenseCategory");
+        categorySelect.value = category;
+        let paymentSelect = document.getElementById("paymentMethod");
+        paymentSelect.value = payment;
+        let commentTexarea = document.getElementById("expenseComment");
+        commentTexarea.textContent = comment;
+        modalAmountInput.value = amount;
+        let form = document.getElementById("expenseForm");
         form.action = "/expenses/" + action;
     })
     expensesEditModal.addEventListener('shown.bs.modal', event => {
