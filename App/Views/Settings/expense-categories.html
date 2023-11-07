@@ -41,20 +41,19 @@
 <div class="modal fade" id="categoryAddModal" aria-label="Okno formularza edycji kategorii wydatków" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-        <div class="modal-header">
+        <div class="modal-header cashflowapp-primary-bg">
             <h1 class="modal-title fs-5">Nazwa kategorii wydatku</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
         </div>
-        <div class="modal-body">
+        <div class="modal-body p-0">
             <form method="post" aria-label="Formularz edycji kategorii wydatków" id="expenseCategoryAddForm" action="\settings\expense-category-add">
                 <input type="hidden" value="{{current_user.userId}}" name="user_id">
-                <div class="form-outline  mb-4 has-validation">
+                <div class="form-outline px-4 mb-4 has-validation">
                     <label class="form-label" for="categoryAddName">Nazwa kategorii</label>
-                    <input class="form-control" aria-label="Podaj nazwę kategorii" type="text" id="categoryAddName" name="name" required autofocus>
+                    <input class="form-control cashflowapp-input" aria-label="Podaj nazwę kategorii" type="text" id="categoryAddName" name="name" required autofocus>
                 </div>
-                <div class="modal-footer">
-                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
-                    <button type="submit" class="btn btn-primary">Zapisz kategorię</button>
+                <div class="modal-footer p-0">
+                    <button type="submit" class="btn btn-block m-0 btn-primary btn-lg save-button"><i class="bi bi-floppy"></i> Zapisz kategorię</button>
                 </div>
             </form>
         </div>
