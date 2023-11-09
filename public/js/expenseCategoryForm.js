@@ -58,10 +58,13 @@ if (categoryDeleteModal) {
     const button = event.relatedTarget;
     // Extract info from data-bs-* attributes
     const id = button.getAttribute('data-bs-id');
+    const name = button.getAttribute('data-bs-name');
     // If necessary, you could initiate an Ajax request here
     // and then do the updating in a callback.
     // Update the modal's content.
     const idInput = categoryDeleteModal.querySelector('#category-delete-id');
     idInput.value = id;
+    const categoryName = categoryDeleteModal.querySelector('#category-to-delete');
+    categoryName.innerHTML = name;
   })
 };

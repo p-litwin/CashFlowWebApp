@@ -9,7 +9,7 @@
         <h1>Ustawienia - Kategorie przychodów</h1>
     </div>
     <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
-        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#category-edit-modal">Dodaj nową kategorię przychodów</button>
+        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#category-edit-modal" data-bs-action="add">Dodaj nową kategorię przychodów</button>
     </div>
     <h2>Lista kategorii wydatków</h2>
     {% if expenses_categories %}
@@ -53,76 +53,6 @@
         modalAriaLabel: 'Okno usuwania kategorii przychodu',
         modalContent: '\\Settings\\Categories_forms\\category_delete_form.html',
         formAction: '\\settings\\income-category-delete' }) }}
-<!--Category add modal -->
-<!-- <div class="modal fade" id="categoryAddModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5">Nazwa kategorii przychodu</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
-        </div>
-        <div class="modal-body">
-            <form method="post" aria-label="Formularz edycji kategorii przychodów" id="incomeCategoryAddForm" action="\settings\income-category-add">
-                <input type="hidden" name="user_id" value="{{current_user.userId}}">
-                <div class="form-outline  mb-4 has-validation">
-                    <label class="form-label" for="categoryAddName">Nazwa kategorii</label>
-                    <input class="form-control" aria-label="Podaj nazwę kategorii" type="text" id="categoryAddName" name="name" required autofocus>
-                </div>
-                <div class="modal-footer">
-                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
-                    <button type="submit" class="btn btn-primary">Zapisz kategorię</button>
-                </div>
-            </form>
-        </div>
-        </div>
-    </div>
-</div> -->
-
-  <!--Category edit modal -->
-<!-- <div class="modal fade" id="categoryEditModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h1 class="modal-title fs-5">Nazwa kategorii przychodu</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
-        </div>
-        <div class="modal-body">
-            <form method="post" aria-label="Formularz edycji kategorii przychodów" id="incomeCategoryEditForm" action="\settings\income-category-update">
-                <input type="hidden" id="categoryId" name="id" value="">
-                <div class="form-outline  mb-4 has-validation">
-                    <label class="form-label" for="categoryName">Nazwa kategorii</label>
-                    <input class="form-control" aria-label="Podaj nazwę kategorii" type="text" id="categoryName" name="name" required autofocus>
-                </div>
-                <div class="modal-footer">
-                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
-                    <button type="submit" class="btn btn-primary">Zapisz kategorię</button>
-                </div>
-            </form>
-        </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="categoryDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-      <div class="modal-header">
-          <h1 class="modal-title fs-5">Usuwanie kategorii przychodu</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij okno dialogowe"></button>
-      </div>
-      <div class="modal-body">
-          <form method="post" id="incomeCategoryDeleteForm" action="\settings\income-category-delete">
-          <input type="hidden" id="categoryDeleteId" name="id" value="">
-          <p>Czy jesteś pewien, że chcesz usunąć kategorię?</p>
-          <div class="modal-footer">
-              <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
-              <button type="submit" class="btn btn-danger">Usuń</button>
-          </div>
-          </form>
-      </div>
-      </div>
-  </div>
-</div> -->
 
 </div>
 {% endblock %}

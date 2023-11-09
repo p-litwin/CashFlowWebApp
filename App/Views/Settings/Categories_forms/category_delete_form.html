@@ -1,7 +1,8 @@
 <form method="post" id="{{id}}-form" action="{{formAction}}">
     <div class="modal-form-inputs">
     <input type="hidden" id="{{id}}-id" name="id" value="">
-        <p class="modal-form-paragraph">Czy jesteś pewien, że chcesz usunąć kategorię?</p>
+        <p class="modal-form-paragraph">Czy jesteś pewien, że chcesz usunąć kategorię <span id="category-to-delete" class="fw-bold"></span>?</p>
+        
         <p class="modal-form-paragraph">Kategoria zostanie usunięta z wszystkich transakcji,  do których była przypisana.</p>
     </div>
     <button type="submit" class="btn btn-block m-0 btn-danger btn-lg save-button"><i
