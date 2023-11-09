@@ -42,32 +42,33 @@ $(document).ready(function () {
 
 });
 
-const categoryEditModal = document.getElementById('categoryEditModal')
+let categoryEditModal = document.getElementById('category-edit-modal')
 if (categoryEditModal) {
-    const nameInput = categoryEditModal.querySelector('#categoryName');
+    const nameInput = categoryEditModal.querySelector('#category-name');
     categoryEditModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    const id = button.getAttribute('data-bs-id');
-    const category = button.getAttribute('data-bs-category');
-
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
-    // Update the modal's content.
-    var idInput = document.getElementById("categoryId");
-    idInput.value = id;
-    var categorySelect = document.getElementById("categoryName");
-    if (category != null){
-    categorySelect.value = category;
-    }
-  })
-  categoryEditModal.addEventListener('shown.bs.modal', event => {
-    nameInput.focus();
-})
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        let action = button.getAttribute('data-bs-action');
+        let id = "";
+        let category = "";
+        if (action == 'update') {
+            id = button.getAttribute('data-bs-id');
+            category = button.getAttribute('data-bs-category');
+        }
+        let idInput = document.getElementById("category-edit-id");
+        idInput.value = id;
+        let categoryInput = document.getElementById("category-name");
+        categoryInput.value = category;
+        let form = document.getElementById("category-edit-form");
+        form.action = "/settings/income-category-" + action;
+    })
+    categoryEditModal.addEventListener('shown.bs.modal', event => {
+        nameInput.focus();
+    })
 };
 
-const categoryDeleteModal = document.getElementById('categoryDeleteModal')
+const categoryDeleteModal = document.getElementById('category-delete-modal')
 if (categoryDeleteModal) {
     
     categoryDeleteModal.addEventListener('show.bs.modal', event => {
@@ -78,7 +79,7 @@ if (categoryDeleteModal) {
     // If necessary, you could initiate an Ajax request here
     // and then do the updating in a callback.
     // Update the modal's content.
-    const idInput = categoryDeleteModal.querySelector('#categoryDeleteId');
+    const idInput = categoryDeleteModal.querySelector('#category-delete-id');
     idInput.value = id;
   })
 };

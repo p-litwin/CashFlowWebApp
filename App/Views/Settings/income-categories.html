@@ -9,7 +9,7 @@
         <h1>Ustawienia - Kategorie przychodów</h1>
     </div>
     <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
-        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#categoryAddModal">Dodaj nową kategorię przychodów</button>
+        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#category-edit-modal">Dodaj nową kategorię przychodów</button>
     </div>
     <h2>Lista kategorii wydatków</h2>
     {% if expenses_categories %}
@@ -25,9 +25,9 @@
                       <i class="bi bi-three-dots-vertical"></i>
                     </a>
                     <ul class="dropdown-menu ellipsis-menu">
-                      <li><button class="btn btn-block" href="" data-bs-toggle="modal" data-bs-target="#categoryDeleteModal" data-bs-id="{{income_category.id}}">
+                      <li><button class="btn btn-block" href="" data-bs-toggle="modal" data-bs-target="#category-delete-modal" data-bs-id="{{income_category.id}}">
                         <i class="bi bi-trash text-danger"></i> Delete</button></li>
-                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{income_category.id}}" data-bs-toggle="modal" data-bs-target="#categoryEditModal" data-bs-category="{{income_category.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
+                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{income_category.id}}" data-bs-toggle="modal" data-bs-target="#category-edit-modal" data-bs-category="{{income_category.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
                     </ul>
                 </div>
             </div>
@@ -37,8 +37,24 @@
   {% else %}
   No incomes categories to show
   {% endif %}
+
+  <!--Category add Modal -->
+  {{ include("modal_window.html", {
+    id: 'category-edit',
+    modalTitle: 'Kategoria przychodu',
+    modalAriaLabel: 'Okno edycji kategorii przychodu',
+    modalContent: '\\Settings\\Categories_forms\\category_edit_form.html',
+    formAriaLabel: 'Formularz edycji kategorii przychodów' }) }}
+    
+    <!-- Category delete modal -->
+    {{ include("modal_window.html", {
+        id: 'category-delete',
+        modalTitle: 'Usuwanie kategorii przychodu',
+        modalAriaLabel: 'Okno usuwania kategorii przychodu',
+        modalContent: '\\Settings\\Categories_forms\\category_delete_form.html',
+        formAction: '\\settings\\income-category-delete' }) }}
 <!--Category add modal -->
-<div class="modal fade" id="categoryAddModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="categoryAddModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
@@ -60,10 +76,10 @@
         </div>
         </div>
     </div>
-</div>
+</div> -->
 
   <!--Category edit modal -->
-<div class="modal fade" id="categoryEditModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="categoryEditModal" aria-label="Okno formularza edycji kategorii przychodów" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
         <div class="modal-header">
@@ -106,7 +122,7 @@
       </div>
       </div>
   </div>
-</div>
+</div> -->
 
 </div>
 {% endblock %}

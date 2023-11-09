@@ -61,7 +61,7 @@ if (categoryDeleteModal) {
     // If necessary, you could initiate an Ajax request here
     // and then do the updating in a callback.
     // Update the modal's content.
-    const idInput = categoryDeleteModal.querySelector('#categoryDeleteId');
+    const idInput = categoryDeleteModal.querySelector('#category-delete-id');
     idInput.value = id;
   })
 };
