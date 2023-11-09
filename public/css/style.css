@@ -436,24 +436,48 @@ width:1200px;
 
 textarea {
     resize: none;
-  }
+}
 
-  .form-label-two-columns {
-    top: 10px;
-    position: relative;
-  }
+.form-label-two-columns {
+top: 10px;
+position: relative;
+}
 
-  .save-button {
-    border-radius:0 0 5px 5px;
-  }
+.save-button {
+border-radius:0 0 5px 5px;
+}
 
-  .cashflowapp-input {
-    padding: 0.6em;
-    font-size: 0.95rem;
-  }
+.cashflowapp-input {
+padding: 0.6em;
+font-size: 0.95rem;
+}
 
-  .cashflowapp-input option {
-    padding-bottom: 0.6em;
-    padding-left:0;
-    font-size: 0.95em;
-  }
+.cashflowapp-input option {
+padding-bottom: 0.6em;
+padding-left:0;
+font-size: 0.95em;
+}
+
+.modal-header {
+padding: 0.6rem 0.7rem 0.6rem 1.5rem;
+font-size: 2rem;
+background: var(--bs-gray-300);
+border-bottom: 2px solid #a5a5a5;
+}
+
+.modal-title {
+font-size: 0.85rem;
+}
+
+.modal-body {
+padding:0;
+}
+
+.modal-form-inputs {
+padding:1.5rem;
+}
+
+.modal-form-paragraph {
+font-size: 0.9em;
+margin-bottom: 0.5rem;
+}
