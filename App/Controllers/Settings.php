@@ -325,4 +325,15 @@ class Settings extends Authenticated
         echo json_encode($is_valid);
     }
 
+    /**
+     * Action to validate if payment method already exists in database (AJAX)
+     * 
+     * @return void
+     */
+    public static function validatePaymentMethodAction() {
+        $is_valid = !PaymentMethod::methodExists($_GET['name']);
+        header('Content-Type: application/json');
+        echo json_encode($is_valid);
+    }
+
 }
