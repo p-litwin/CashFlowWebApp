@@ -361,11 +361,11 @@ width:1200px;
     text-overflow: ellipsis;
 }
 
-.expenses-amount {
+.expense-amount {
     color:red;
 }
 
-.incomes-amount {
+.income-amount {
     color: green;
 }
 .transaction-ellipsis {
