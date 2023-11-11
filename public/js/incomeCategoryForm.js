@@ -15,10 +15,16 @@ $(document).ready(function () {
             .removeClass(errorClass);
     },
     rules: {
-        name: {
-          maxlength: 50
-        }
-    }
+      name: {
+          maxlength: 50,
+          remote: '/settings/validate-income-category'
+      }
+  },
+  messages: {
+      name: {
+          remote: 'Kategoria już istnieje w bazie'
+      }
+  }
   });
 });
 

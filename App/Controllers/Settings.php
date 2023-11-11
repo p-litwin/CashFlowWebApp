@@ -336,4 +336,15 @@ class Settings extends Authenticated
         echo json_encode($is_valid);
     }
 
+    /**
+     * Action to validate if income category already exists in database (AJAX)
+     * 
+     * @return void
+     */
+    public static function validateIncomeCategoryAction() {
+        $is_valid = !IncomeCategory::categoryExists($_GET['name']);
+        header('Content-Type: application/json');
+        echo json_encode($is_valid);
+    }
+
 }
