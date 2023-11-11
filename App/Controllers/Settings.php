@@ -314,4 +314,15 @@ class Settings extends Authenticated
         }
     }
 
+    /**
+     * Action to validate if expense category already exists in database (AJAX)
+     * 
+     * @return void
+     */
+    public static function validateExpenseCategoryAction() {
+        $is_valid = !ExpenseCategory::categoryExists($_GET['name']);
+        header('Content-Type: application/json');
+        echo json_encode($is_valid);
+    }
+
 }
