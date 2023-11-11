@@ -4,6 +4,10 @@ html {
     min-height: 100%;
 }
 
+.cashflowapp-primary-bg {
+    background-color: #59c6ed;
+}
+
 /* Block buttons */
 
 .btn-block {
@@ -161,12 +165,13 @@ html {
 
 .form-label {
     margin-bottom: 0;
-    top: -12px;
-    position: absolute;
+    top: 9px;
+    position: relative;
     background: white;
     left: 0.7rem;
     font-size: 0.85rem;
     padding: 0px 8px 0px 2px;
+    color: var(--bs-secondary);
   }
 
 .buttons {
@@ -356,11 +361,11 @@ width:1200px;
     text-overflow: ellipsis;
 }
 
-.expenses-amount {
+.expense-amount {
     color:red;
 }
 
-.incomes-amount {
+.income-amount {
     color: green;
 }
 .transaction-ellipsis {
@@ -427,4 +432,52 @@ width:1200px;
 
 .main-menu-dropdown-item:hover {
     background:none;
+}
+
+textarea {
+    resize: none;
+}
+
+.form-label-two-columns {
+top: 10px;
+position: relative;
+}
+
+.save-button {
+border-radius:0 0 5px 5px;
+}
+
+.cashflowapp-input {
+padding: 0.6em;
+font-size: 0.95rem;
+}
+
+.cashflowapp-input option {
+padding-bottom: 0.6em;
+padding-left:0;
+font-size: 0.95em;
+}
+
+.modal-header {
+padding: 0.6rem 0.7rem 0.6rem 1.5rem;
+font-size: 2rem;
+background: var(--bs-gray-300);
+border-bottom: 2px solid #a5a5a5;
+}
+
+.modal-title {
+font-size: 0.85rem;
+}
+
+.modal-body {
+padding:0;
+}
+
+.modal-form-inputs {
+padding:1.5rem;
+}
+
+.modal-form-paragraph {
+font-size: 0.9em;
+margin-bottom: 0.5rem;
 }

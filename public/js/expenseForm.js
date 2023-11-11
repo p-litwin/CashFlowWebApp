@@ -1,6 +1,5 @@
 $(document).ready(function () {
-
-    $("#expenseForm").validate({
+    $("#expense-edit-form").validate({
         errorClass: "is-invalid",
         validClass: "is-valid",
         errorElement: "span",
@@ -17,7 +16,8 @@ $(document).ready(function () {
         rules: {
             amount: {
                 required: true,
-                pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/
+                pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/,
+                min: 0.01
             },
             date: {
                 required: true,
@@ -34,54 +34,65 @@ $(document).ready(function () {
             }
         }
     });
-
-    
-
 });
 
-const expensesEditModal = document.getElementById('expensesEditModal')
+let expensesEditModal = document.getElementById('expense-edit-modal')
 if (expensesEditModal) {
-    const modalAmountInput = expensesEditModal.querySelector('#expenseAmount');
+    const modalAmountInput = expensesEditModal.querySelector('#expense-edit-amount');
+    const modalTitle = expensesEditModal.querySelector('.modal-title');
     expensesEditModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    const id = button.getAttribute('data-bs-id');
-    const amount = button.getAttribute('data-bs-amount');
-    const date = button.getAttribute('data-bs-date');
-    const category = button.getAttribute('data-bs-category');
-    const payment = button.getAttribute('data-bs-payment');
-    const comment = button.getAttribute('data-bs-comment');
-    const action = button.getAttribute('data-bs-action');
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
-    // Update the modal's content.
-    var idInput = document.getElementById("expenseId");
-    idInput.value = id;
-    var dateInput = document.getElementById("expenseDate");
-    dateInput.value = date;
-    var categorySelect = document.getElementById("expenseCategory");
-    categorySelect.value = category;
-    var paymentSelect = document.getElementById("paymentMethod");
-    paymentSelect.value = payment;
-    var commentTexarea = document.getElementById("expenseComment");
-    commentTexarea.textContent = comment;
-    modalAmountInput.value = amount;
-    var form = document.getElementById("expenseForm");
-    form.action = "/expenses/" + action;
-  })
-  expensesEditModal.addEventListener('shown.bs.modal', event => {
-    modalAmountInput.focus();
-})
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        let action = button.getAttribute('data-bs-action');
+        let id = "";
+        let amount = 0.01;
+        let date = "";
+        let category = "";
+        let payment = "";
+        let comment = "";
+        if (action == 'update') {
+            id = button.getAttribute('data-bs-id');
+            amount = button.getAttribute('data-bs-amount');
+            date = button.getAttribute('data-bs-date');
+            category = button.getAttribute('data-bs-category');
+            payment = button.getAttribute('data-bs-payment');
+            comment = button.getAttribute('data-bs-comment');
+            modalTitle.innerHTML = 'Edycja wydatku';
+        } else {
+            const today = new Date();
+            let day = today.getDate();
+            let month = today.getMonth() + 1;
+            let year = today.getFullYear();
+            date = `${year}-${month}-${day}`;
+            modalTitle.innerHTML = 'Dodawanie nowego wydatku';
+        }
+        let idInput = document.getElementById("expense-edit-id");
+        idInput.value = id;
+        let dateInput = document.getElementById("expense-edit-date");
+        dateInput.value = date;
+        let categorySelect = document.getElementById("expense-edit-category");
+        categorySelect.value = category;
+        let paymentSelect = document.getElementById("expense-edit-method");
+        paymentSelect.value = payment;
+        let commentTexarea = document.getElementById("expense-edit-comment");
+        commentTexarea.textContent = comment;
+        modalAmountInput.value = amount;
+        let form = document.getElementById("expense-edit-form");
+        form.action = "/expenses/" + action;
+    })
+    expensesEditModal.addEventListener('shown.bs.modal', event => {
+        modalAmountInput.focus();
+    })
 };
 
-$('.transaction-form-button').on('click', function() {
-    $('#expenseDate').daterangepicker({
+$('.transaction-form-button').on('click', function () {
+    $('#expense-edit-date').daterangepicker({
         singleDatePicker: true,
         autoUpdateInput: true,
         showDropdowns: true,
         autoApply: true,
         locale: dateRangePickerLocale,
-        parentEl: "#expenseForm"
+        parentEl: "#expense-edit-form"
     });
 });

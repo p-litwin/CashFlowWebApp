@@ -1,6 +1,5 @@
 $(document).ready(function () {
-
-    $("#incomeForm").validate({
+    $("#income-edit-form").validate({
         errorClass: "is-invalid",
         validClass:"is-valid",
         errorElement: "span",
@@ -31,51 +30,61 @@ $(document).ready(function () {
             }
         }
     });
-
-
-
 });
 
-const incomesEditModal = document.getElementById('incomesEditModal')
-if (incomesEditModal) {
-    const modalAmountInput = incomesEditModal.querySelector('#incomeAmount');
-    incomesEditModal.addEventListener('show.bs.modal', event => {
+let incomeEditModal = document.getElementById('income-edit-modal')
+if (incomeEditModal) {
+    const modalAmountInput = incomeEditModal.querySelector('#income-edit-amount');
+    const modalTitle = incomeEditModal.querySelector('.modal-title');
+    incomeEditModal.addEventListener('show.bs.modal', event => {
         // Button that triggered the modal
         const button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
-        const id = button.getAttribute('data-bs-id');
-        const amount = button.getAttribute('data-bs-amount');
-        const date = button.getAttribute('data-bs-date');
-        const category = button.getAttribute('data-bs-category');
-        const comment = button.getAttribute('data-bs-comment');
-        const action = button.getAttribute('data-bs-action');
-        // If necessary, you could initiate an Ajax request here
-        // and then do the updating in a callback.
-        // Update the modal's content.
-        var idInput = document.getElementById("incomeId");
+        // Extract action from data-bs-* attributes
+        let action = button.getAttribute('data-bs-action');
+        let id = "";
+        let amount = 0.01;
+        let date = "";
+        let category = "";
+        let comment = "";
+        if (action == 'update') {
+            id = button.getAttribute('data-bs-id');
+            amount = button.getAttribute('data-bs-amount');
+            date = button.getAttribute('data-bs-date');
+            category = button.getAttribute('data-bs-category');
+            comment = button.getAttribute('data-bs-comment');
+            modalTitle.innerHTML = "Edycja przychodu";
+        } else {
+            const today = new Date();
+            let day = today.getDate();
+            let month = today.getMonth() + 1;
+            let year = today.getFullYear();
+            date = `${year}-${month}-${day}`;
+            modalTitle.innerHTML = "Dodawanie nowego przychodu";
+        }
+        let idInput = document.getElementById("income-edit-id");
         idInput.value = id;
-        var dateInput = document.getElementById("incomeDate");
+        let dateInput = document.getElementById("income-edit-date");
         dateInput.value = date;
-        var categorySelect = document.getElementById("incomeCategory");
+        let categorySelect = document.getElementById("income-edit-category");
         categorySelect.value = category;
-        var commentTexarea = document.getElementById("incomeComment");
+        let commentTexarea = document.getElementById("income-edit-comment");
         commentTexarea.textContent = comment;
         modalAmountInput.value = amount;
-        var form = document.getElementById("incomeForm");
+        let form = document.getElementById("income-edit-form");
         form.action = "/incomes/" + action;
     })
-    incomesEditModal.addEventListener('shown.bs.modal', event => {
+    incomeEditModal.addEventListener('shown.bs.modal', event => {
         modalAmountInput.focus();
     })
 };
 
 $('.transaction-form-button').on('click', function () {
-    $('#incomeDate').daterangepicker({
+    $('#income-edit-date').daterangepicker({
         singleDatePicker: true,
         autoUpdateInput: true,
         showDropdowns: true,
         autoApply: true,
         locale: dateRangePickerLocale,
-        parentEl: "#incomeForm"
+        parentEl: "#income-edit-form"
     });
 });

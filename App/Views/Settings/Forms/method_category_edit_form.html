@@ -1,0 +1,13 @@
+<form method="post" aria-label="{{formAriaLabel}}" id="{{idSuffix}}-form" action="">
+    <input type="hidden" name="user_id" value="{{current_user.userId}}">
+    <input type="hidden" id="{{idSuffix}}-id" name="id" value="">
+    <div class="form-outline px-4 mb-4 has-validation">
+        <label class="form-label" for="{{idSuffix}}-name">{{formLabel}}</label>
+        <input class="form-control cashflowapp-input" aria-label="Podaj nazwę kategorii" type="text" id="{{idSuffix}}-name"
+            name="name" value="" required autofocus>
+    </div>
+    <div class="modal-footer p-0">
+        <button type="submit" class="btn btn-block m-0 btn-success btn-lg save-button"><i class="bi bi-floppy"></i>
+            {{buttonCaption}}</button>
+    </div>
+</form>
