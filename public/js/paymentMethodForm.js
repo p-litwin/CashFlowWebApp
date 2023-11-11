@@ -40,43 +40,50 @@ $(document).ready(function () {
 });
 });
 
-
-
-const paymentMethodEditModal = document.getElementById('paymentMethodEditModal')
+let paymentMethodEditModal = document.getElementById('method-edit-modal')
 if (paymentMethodEditModal) {
-    const nameInput = paymentMethodEditModal.querySelector('#paymentMethodEditName');
+    const nameInput = paymentMethodEditModal.querySelector('#method-edit-name');
+    const modalTitle = paymentMethodEditModal.querySelector('.modal-title');
     paymentMethodEditModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    const id = button.getAttribute('data-bs-id');
-    const paymentMethod = button.getAttribute('data-bs-method');
-
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
-    // Update the modal's content.
-    const idInput = document.getElementById("paymentMethodEditId");
-    idInput.value = id;
-    nameInput.value = paymentMethod;
-  
-  })
-  paymentMethodEditModal.addEventListener('shown.bs.modal', event => {
-    nameInput.focus();
-})
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        let action = button.getAttribute('data-bs-action');
+        let id = "";
+        let name = "";
+        if (action == 'update') {
+            id = button.getAttribute('data-bs-id');
+            name = button.getAttribute('data-bs-name');
+            modalTitle.innerHTML = "Edycja metody płatności"
+        } else {
+            modalTitle.innerHTML = "Dodawanie nowej metody płatności"
+        }
+        let idInput = document.getElementById("method-edit-id");
+        idInput.value = id;
+        nameInput.value = name;
+        let form = document.getElementById("method-edit-form");
+        form.action = "/settings/payment-method-" + action;
+    })
+    paymentMethodEditModal.addEventListener('shown.bs.modal', event => {
+        nameInput.focus();
+    })
 };
 
-const paymentMethodDeleteModal = document.getElementById('paymentMethodDeleteModal')
-if (paymentMethodDeleteModal) {
+const categoryDeleteModal = document.getElementById('method-delete-modal')
+if (categoryDeleteModal) {
     
-    paymentMethodDeleteModal.addEventListener('show.bs.modal', event => {
+    categoryDeleteModal.addEventListener('show.bs.modal', event => {
     // Button that triggered the modal
     const button = event.relatedTarget;
     // Extract info from data-bs-* attributes
     const id = button.getAttribute('data-bs-id');
+    const name = button.getAttribute('data-bs-name');
     // If necessary, you could initiate an Ajax request here
     // and then do the updating in a callback.
     // Update the modal's content.
-    const idInput = paymentMethodDeleteModal.querySelector('#paymentMethodDeleteId');
+    const idInput = categoryDeleteModal.querySelector('#method-delete-id');
     idInput.value = id;
+    const parameterName = categoryDeleteModal.querySelector('#parameter-to-delete');
+    parameterName.innerHTML = name;
   })
 };
