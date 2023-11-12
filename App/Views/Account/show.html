@@ -1,6 +1,6 @@
 {% extends "authorized.html" %}
 
-{% block title %}CashFlowApp - Ustawienia|Konto użytkownika{% endblock %}
+{% block title %}CashFlowApp - Ustawienia | Konto użytkownika{% endblock %}
 
 {% block body %}
 
@@ -9,7 +9,7 @@
         <h1>Ustawienia - Konto użytkownika</h1>
     </div>
     <div class="col-md-6 col-sm-12">
-        <form class="row pb-3" id="userNameChangeForm" method="post" action="/settings/user-name-update">
+        <form class="row pb-3" id="userNameChangeForm" method="post" action="/account/user-name-update">
             <div class="col-md-9 col-sm-5">
                 <input class="form-control" type="text" name="userName" id="name" value="{{current_user.name}}">
             </div>
@@ -17,7 +17,7 @@
                 <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
             </div>
         </form>
-        <form class="row pb-3" id="userEmailChangeForm" method="post" action="/settings/user-email-update">
+        <form class="row pb-3" id="userEmailChangeForm" method="post" action="/account/user-email-update">
             <div class="col-md-9 col-sm-5">
                 <input type="hidden" id="userId" value="{{current_user.userId}}">
                 <input class="form-control" type="text" name="email" id="email" value="{{current_user.email}}">
@@ -26,7 +26,7 @@
                 <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
             </div>
         </form>
-        <form class="row pb-3" id="passwordChangeForm" method="post" action="/settings/user-password-update">
+        <form class="row pb-3" id="passwordChangeForm" method="post" action="/account/user-password-update">
             <div class="col-md-9 col-sm-5">
                 <input class="form-control hide-show-password col-10" type="password" id="inputPassword" name="password" value="">
             </div>
