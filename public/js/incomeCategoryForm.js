@@ -16,7 +16,7 @@ $(document).ready(function () {
     rules: {
       name: {
           maxlength: 50,
-          remote: '/settings/validate-income-category'
+          remote: '/income-categories/validate-income-category'
       }
   },
   messages: {
@@ -49,7 +49,7 @@ if (categoryEditModal) {
     idInput.value = id;
     nameInput.value = name;
     let form = document.getElementById("category-edit-form");
-    form.action = "/settings/income-category-" + action;
+    form.action = "/income-categories/" + action;
   })
   categoryEditModal.addEventListener('shown.bs.modal', event => {
     nameInput.focus();

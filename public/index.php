@@ -40,7 +40,10 @@ $router->add('signup/activate/{token:[\da-f]+}', ['controller'=>'Signup', 'actio
 $router->add('{controller}/{action}');
 $router->add('{controller}/{id:\d+}/{action}');
 $router->add('balance', ['controller'=>'Balance', 'action'=>'show']);
-$router->add('settings', ['controller'=> 'settings', 'action'=>'show']);
+$router->add('account', ['controller'=> 'Account', 'action'=>'show']);
+$router->add('expense-categories', ['controller'=> 'ExpenseCategories', 'action'=>'show']);
+$router->add('income-categories', ['controller'=> 'IncomeCategories', 'action'=>'show']);
+$router->add('payment-methods', ['controller'=> 'PaymentMethods', 'action'=>'show']);
 
 
 $router->dispatch($_SERVER['QUERY_STRING']);

@@ -70,7 +70,7 @@ abstract class TransactionCategory extends Model {
         
         $category = static::findByName($category_name);
 
-        if ($category and $category->user_id = $_SESSION['user_id']) {
+        if ($category && $category->user_id == $_SESSION['user_id']) {
             return true;
         }
         return false;
