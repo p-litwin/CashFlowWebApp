@@ -1,6 +1,6 @@
 {% extends "authorized.html" %}
 
-{% block title %}CashFlowApp - Ustawienia|Kategorie wydatków{% endblock %}
+{% block title %}CashFlowApp - Ustawienia | Kategorie wydatków{% endblock %}
 
 {% block body %}
 
@@ -48,7 +48,7 @@
     idSuffix: 'category-edit',
     modalTitle: 'Kategoria wydatku',
     modalAriaLabel: 'Okno edycji kategorii',
-    modalContent: '\\Settings\\Forms\\method_category_edit_form.html',
+    modalContent: '\\Categories_methods\\Forms\\method_category_edit_form.html',
     formLabel: 'Nazwa kategorii',
     formAriaLabel: 'Formularz edycji kategorii wydatków',
     buttonCaption: "Zapisz kategorię" }) }}
@@ -58,8 +58,8 @@
     idSuffix: 'category-delete',
     modalTitle: 'Usuwanie kategorii wydatku',
     modalAriaLabel: 'Okno usuwania kategorii',
-    modalContent: '\\Settings\\Forms\\method_category_delete_form.html',
-    formAction: '\\settings\\expense-category-delete' }) }}
+    modalContent: '\\Categories_methods\\Forms\\method_category_delete_form.html',
+    formAction: '\\expense-categories\\delete' }) }}
     
 </div>
 {% endblock %}

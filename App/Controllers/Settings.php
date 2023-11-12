@@ -21,51 +21,6 @@ class Settings extends Authenticated
 {
 
     /**
-     * Action to display expenses categories list
-     * 
-     * @return void
-     */
-    public function expenseCategoriesAction()
-    {
-        View::renderTemplate('Settings\expense-categories.html');
-    }
-
-    /**
-     * Action to update expense category
-     * 
-     * @return void
-     */
-    public function expenseCategoryUpdateAction()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $expense_category = new ExpenseCategory($_POST);
-            if ($expense_category->update()) {
-                Flash::addMessage('Nazwa kategorii została zmieniona.');
-            } else {
-                Flash::addMessage('Nie udało się zmienić kategorii wydatku', Flash::WARNING);
-            }
-        }
-        $this->redirect('\settings\expense-categories');
-    }
-
-    /**
-     * Action to delete expense category from the database
-     * 
-     * @return void
-     */
-    public function expenseCategoryDeleteAction()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $expense_category = new ExpenseCategory($_POST);
-            if ($expense_category->delete()) {
-                Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
-            } else {
-                Flash::addMessage('Nie udało się usunąć kategorii wydatku', Flash::WARNING);
-            }
-        }
-        $this->redirect('\settings\expense-categories');
-    }
-    /**
      * Action to display incomes categories list
      * 
      * @return void
@@ -174,24 +129,6 @@ class Settings extends Authenticated
     }
 
     /**
-     * Action to add new expense category
-     * 
-     * @return void
-     */
-    public function expenseCategoryAddAction()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $expense_category = new ExpenseCategory($_POST);
-            if ($expense_category->save()) {
-                Flash::addMessage('Kategoria wydatku została dodana.');
-            } else {
-                $this->pushFlashMessages($expense_category->errors, Flash::WARNING);
-            }
-            $this->redirect('/settings/expense-categories');
-        }
-    }
-
-    /**
      * Action to add new income category
      * 
      * @return void
@@ -207,18 +144,6 @@ class Settings extends Authenticated
             }
             $this->redirect('/settings/income-categories');
         }
-    }
-
-    /**
-     * Action to validate if expense category already exists in database (AJAX)
-     * 
-     * @return void
-     */
-    public static function validateExpenseCategoryAction()
-    {
-        $is_valid = !ExpenseCategory::categoryExists($_GET['name']);
-        header('Content-Type: application/json');
-        echo json_encode($is_valid);
     }
 
     /**

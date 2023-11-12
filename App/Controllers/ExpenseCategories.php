@@ -1,0 +1,92 @@
+<?php
+
+namespace App\Controllers;
+
+use App\Controllers\Authenticated;
+use App\Flash;
+use App\Models\ExpenseCategory;
+use Core\View;
+
+class ExpenseCategories extends Authenticated
+{
+
+    /**
+     * Action to add new expense category
+     * 
+     * @return void
+     */
+    public function addAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $expense_category = new ExpenseCategory($_POST);
+            if ($expense_category->save()) {
+                Flash::addMessage('Kategoria wydatku została dodana.');
+            } else {
+                $this->pushFlashMessages($expense_category->errors, Flash::WARNING);
+            }
+            $this->redirect('/expense-categories');
+        }
+    }
+
+    /**
+     * Action to display expenses categories list
+     * 
+     * @return void
+     */
+    public function showAction()
+    {
+        View::renderTemplate('Categories_methods\Expense_Categories\show.html');
+    }
+
+    /**
+     * Action to update expense category
+     * 
+     * @return void
+     */
+    public function updateAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $expense_category = new ExpenseCategory($_POST);
+            if ($expense_category->update()) {
+                Flash::addMessage('Nazwa kategorii została zmieniona.');
+            } else {
+                Flash::addMessage('Nie udało się zmienić kategorii wydatku', Flash::WARNING);
+            }
+        }
+        $this->redirect('\expense-categories');
+    }
+
+    /**
+     * Action to delete expense category from the database
+     * 
+     * @return void
+     */
+    public function deleteAction()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $expense_category = new ExpenseCategory($_POST);
+            if ($expense_category->delete()) {
+                Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
+            } else {
+                Flash::addMessage('Nie udało się usunąć kategorii wydatku', Flash::WARNING);
+            }
+        }
+        $this->redirect('\expense-categories');
+    }
+
+    /**
+     * Action to validate if expense category already exists in database (AJAX)
+     * 
+     * @return void
+     */
+    public static function validateExpenseCategoryAction()
+    {
+        $is_valid = !ExpenseCategory::categoryExists($_GET['name']);
+        header('Content-Type: application/json');
+        echo json_encode($is_valid);
+    }
+
+}
+
+
+?>

@@ -17,7 +17,7 @@ $(document).ready(function () {
         rules: {
             name: {
                 maxlength: 50,
-                remote: '/settings/validate-expense-category'
+                remote: '/expense-categories/validate-expense-category'
             }
         },
         messages: {
@@ -51,7 +51,7 @@ if (categoryEditModal) {
         idInput.value = id;
         nameInput.value = name;
         let form = document.getElementById("category-edit-form");
-        form.action = "/settings/expense-category-" + action;
+        form.action = "/expense-categories/" + action;
     })
     categoryEditModal.addEventListener('shown.bs.modal', event => {
         nameInput.focus();
