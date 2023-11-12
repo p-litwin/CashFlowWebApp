@@ -21,52 +21,6 @@ class Settings extends Authenticated
 {
 
     /**
-     * Action to display incomes categories list
-     * 
-     * @return void
-     */
-    public function incomeCategoriesAction()
-    {
-        View::renderTemplate('Settings\income-categories.html', );
-    }
-
-    /**
-     * Action to update income category
-     * 
-     * @return void
-     */
-    public function incomeCategoryUpdateAction()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $income_category = new IncomeCategory($_POST);
-            if ($income_category->update()) {
-                Flash::addMessage('Nazwa kategorii została zmieniona.');
-            } else {
-                Flash::addMessage('Nie udało się zmienić kategorii przychodu', Flash::WARNING);
-            }
-        }
-        $this->redirect('\settings\income-categories');
-    }
-
-    /**
-     * Action to delete expense category from the database
-     * 
-     * @return void
-     */
-    public function incomeCategoryDeleteAction()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $income_category = new IncomeCategory($_POST);
-            if ($income_category->delete()) {
-                Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
-            } else {
-                Flash::addMessage('Nie udało się usunąć kategorii wydatku', Flash::WARNING);
-            }
-        }
-        $this->redirect('\settings\income-categories');
-    }
-
-    /**
      * Action to display payment methods list
      * 
      * @return void
@@ -129,24 +83,6 @@ class Settings extends Authenticated
     }
 
     /**
-     * Action to add new income category
-     * 
-     * @return void
-     */
-    public function incomeCategoryAddAction()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $income_category = new IncomeCategory($_POST);
-            if ($income_category->save()) {
-                Flash::addMessage('Kategoria przychodu została dodana.');
-            } else {
-                $this->pushFlashMessages($income_category->errors, Flash::WARNING);
-            }
-            $this->redirect('/settings/income-categories');
-        }
-    }
-
-    /**
      * Action to validate if payment method already exists in database (AJAX)
      * 
      * @return void
@@ -158,16 +94,6 @@ class Settings extends Authenticated
         echo json_encode($is_valid);
     }
 
-    /**
-     * Action to validate if income category already exists in database (AJAX)
-     * 
-     * @return void
-     */
-    public static function validateIncomeCategoryAction()
-    {
-        $is_valid = !IncomeCategory::categoryExists($_GET['name']);
-        header('Content-Type: application/json');
-        echo json_encode($is_valid);
-    }
+    
 
 }
