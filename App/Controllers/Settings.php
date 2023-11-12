@@ -310,7 +310,10 @@ class Settings extends Authenticated
                 Flash::addMessage('Kategoria przychodu została dodana.');
 
             } else {
-                Flash::addMessage('Wystąpił błąd w trakcie dodawania kategorii przychodu.', Flash::WARNING);
+                $errors = $income_category->errors;
+                foreach ($errors as $error) {
+                    Flash::addMessage($error, Flash::WARNING);
+                }
             }
             $this->redirect('/settings/income-categories');
         }

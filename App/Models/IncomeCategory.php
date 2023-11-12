@@ -133,21 +133,6 @@ class IncomeCategory extends TransactionCategory {
     }
 
     /**
-     * Check if category already exists in the database for logged in user
-     * @param string $category_name Income category name
-     * @return bool true if income category exists, false otherwise
-     */
-    public static function categoryExists($category_name) {
-        
-        $category = static::findByName($category_name);
-
-        if ($category and $category->user_id = $_SESSION['user_id']) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
      * Find income category by name
      * 
      * @param string $category_name Income category name
