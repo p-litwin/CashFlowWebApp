@@ -52,6 +52,10 @@ abstract class TransactionCategory extends Model {
      */
     protected function validate()
     {
+        if (empty($this->name)){
+            $this->errors[] = "Kategoria nie może być pusta";
+        }
+        
         if (strlen($this->name) > 50) {
             $this->errors[] = 'Kategoria może mieć maksymalnie 50 znaków';
         }
