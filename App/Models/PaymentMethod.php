@@ -196,7 +196,7 @@ class PaymentMethod extends Model
         
         $method = static::findByName($method_name);
 
-        if ($method and $method->user_id = $_SESSION['user_id']) {
+        if ($method && $method->user_id == $_SESSION['user_id']) {
             return true;
         }
         return false;

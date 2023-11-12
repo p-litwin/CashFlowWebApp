@@ -16,7 +16,7 @@ $(document).ready(function () {
         rules: {
             name: {
                 maxlength: 50,
-                remote: '/settings/validate-payment-method'
+                remote: '/payment-methods/validate'
             }
         },
         messages: {
@@ -49,7 +49,7 @@ if (paymentMethodEditModal) {
         idInput.value = id;
         nameInput.value = name;
         let form = document.getElementById("method-edit-form");
-        form.action = "/settings/payment-method-" + action;
+        form.action = "/payment-methods/" + action;
     })
     paymentMethodEditModal.addEventListener('shown.bs.modal', event => {
         nameInput.focus();
