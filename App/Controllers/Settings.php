@@ -288,10 +288,7 @@ class Settings extends Authenticated
             if ($expense_category->save()) {
                 Flash::addMessage('Kategoria wydatku została dodana.');
             } else {
-                $errors = $expense_category->errors;
-                foreach ($errors as $error) {
-                    Flash::addMessage($error, Flash::WARNING);
-                }
+                $this->pushFlashMessages($expense_category->errors, Flash::WARNING);
             }
             $this->redirect('/settings/expense-categories');
         }
@@ -308,12 +305,8 @@ class Settings extends Authenticated
             $income_category = new IncomeCategory($_POST);
             if ($income_category->save()) {
                 Flash::addMessage('Kategoria przychodu została dodana.');
-
             } else {
-                $errors = $income_category->errors;
-                foreach ($errors as $error) {
-                    Flash::addMessage($error, Flash::WARNING);
-                }
+                $this->pushFlashMessages($income_category->errors, Flash::WARNING);
             }
             $this->redirect('/settings/income-categories');
         }
