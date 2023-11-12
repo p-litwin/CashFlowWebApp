@@ -141,7 +141,7 @@ class Settings extends Authenticated
             if ($payment_method->update()) {
                 Flash::addMessage('Metoda płatności została zmieniona.');
             } else {
-                Flash::addMessage('Nie udało się zmienić metody płatności', Flash::WARNING);
+                $this->pushFlashMessages($payment_method->errors, Flash::WARNING);
             }
         }
         $this->redirect('\settings\payment-methods');
@@ -268,9 +268,8 @@ class Settings extends Authenticated
             $payment_method = new PaymentMethod($_POST);
             if ($payment_method->save()) {
                 Flash::addMessage('Metoda płatności została dodana');
-
             } else {
-                Flash::addMessage('Wystąpił błąd w trakcie dodawania metody płatności.', Flash::WARNING);
+                $this->pushFlashMessages($payment_method->errors, Flash::WARNING);
             }
             $this->redirect('/settings/payment-methods');
         }

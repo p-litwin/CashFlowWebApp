@@ -83,6 +83,10 @@ class PaymentMethod extends Model
         if (strlen($this->name) > 50) {
             $this->errors[] = 'Nazwa metody płatności może mieć maksymalnie 50 znaków';
         }
+        
+        if (static::methodExists($this->name)) {
+            $this->errors[] =  'Metoda płatności już istnieje w bazie';
+        }
     }
 
     /**

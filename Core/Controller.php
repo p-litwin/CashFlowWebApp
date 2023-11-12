@@ -99,13 +99,14 @@ abstract class Controller
 
     /**
      * Add flash messages bassed on passed parameters
-     * @param mixed $messages
-     * @param mixed $type
+     * s
+     * @param array $messages Array of messages
+     * @param string $type Flash message type, INFO, WARNING, SUCCESS
      * @return void
      */
-    public function pushFlashMessages($messages, $type){
+    public function pushFlashMessages($messages, $type = Flash::INFO){
         foreach ($messages as $message) {
-            Flash::addMessage($message, $type = Flash::INFO);
+            Flash::addMessage($message, $type);
         }
     }
 

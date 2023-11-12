@@ -1,5 +1,4 @@
 $(document).ready(function () {
-
     $("#method-edit-form").validate({
         errorClass: "is-invalid",
         validClass: "is-valid",
