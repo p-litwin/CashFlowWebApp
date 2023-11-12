@@ -8,7 +8,7 @@ use PDO;
 /**
  * Model to handle the expenses categories
  */
-class TransactionCategory extends Model {
+abstract class TransactionCategory extends Model {
 
     /**
      * User id
@@ -55,7 +55,28 @@ class TransactionCategory extends Model {
         if (strlen($this->name) > 50) {
             $this->errors[] = 'Kategoria może mieć maksymalnie 50 znaków';
         }
+
+        if (static::categoryExists($this->name)) {
+            $this->errors[] =  'Kategoria już istnieje w bazie';
+        }
     }
+
+        /**
+     * Check if category already exists in the database for logged in user
+     * @param string $category_name
+     * @return bool true if category exists, false otherwise
+     */
+    public static function categoryExists($category_name) {
+        
+        $category = static::findByName($category_name);
+
+        if ($category and $category->user_id = $_SESSION['user_id']) {
+            return true;
+        }
+        return false;
+    }
+
+    abstract public static function findByName($category_name);
 
 }
 

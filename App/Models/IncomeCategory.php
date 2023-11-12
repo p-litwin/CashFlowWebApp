@@ -132,6 +132,26 @@ class IncomeCategory extends TransactionCategory {
 
     }
 
+    /**
+     * Find income category by name
+     * 
+     * @param string $category_name Income category name
+     * @return mixed object of the IncomeCateogry class if found in the database, false otherwise 
+     */
+    public static function findByName($category_name)
+    {
+        $sql = 'SELECT * FROM incomes_category_assigned_to_users
+                WHERE name = :category_name';
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':category_name', $category_name, PDO::PARAM_STR);
+        $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $statement->execute();
+
+        return $statement->fetch();
+    }
+
 }
 
 ?>

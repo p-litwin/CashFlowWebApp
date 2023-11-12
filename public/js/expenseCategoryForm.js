@@ -16,7 +16,13 @@ $(document).ready(function () {
         },
         rules: {
             name: {
-                maxlength: 50
+                maxlength: 50,
+                remote: '/settings/validate-expense-category'
+            }
+        },
+        messages: {
+            name: {
+                remote: 'Kategoria już istnieje w bazie'
             }
         }
     });

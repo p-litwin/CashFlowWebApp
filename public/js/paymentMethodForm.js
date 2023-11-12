@@ -1,43 +1,30 @@
 $(document).ready(function () {
-
-  $("#paymentMethodAddForm").validate({
-      errorClass: "is-invalid",
-      errorElement: "span",
-      highlight: function (element, errorClass, validClass) {
-          $(element).addClass(errorClass).removeClass(validClass);
-          $(element.form).find("label[for=" + element.id + "]")
-              .addClass(errorClass);
-      },
-      unhighlight: function (element, errorClass, validClass) {
-          $(element).removeClass(errorClass).addClass(validClass);
-          $(element.form).find("label[for=" + element.id + "]")
-              .removeClass(errorClass);
-      },
-      rules: {
-          name: {
-            maxlength: 50
-          }
-      }
-  });
-  $("#paymentMethodEditForm").validate({
-    errorClass: "is-invalid",
-    errorElement: "span",
-    highlight: function (element, errorClass, validClass) {
-        $(element).addClass(errorClass).removeClass(validClass);
-        $(element.form).find("label[for=" + element.id + "]")
-            .addClass(errorClass);
-    },
-    unhighlight: function (element, errorClass, validClass) {
-        $(element).removeClass(errorClass).addClass(validClass);
-        $(element.form).find("label[for=" + element.id + "]")
-            .removeClass(errorClass);
-    },
-    rules: {
-        name: {
-          maxlength: 50
+    $("#method-edit-form").validate({
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "span",
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+            $(element.form).find("label[for=" + element.id + "]")
+                .addClass(errorClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
+            $(element.form).find("label[for=" + element.id + "]")
+                .removeClass(errorClass);
+        },
+        rules: {
+            name: {
+                maxlength: 50,
+                remote: '/settings/validate-payment-method'
+            }
+        },
+        messages: {
+            name: {
+                remote: 'Metoda płatności już istnieje w bazie'
+            }
         }
-    }
-});
+    });
 });
 
 let paymentMethodEditModal = document.getElementById('method-edit-modal')
@@ -71,19 +58,19 @@ if (paymentMethodEditModal) {
 
 const categoryDeleteModal = document.getElementById('method-delete-modal')
 if (categoryDeleteModal) {
-    
+
     categoryDeleteModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget;
-    // Extract info from data-bs-* attributes
-    const id = button.getAttribute('data-bs-id');
-    const name = button.getAttribute('data-bs-name');
-    // If necessary, you could initiate an Ajax request here
-    // and then do the updating in a callback.
-    // Update the modal's content.
-    const idInput = categoryDeleteModal.querySelector('#method-delete-id');
-    idInput.value = id;
-    const parameterName = categoryDeleteModal.querySelector('#parameter-to-delete');
-    parameterName.innerHTML = name;
-  })
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        const id = button.getAttribute('data-bs-id');
+        const name = button.getAttribute('data-bs-name');
+        // If necessary, you could initiate an Ajax request here
+        // and then do the updating in a callback.
+        // Update the modal's content.
+        const idInput = categoryDeleteModal.querySelector('#method-delete-id');
+        idInput.value = id;
+        const parameterName = categoryDeleteModal.querySelector('#parameter-to-delete');
+        parameterName.innerHTML = name;
+    })
 };

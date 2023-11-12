@@ -141,7 +141,7 @@ class Settings extends Authenticated
             if ($payment_method->update()) {
                 Flash::addMessage('Metoda płatności została zmieniona.');
             } else {
-                Flash::addMessage('Nie udało się zmienić metody płatności', Flash::WARNING);
+                $this->pushFlashMessages($payment_method->errors, Flash::WARNING);
             }
         }
         $this->redirect('\settings\payment-methods');
@@ -268,9 +268,8 @@ class Settings extends Authenticated
             $payment_method = new PaymentMethod($_POST);
             if ($payment_method->save()) {
                 Flash::addMessage('Metoda płatności została dodana');
-                
             } else {
-                Flash::addMessage('Wystąpił błąd w trakcie dodawania metody płatności.', Flash::WARNING);
+                $this->pushFlashMessages($payment_method->errors, Flash::WARNING);
             }
             $this->redirect('/settings/payment-methods');
         }
@@ -287,9 +286,8 @@ class Settings extends Authenticated
             $expense_category = new ExpenseCategory($_POST);
             if ($expense_category->save()) {
                 Flash::addMessage('Kategoria wydatku została dodana.');
-                
             } else {
-                Flash::addMessage('Wystąpił błąd w trakcie dodawania kategorii wydatku.', Flash::WARNING);
+                $this->pushFlashMessages($expense_category->errors, Flash::WARNING);
             }
             $this->redirect('/settings/expense-categories');
         }
@@ -306,12 +304,47 @@ class Settings extends Authenticated
             $income_category = new IncomeCategory($_POST);
             if ($income_category->save()) {
                 Flash::addMessage('Kategoria przychodu została dodana.');
-                
             } else {
-                Flash::addMessage('Wystąpił błąd w trakcie dodawania kategorii przychodu.', Flash::WARNING);
+                $this->pushFlashMessages($income_category->errors, Flash::WARNING);
             }
             $this->redirect('/settings/income-categories');
         }
+    }
+
+    /**
+     * Action to validate if expense category already exists in database (AJAX)
+     * 
+     * @return void
+     */
+    public static function validateExpenseCategoryAction()
+    {
+        $is_valid = !ExpenseCategory::categoryExists($_GET['name']);
+        header('Content-Type: application/json');
+        echo json_encode($is_valid);
+    }
+
+    /**
+     * Action to validate if payment method already exists in database (AJAX)
+     * 
+     * @return void
+     */
+    public static function validatePaymentMethodAction()
+    {
+        $is_valid = !PaymentMethod::methodExists($_GET['name']);
+        header('Content-Type: application/json');
+        echo json_encode($is_valid);
+    }
+
+    /**
+     * Action to validate if income category already exists in database (AJAX)
+     * 
+     * @return void
+     */
+    public static function validateIncomeCategoryAction()
+    {
+        $is_valid = !IncomeCategory::categoryExists($_GET['name']);
+        header('Content-Type: application/json');
+        echo json_encode($is_valid);
     }
 
 }

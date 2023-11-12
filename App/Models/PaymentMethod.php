@@ -83,6 +83,10 @@ class PaymentMethod extends Model
         if (strlen($this->name) > 50) {
             $this->errors[] = 'Nazwa metody płatności może mieć maksymalnie 50 znaków';
         }
+        
+        if (static::methodExists($this->name)) {
+            $this->errors[] =  'Metoda płatności już istnieje w bazie';
+        }
     }
 
     /**
@@ -180,6 +184,42 @@ class PaymentMethod extends Model
         $statement = $db->prepare($sql);
         $statement->bindValue(':user_id', $user_id, PDO::PARAM_INT);
         return $statement->execute();
+    }
+
+    /**
+     * Check if the payment method exists in the database
+     * 
+     * @param string $method_name name of the payment method
+     * @return bool true if the payment method exists, false otherwise
+     */
+    public static function methodExists($method_name) {
+        
+        $method = static::findByName($method_name);
+
+        if ($method and $method->user_id = $_SESSION['user_id']) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Find payment method in the databse by name
+     * 
+     * @param string $method_name Name of the payment method
+     * @return mixed object of the PaymentMethod class if the method exists, false otherwise.
+     */
+    public static function findByName($method_name)
+    {
+        $sql = 'SELECT * FROM payment_methods_assigned_to_users
+                WHERE name = :category_name';
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':category_name', $method_name, PDO::PARAM_STR);
+        $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $statement->execute();
+
+        return $statement->fetch();
     }
 
 }
