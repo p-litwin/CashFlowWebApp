@@ -80,6 +80,10 @@ class PaymentMethod extends Model
      */
     private function validate()
     {
+        if (empty($this->name)){
+            $this->errors[] = "Metoda płatności nie może być pusta";
+        }
+
         if (strlen($this->name) > 50) {
             $this->errors[] = 'Nazwa metody płatności może mieć maksymalnie 50 znaków';
         }
