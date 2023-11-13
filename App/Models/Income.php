@@ -35,7 +35,6 @@ class Income extends Transaction
             $statement->bindValue(':date_of_income', $this->date, PDO::PARAM_STR);
             $statement->bindValue(':income_comment', $this->comment, PDO::PARAM_STR);
 
-
             return $statement->execute();
 
         } else {
@@ -131,7 +130,6 @@ class Income extends Transaction
             $statement->bindValue(':amount', $this->amount, PDO::PARAM_STR);
             $statement->bindValue(':date_of_income', $this->date, PDO::PARAM_STR);
             $statement->bindValue(':income_comment', $this->comment, PDO::PARAM_STR);
-
 
             return $statement->execute();
 

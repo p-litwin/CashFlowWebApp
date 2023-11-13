@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Auth;
 use App\Flash;
 use Core\View;
 use App\Models\IncomeCategory;
@@ -83,10 +84,10 @@ class Incomes extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income = new Income($_POST);
-            if ($income->delete()) {
-                Flash::addMessage('Przychód został usunięty pomyślnie.', Flash::SUCCESS);
-            } else {
-                Flash::addMessage('Wystąpił błąd w trakcie usuwania wydatku.', Flash::WARNING);
+            $income->user_id = $this->user->userId;
+            if ($income){ 
+                $income->delete();
+                Flash::addMessage('Przychód został usunięty pomyślnie.', Flash::SUCCESS); 
             }
             $this->redirect($_SESSION['return_to']);
         }

@@ -35,7 +35,7 @@ abstract class Transaction extends Model  {
     public $date;
 
     /**
-     * Expense category id assigned to user id
+     * Transaction category id assigned to user id
      * 
      * @var int
      */
