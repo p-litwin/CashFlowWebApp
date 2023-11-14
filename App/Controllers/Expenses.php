@@ -13,22 +13,6 @@ use App\Models\Expense;
  */
 class Expenses extends \App\Controllers\Authenticated
 {
-
-    /**
-     * Display form to get the data of new expense from the users
-     * @return void
-     */
-    public function newAction()
-    {
-        $_SESSION['expenses_categories'] = ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']);
-        $_SESSION['payment_methods']     = PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']);
-
-        View::renderTemplate('\Expense\new.html', [
-            'expenses_categories' => $_SESSION['expenses_categories'],
-            'payment_methods'     => $_SESSION['payment_methods']
-        ]);
-    }
-
     /**
      * Add new expense
      * @return void
@@ -37,7 +21,7 @@ class Expenses extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense = new Expense($_POST);
-
+            $expense->user_id = $this->user_id;
             if ($expense->save()) {
                 Flash::addMessage('Wydatek został dodany');
             } else {
@@ -56,6 +40,7 @@ class Expenses extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense = new Expense($_POST);
+            $expense->user_id = $this->user_id;
         }
 
         if ($expense->update()) {
@@ -85,7 +70,7 @@ class Expenses extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense = new Expense($_POST);
-            $expense->user_id = $this->user->userId;
+            $expense->user_id = $this->user_id;
             if ($expense) {
                 $expense->delete();
                 Flash::addMessage('Wydatek został usunięty pomyślnie.', Flash::SUCCESS);
