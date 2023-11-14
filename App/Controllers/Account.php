@@ -34,7 +34,7 @@ class Account extends Authenticated {
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $new_name = $_POST['userName'];
-            $user     = new User(Auth::getUser());
+            $user = new User(Auth::getUser());
             if ($user->name != $new_name) {
                 if ($user->updateName($new_name))
                     Flash::addMessage('Imię zostało zmienione.');
@@ -91,7 +91,7 @@ class Account extends Authenticated {
      * @return void
      */
 
-     public function userAccountDeleteAction()
+     public function deleteAction()
      {
  
          if ($_SERVER['REQUEST_METHOD'] == 'POST') {
