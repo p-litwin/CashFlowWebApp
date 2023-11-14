@@ -23,7 +23,7 @@ $(document).ready(function () {
                 required: true,
                 email: true,
                 maxlength:50,
-                remote: '/account/validate-email'
+                remote: '/signup/validate-email'
             },
             password: {
                 required: true,

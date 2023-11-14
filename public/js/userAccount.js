@@ -32,7 +32,7 @@ $(document).ready(function () {
                 email: true,
                 maxlength: 50,
                 remote: {
-                    url: '/account/validate-email',
+                    url: '/signup/validate-email',
                     data: {
                         ignore_id: function () {
                             return $("#userId").val();
