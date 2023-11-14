@@ -47,4 +47,20 @@ $(document).ready(function () {
             }
         }
     });
+
+    $("#account-delete-form").validate({
+        errorClass: "is-invalid",
+        validClass:"is-valid",
+        errorElement: "span",
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+            $(element.form).find("label[for=" + element.id + "]")
+                .addClass(errorClass);
+        },
+        rules: {
+            password: {
+                required: true
+            }
+        }
+    });
 });
