@@ -10,10 +10,10 @@ abstract class Authenticated extends \Core\Controller {
     
     
     /**
-     * Object of the User class
-     * @var object
+     * Id of the authenticated user
+     * @var integer
      */
-    public $user;
+    public $user_id;
     /**
      * Require the user to be logged in before giving access to all methods in the controller
      * 
@@ -22,7 +22,12 @@ abstract class Authenticated extends \Core\Controller {
     public function before() {
         
         $this->requireLogin();
-        $this->user = Auth::getUser();
+        
+        if(!isset($_SESSION['user_id'])){
+            $this->user_id = Auth::getUser();
+        } else {
+            $this->user_id = $_SESSION['user_id'];
+        }
     
     }
 }

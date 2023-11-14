@@ -22,7 +22,7 @@ class Incomes extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income = new Income($_POST);
-            $income->user_id = $this->user->id;
+            $income->user_id = $this->user_id;
             if ($income->save()) {
                 Flash::addMessage('Przychód został dodany');
             } else {
@@ -42,7 +42,7 @@ class Incomes extends \App\Controllers\Authenticated
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income = new Income($_POST);
-            $income->user_id = $this->user->userId;
+            $income->user_id = $this->user_id;
         }
 
         if ($income->update()) {
@@ -71,7 +71,7 @@ class Incomes extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income = new Income($_POST);
-            $income->user_id = $this->user->userId;
+            $income->user_id = $this->user_id;
             if ($income){ 
                 $income->delete();
                 Flash::addMessage('Przychód został usunięty pomyślnie.', Flash::SUCCESS); 
