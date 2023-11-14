@@ -19,6 +19,7 @@ class ExpenseCategories extends Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense_category = new ExpenseCategory($_POST);
+            $expense_category->user_id = $this->user_id;
             if ($expense_category->save()) {
                 Flash::addMessage('Kategoria wydatku została dodana.');
             } else {
@@ -47,6 +48,7 @@ class ExpenseCategories extends Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense_category = new ExpenseCategory($_POST);
+            $expense_category->user_id = $this->user_id;
             if ($expense_category->update()) {
                 Flash::addMessage('Nazwa kategorii została zmieniona.');
             } else {
@@ -65,6 +67,7 @@ class ExpenseCategories extends Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense_category = new ExpenseCategory($_POST);
+            $expense_category->user_id = $this->user_id;
             if ($expense_category->delete()) {
                 Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
             } else {

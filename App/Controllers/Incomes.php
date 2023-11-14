@@ -15,20 +15,6 @@ class Incomes extends \App\Controllers\Authenticated
 {
 
     /**
-     * Display form to get the data of new expense from the users
-     * @return void
-     */
-    public function newAction()
-    {
-        $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']);
-
-
-        View::renderTemplate('\Income\new.html', [
-            'incomes_categories' => $_SESSION['incomes_categories']
-        ]);
-    }
-
-    /**
      * Add new expense
      * @return void
      */
@@ -36,7 +22,7 @@ class Incomes extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income = new Income($_POST);
-
+            $income->user_id = $this->user_id;
             if ($income->save()) {
                 Flash::addMessage('Przychód został dodany');
             } else {
@@ -56,6 +42,7 @@ class Incomes extends \App\Controllers\Authenticated
 
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income = new Income($_POST);
+            $income->user_id = $this->user_id;
         }
 
         if ($income->update()) {
@@ -84,7 +71,7 @@ class Incomes extends \App\Controllers\Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income = new Income($_POST);
-            $income->user_id = $this->user->userId;
+            $income->user_id = $this->user_id;
             if ($income){ 
                 $income->delete();
                 Flash::addMessage('Przychód został usunięty pomyślnie.', Flash::SUCCESS); 

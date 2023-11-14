@@ -29,6 +29,7 @@ class IncomeCategories extends Authenticated{
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income_category = new IncomeCategory($_POST);
+            $income_category->user_id = $this->user_id;
             if ($income_category->save()) {
                 Flash::addMessage('Kategoria przychodu została dodana.');
             } else {
@@ -47,6 +48,7 @@ class IncomeCategories extends Authenticated{
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income_category = new IncomeCategory($_POST);
+            $income_category->user_id = $this->user_id;
             if ($income_category->update()) {
                 Flash::addMessage('Nazwa kategorii została zmieniona.');
             } else {
@@ -65,6 +67,7 @@ class IncomeCategories extends Authenticated{
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $income_category = new IncomeCategory($_POST);
+            $income_category->user_id = $this->user_id;
             if ($income_category->delete()) {
                 Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
             } else {

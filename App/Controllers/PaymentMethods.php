@@ -31,6 +31,7 @@ class PaymentMethods extends Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $payment_method = new PaymentMethod($_POST);
+            $payment_method->user_id = $this->user_id;
             if ($payment_method->save()) {
                 Flash::addMessage('Metoda płatności została dodana');
             } else {
@@ -49,6 +50,7 @@ class PaymentMethods extends Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $payment_method = new PaymentMethod($_POST);
+            $payment_method->user_id = $this->user_id;
             if ($payment_method->update()) {
                 Flash::addMessage('Metoda płatności została zmieniona.');
             } else {
@@ -66,6 +68,7 @@ class PaymentMethods extends Authenticated
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $payment_method = new PaymentMethod($_POST);
+            $payment_method->user_id = $this->user_id;
             if ($payment_method->delete()) {
                 Flash::addMessage('Metoda płatności usunięta z bazy i z wszystkich transakcji, do których była przypisana.');
             } else {
