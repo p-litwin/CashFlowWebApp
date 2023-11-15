@@ -126,9 +126,14 @@ h2 {
 /* Navigation bar */
 
 .main-menu {
-    background-color: #59c6ed;
-    box-shadow: 5px 5px 15px #a5a5a5;
+    box-shadow: 8px 8px 15px #a5a5a5;
     padding: 0 2rem;
+}
+
+@media (max-width:993px) {
+    .main-menu-dropdown {
+        box-shadow:none;
+    }
 }
 
 .navbar-brand {
@@ -148,12 +153,33 @@ h2 {
     margin-bottom: 10px;
 }
 
-.site-title {
-    margin-bottom: 1.4rem;
+/* Dropdown menu */
+
+
+.dropdown-menu{
+    --bs-dropdown-font-size:12px;
+    --bs-dropdown-min-width: 6rem;
 }
 
-.site-title h1 {
-    font-size: 1.7rem;
+.dropdown-menu .btn {
+    --bs-btn-font-size:0.85rem;
+}
+
+.main-menu-dropdown {
+    font-size: 1em;
+    border:none;
+}
+
+.main-menu-dropdown-item {
+    padding: 0.8em 0;
+}
+
+.main-menu-dropdown-item:hover {
+    background:none;
+}
+
+.nav-link:hover, .dropdown-item:hover {
+    color:white;
 }
 
 /* Main content of the app */
@@ -415,32 +441,7 @@ width:1200px;
     .amount {
         padding-left:0.5em;
     }
-
-/* Dropdown menu */
-
 }
-.dropdown-menu{
-    --bs-dropdown-font-size:12px;
-    --bs-dropdown-min-width: 6rem;
-}
-
-.dropdown-menu .btn {
-    --bs-btn-font-size:0.85rem;
-}
-
-.main-menu-dropdown {
-    font-size: 1em;
-    border:none;
-}
-
-.main-menu-dropdown-item {
-    padding: 0.8em 0;
-}
-
-.main-menu-dropdown-item:hover {
-    background:none;
-}
-
 /* Modal dialogs */
 
 .modal-header {
