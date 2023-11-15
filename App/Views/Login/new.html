@@ -13,16 +13,16 @@
                     <form action="/login/create" aria-label="Formularz logowania." method="post">
                         <h3 class="font-weight-normal">Zaloguj się</h3>
                         <div class="pb-4">
-                            <label for="inputEmail" class="visually-hidden">Email (login)</label>
-                            <input type="text" id="inputEmail" aria-label="Adres email (login)" name="email" class="form-control" placeholder="Email (login)" value="{{ email }}" required autofocus>
+                            <label for="email" class="visually-hidden">Email (login)</label>
+                            <input type="text" id="email" aria-label="Adres email (login)" name="email" class="form-control" placeholder="Email (login)" value="{{ email }}" required autofocus>
                         </div>
                         <div class="pb-2">
-                            <label for="inputPassword" class="visually-hidden">Password</label>
-                            <input type="password" class="form-control hide-show-password" aria-label="Hasło." name="password" id="inputPassword" placeholder="Hasło" required>
+                            <label for="password" class="visually-hidden">Password</label>
+                            <input type="password" class="form-control hide-show-password" aria-label="Hasło." name="password" id="password" placeholder="Hasło" required>
                         </div>
                         <div class="form-check pt-1 pb-2">
-                            <input id="inputRememberMe" aria-label="Pamiętaj logowanie" name="remember_me" class="form-check-input" type="checkbox">
-                            <label class="form-check-label" for="inputRememberMe">Pamiętaj mnie</label>
+                            <input id="remember-me" aria-label="Pamiętaj logowanie" name="remember_me" class="form-check-input" type="checkbox">
+                            <label class="form-check-label" for="remember-me">Pamiętaj mnie</label>
                         </div>
                         <button class="btn btn-lg btn-primary btn-block" type="submit">Zaloguj się</button>
                         <p class="pt-2 mb-0"><a href="/password">Nie pamiętam hasła</a></p>

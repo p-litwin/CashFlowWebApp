@@ -8,6 +8,22 @@ html {
     background-color: #59c6ed;
 }
 
+.btn-close {
+    font-size: 10px;
+    vertical-align: middle;
+    margin: 0 0 2px 10px;
+}
+
+h1 {
+    font-size: 1.7rem;
+    margin-bottom: 1rem;
+  }
+
+h2 {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
 /* Block buttons */
 
 .btn-block {
@@ -65,10 +81,6 @@ html {
     margin-bottom: 0;
 }
 
-.feature-column {
-    padding: 0 0.5rem 0 2.65rem;
-}
-
 .feature-image {
     width: 50px;
     padding: 25px 0;
@@ -114,9 +126,14 @@ html {
 /* Navigation bar */
 
 .main-menu {
-    background-color: #59c6ed;
-    box-shadow: 5px 5px 15px #a5a5a5;
+    box-shadow: 8px 8px 15px #a5a5a5;
     padding: 0 2rem;
+}
+
+@media (max-width:993px) {
+    .main-menu-dropdown {
+        box-shadow:none;
+    }
 }
 
 .navbar-brand {
@@ -136,12 +153,33 @@ html {
     margin-bottom: 10px;
 }
 
-.site-title {
-    margin-bottom: 1.4rem;
+/* Dropdown menu */
+
+
+.dropdown-menu{
+    --bs-dropdown-font-size:12px;
+    --bs-dropdown-min-width: 6rem;
 }
 
-.site-title h1 {
-    font-size: 1.7rem;
+.dropdown-menu .btn {
+    --bs-btn-font-size:0.85rem;
+}
+
+.main-menu-dropdown {
+    font-size: 1em;
+    border:none;
+}
+
+.main-menu-dropdown-item {
+    padding: 0.8em 0;
+}
+
+.main-menu-dropdown-item:hover {
+    background:none;
+}
+
+.nav-link:hover, .dropdown-item:hover {
+    color:white;
 }
 
 /* Main content of the app */
@@ -150,18 +188,7 @@ html {
     padding: 2rem;
 }
 
-/* Add expense and income card */
-
-.add-expense-income-card {
-    max-width: 400px;
-    margin: 0 auto 2rem 0;
-    box-shadow: 5px 5px 15px #a5a5a5;
-    border: 0;
-}
-
-.form-outline {
-    position:relative;
-}
+/* Forms */
 
 .form-label {
     margin-bottom: 0;
@@ -174,35 +201,34 @@ html {
     color: var(--bs-secondary);
     z-index:999;
   }
-
-.buttons {
-    padding-top: 1rem;
+  
+textarea {
+    resize: none;
 }
 
-.textarea-100 {
-    height: 100%;
+.form-label-two-columns {
+top: 10px;
+position: relative;
 }
 
-.input-group {
-    padding: 0.5rem 0;
-    margin-right: 0;
+.save-button {
+border-radius:0 0 5px 5px;
 }
 
-.input-group-prepend {
-    text-align: right;
-    padding-right: 0;
+.inline-form-button {
+    padding: 0.75em;
 }
 
-.input-group-text {
-    align-items: baseline;
-    background-color: rgb(234, 234, 234);
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
+.cashflowapp-input {
+padding: 0.6em;
+font-size: 0.95rem;
 }
 
-/* .login-register-fields {
-    margin: 0 0 1rem 0;
-} */
+.cashflowapp-input option {
+padding-bottom: 0.6em;
+padding-left:0;
+font-size: 0.95em;
+}
 
 /* Balance page */
 
@@ -225,7 +251,7 @@ html {
     }
 }
 
-/* Cards */
+/* Balance cards */
 
 .card-header {
     background-color: #59c6ed;
@@ -294,6 +320,8 @@ input.error {
     color: red;
 }
 
+/* Flash messages */
+
 .flash-messages-container {
     position: fixed;
     bottom: 4%;
@@ -308,13 +336,8 @@ input.error {
     display: inline-block;
 }
 
-.btn-close {
-    font-size: 10px;
-    vertical-align: middle;
-    margin: 0 0 2px 10px;
-}
+/* Error page, 404 and 500 */
 
-/* 404 page */
 .error-page {
     background: #59c6ed;
     background-size: cover;
@@ -355,6 +378,8 @@ input.error {
     color: #3498DB;
     cursor: pointer;
 }
+
+/* Transactions list */
 
 .transaction-item {
 width:1200px;
@@ -417,55 +442,7 @@ width:1200px;
         padding-left:0.5em;
     }
 }
-.dropdown-menu{
-    --bs-dropdown-font-size:12px;
-    --bs-dropdown-min-width: 6rem;
-}
-
-.dropdown-menu .btn {
-    --bs-btn-font-size:0.85rem;
-}
-
-.main-menu-dropdown {
-    font-size: 1em;
-    border:none;
-}
-
-.main-menu-dropdown-item {
-    padding: 0.8em 0;
-}
-
-.main-menu-dropdown-item:hover {
-    background:none;
-}
-
-textarea {
-    resize: none;
-}
-
-.form-label-two-columns {
-top: 10px;
-position: relative;
-}
-
-.save-button {
-border-radius:0 0 5px 5px;
-}
-
-.inline-form-button {
-    padding: 0.75em;
-}
-
-.cashflowapp-input {
-padding: 0.6em;
-font-size: 0.95rem;
-}
-
-.cashflowapp-input option {
-padding-bottom: 0.6em;
-padding-left:0;
-font-size: 0.95em;
-}
+/* Modal dialogs */
 
 .modal-header {
 padding: 0.6rem 0.7rem 0.6rem 1.5rem;

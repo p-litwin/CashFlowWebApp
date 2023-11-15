@@ -5,20 +5,18 @@
 {% block body %}
 
 <div class="container-fluid main-content ms-auto mf-auto">
-    <div class="row site-title">
-        <h1>Ustawienia - Konto użytkownika</h1>
-    </div>
+    <h1>Ustawienia - Konto użytkownika</h1>
     <div class="col-lg-6 col-sm-12 card p-3">
-        <form class="row pb-3" id="userNameChangeForm" method="post" action="/account/user-name-update">
+        <form class="row pb-3" id="user-name-change-form" method="post" action="/account/user-name-update">
             <div class="col-md-8 col-sm-6">
                 <label class="form-label" for="name">Imię</label>
-                <input class="form-control cashflowapp-input" type="text" name="userName" id="name" value="{{current_user.name}}">
+                <input class="form-control cashflowapp-input" type="text" name="name" id="name" value="{{current_user.name}}">
             </div>
             <div class="col-md-4 col-sm-6 align-self-end">
                 <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj imię</button>
             </div>
         </form>
-        <form class="row pb-3" id="userEmailChangeForm" method="post" action="/account/user-email-update">
+        <form class="row pb-3" id="user-email-change-form" method="post" action="/account/user-email-update">
             <div class="col-md-8 col-sm-6">
                 <input type="hidden" id="userId" value="{{current_user.userId}}">
                 <label class="form-label" for="email">Email (login)</label>
@@ -28,7 +26,7 @@
                 <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj email</button>
             </div>
         </form>
-        <form class="row pb-3" id="passwordChangeForm" method="post" action="/account/user-password-update">
+        <form class="row pb-3" id="password-change-form" method="post" action="/account/user-password-update">
             <div class="col-md-8 col-sm-6">
                 <label class="form-label" for="password">Hasło</label>
                 <input class="form-control cashflowapp-input hide-show-password col-10" type="password" id="inputPassword" name="password" value="">
@@ -37,7 +35,7 @@
                 <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj hasło</button>
             </div>
         </form>
-        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#account-delete-modal">Usuń konto wraz z danymi</a>
+        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#account-delete-modal"><i class="bi bi-trash"></i> Usuń konto wraz z danymi</a>
     </div> 
 </div>
 

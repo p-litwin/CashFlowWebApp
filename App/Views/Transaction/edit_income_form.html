@@ -1,6 +1,6 @@
 <form method="post" id="{{idSuffix}}-form" action="" aria-label="{{ariaLabel}}">
     <input type="hidden" id="{{idSuffix}}-id" name="id" value="{{transactions.transactions_id}}">
-    <div class="form-outline  mb-1 has-validation row px-4 pt-2">
+    <div class="mb-1 has-validation row px-4 pt-2">
         <div class="col-5">
             <label class="form-label form-label-two-columns" for="{{idSuffix}}-amount">Kwota</label>
             <input class="form-control auto-highlight cashflowapp-input " type="number"
@@ -15,7 +15,7 @@
                 id="{{idSuffix}}-date" name="date" value="" pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}">
         </div>
     </div>
-    <div class="form-outline mb-1 has-validation px-4">
+    <div class="mb-1 has-validation px-4">
         <label class="form-label" for="{{idSuffix}}-category">Kategoria:</label>
         <select class="form-control cashflowapp-input" aria-label="Kategoria przychodu" id="{{idSuffix}}-category"
             placeholder="Kategoria" name="category">
@@ -25,7 +25,7 @@
             {% endfor %}
         </select>
     </div>
-    <div class="form-outline mb-2 has-validation px-4 pb-4">
+    <div class="mb-2 has-validation px-4 pb-4">
         <label class="form-label" for="{{idSuffix}}-comment">Opis przychodu:</label>
         <textarea class="form-control cashflowapp-input" aria-label="Opis przychodu" id="{{idSuffix}}-comment"
             name="comment"></textarea>

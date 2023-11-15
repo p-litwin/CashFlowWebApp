@@ -33,7 +33,7 @@ class Account extends Authenticated {
     public function userNameUpdateAction()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $new_name = $_POST['userName'];
+            $new_name = $_POST['name'];
             $user = new User(Auth::getUser());
             if ($user->name != $new_name) {
                 if ($user->updateName($new_name))

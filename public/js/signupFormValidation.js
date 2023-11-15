@@ -1,6 +1,5 @@
 $(document).ready(function () {
-
-    $("#signupForm").validate({
+    $("#signup-form").validate({
         errorClass: "is-invalid",
         validClass:"is-valid",
         errorElement: "span",
