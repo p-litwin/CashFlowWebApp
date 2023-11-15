@@ -8,61 +8,46 @@
     <div class="row site-title">
         <h1>Ustawienia - Konto użytkownika</h1>
     </div>
-    <div class="col-md-6 col-sm-12">
+    <div class="col-lg-6 col-sm-12 card p-3">
         <form class="row pb-3" id="userNameChangeForm" method="post" action="/account/user-name-update">
-            <div class="col-md-9 col-sm-5">
-                <input class="form-control" type="text" name="userName" id="name" value="{{current_user.name}}">
+            <div class="col-md-8 col-sm-6">
+                <label class="form-label" for="name">Imię</label>
+                <input class="form-control cashflowapp-input" type="text" name="userName" id="name" value="{{current_user.name}}">
             </div>
-            <div class="col-md-3 col-sm-5">
-                <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
+            <div class="col-md-4 col-sm-6 align-self-end">
+                <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj imię</button>
             </div>
         </form>
         <form class="row pb-3" id="userEmailChangeForm" method="post" action="/account/user-email-update">
-            <div class="col-md-9 col-sm-5">
+            <div class="col-md-8 col-sm-6">
                 <input type="hidden" id="userId" value="{{current_user.userId}}">
-                <input class="form-control" type="text" name="email" id="email" value="{{current_user.email}}">
+                <label class="form-label" for="email">Email (login)</label>
+                <input class="form-control cashflowapp-input" type="text" name="email" id="email" value="{{current_user.email}}">
             </div>
-            <div class="col-md-3 col-sm-5">
-                <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
+            <div class="col-md-4 col-sm-6 align-self-end">
+                <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj email</button>
             </div>
         </form>
         <form class="row pb-3" id="passwordChangeForm" method="post" action="/account/user-password-update">
-            <div class="col-md-9 col-sm-5">
-                <input class="form-control hide-show-password col-10" type="password" id="inputPassword" name="password" value="">
+            <div class="col-md-8 col-sm-6">
+                <label class="form-label" for="password">Hasło</label>
+                <input class="form-control cashflowapp-input hide-show-password col-10" type="password" id="inputPassword" name="password" value="">
             </div>
-            <div class="col-md-3 col-sm-5">
-                <button class="btn btn-primary btn-sm btn-block">Aktualizuj</button>
+            <div class="col-md-4 col-sm-6 align-self-end">
+                <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj hasło</button>
             </div>
         </form>
-        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#accountDeleteModal">Usuń konto wraz z danymi</a>
+        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#account-delete-modal">Usuń konto wraz z danymi</a>
     </div> 
 </div>
-<!-- Modal -->
-<div class="modal fade" id="accountDeleteModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-    aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Usuwanie konta użytkownika</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form method="post" id="transactionDeleteForm" action="\settings\user-account-delete">
-                    <input type="hidden" name="user_id" value="{{ current_user.userId }}">
-                    <p class="text-danger">Czy jesteś pewien, że chcesz usunąć swoje konto wraz ze wszystkimi danymi?</p>
-                     <p class="text-danger">Aby usunąć swoje konto, podaj swoje hasło poniżej:</p>
-                    <label for="password">Hasło</label>
-                     <input class="form-control hide-show-password field-required" type="password" id="password" name="password" required>
-                <div class="modal-footer">
-                    <a role="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</a>
-                    <button type="submit" class="btn btn-danger">Usuń</button>
-                </div>
-            </form>
-            </div>
-        </div>
-    </div>
-</div>
 
+<!-- Modal -->
+{{ include("modal_window.html", {
+    idSuffix: 'account-delete',
+    modalTitle: 'Usuwanie konta użytkownika',
+    modalAriaLabel: 'Okno potwierdzenia usunięcia konta użytkownika',
+    modalContent: '\\Account\\delete-account-form.html',
+    formAriaLabel: 'Formularz edycji wydatku' }) }}
 {% endblock %}
 
 {% block footer %}
