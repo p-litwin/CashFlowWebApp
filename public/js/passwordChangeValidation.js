@@ -1,6 +1,5 @@
 $(document).ready(function () {
-
-    $("#passwordChangeForm").validate({
+    $("#password-change-form").validate({
         errorClass: "is-invalid",
         validClass:"is-valid",
         errorElement: "span",

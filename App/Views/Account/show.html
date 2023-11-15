@@ -9,7 +9,7 @@
         <h1>Ustawienia - Konto użytkownika</h1>
     </div>
     <div class="col-lg-6 col-sm-12 card p-3">
-        <form class="row pb-3" id="userNameChangeForm" method="post" action="/account/user-name-update">
+        <form class="row pb-3" id="user-name-change-form" method="post" action="/account/user-name-update">
             <div class="col-md-8 col-sm-6">
                 <label class="form-label" for="name">Imię</label>
                 <input class="form-control cashflowapp-input" type="text" name="userName" id="name" value="{{current_user.name}}">
@@ -18,7 +18,7 @@
                 <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj imię</button>
             </div>
         </form>
-        <form class="row pb-3" id="userEmailChangeForm" method="post" action="/account/user-email-update">
+        <form class="row pb-3" id="user-email-change-form" method="post" action="/account/user-email-update">
             <div class="col-md-8 col-sm-6">
                 <input type="hidden" id="userId" value="{{current_user.userId}}">
                 <label class="form-label" for="email">Email (login)</label>
@@ -28,7 +28,7 @@
                 <button class="btn btn-primary btn-sm btn-block inline-form-button">Aktualizuj email</button>
             </div>
         </form>
-        <form class="row pb-3" id="passwordChangeForm" method="post" action="/account/user-password-update">
+        <form class="row pb-3" id="password-change-form" method="post" action="/account/user-password-update">
             <div class="col-md-8 col-sm-6">
                 <label class="form-label" for="password">Hasło</label>
                 <input class="form-control cashflowapp-input hide-show-password col-10" type="password" id="inputPassword" name="password" value="">

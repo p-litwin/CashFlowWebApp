@@ -1,6 +1,6 @@
 $(document).ready(function () {
 
-    $("#userNameChangeForm").validate({
+    $("#user-name-change-form").validate({
         errorClass: "is-invalid",
         validClass:"is-valid",
         errorElement: "span",
@@ -17,7 +17,7 @@ $(document).ready(function () {
         }
     });
 
-    $("#userEmailChangeForm").validate({
+    $("#user-email-change-form").validate({
         errorClass: "is-invalid",
         validClass:"is-valid",
         errorElement: "span",
