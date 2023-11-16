@@ -36,7 +36,7 @@ class ExpenseCategories extends Authenticated
      */
     public function showAction()
     {
-        View::renderTemplate('Categories_methods\Expense_Categories\show.html');
+        View::renderTemplate('Categories_methods/Expense_categories/show.html');
     }
 
     /**
