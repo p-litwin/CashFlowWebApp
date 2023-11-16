@@ -5,54 +5,60 @@
 {% block body %}
 
 <div class="container-fluid main-content ms-auto mf-auto">
-    <h1>Ustawienia - Metody płatności</h1>
-    <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
-        <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#method-edit-modal" data-bs-action="add">
-          <i class="bi bi-plus-circle"></i> Dodaj nową metodę płatności</button>
-    </div>
-    <h2>Lista metod płatności</h2>
-    {% if payment_methods %}
-        {% for payment_method in payment_methods %}
-        <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
-          <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex">
-            <div class="col-lg-10 col-md-10 col-sm-10 col-7">
-                {{payment_method.name}}
-            </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 col-5">
-                  <div class="dropdown text-end">
-                    <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-three-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu ellipsis-menu">
-                      <li><button class="btn btn-block" href="" data-bs-toggle="modal" data-bs-target="#method-delete-modal" data-bs-id="{{payment_method.id}}" data-bs-name="{{payment_method.name}}">
-                        <i class="bi bi-trash text-danger"></i> Delete</button></li>
-                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update" data-bs-id="{{payment_method.id}}" data-bs-toggle="modal" data-bs-target="#method-edit-modal" data-bs-name="{{payment_method.name}}"><i class="bi bi-pencil-square"></i> Edit</button></li>
-                    </ul>
-                </div>
-            </div>
-          </div>
+  <h1>Ustawienia - Metody płatności</h1>
+  <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
+    <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#method-edit-modal"
+      data-bs-action="add">
+      <i class="bi bi-plus-circle"></i> Dodaj nową metodę płatności</button>
+  </div>
+  <h2>Lista metod płatności</h2>
+  {% if payment_methods %}
+  {% for payment_method in payment_methods %}
+  <div class="card col-md-6 col-sm-12 shadow-sm mb-1">
+    <div class="card-body ps-2 pt-2 pb-2 pe-2 transaction-details d-flex">
+      <div class="col-lg-10 col-md-10 col-sm-10 col-7">
+        {{payment_method.name}}
+      </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 col-5">
+        <div class="dropdown text-end">
+          <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-three-dots-vertical"></i>
+          </a>
+          <ul class="dropdown-menu ellipsis-menu">
+            <li class="dropdown-item ellipsis-dropdown-item"><button class="btn btn-block  ellipsis-dropdown-button"
+                href="" data-bs-toggle="modal" data-bs-target="#method-delete-modal" data-bs-id="{{payment_method.id}}"
+                data-bs-name="{{payment_method.name}}">
+                <i class="bi bi-trash text-danger"></i> Delete</button></li>
+            <li class="dropdown-item ellipsis-dropdown-item"><button class="btn btn-block ellipsis-dropdown-button"
+                data-bs-action="update" data-bs-id="{{payment_method.id}}" data-bs-toggle="modal"
+                data-bs-target="#method-edit-modal" data-bs-name="{{payment_method.name}}"><i
+                  class="bi bi-pencil-square"></i> Edit</button></li>
+          </ul>
         </div>
-        {% endfor %}
+      </div>
+    </div>
+  </div>
+  {% endfor %}
   {% else %}
-<p>Brak  metod płatności.</p>
+  <p>Brak metod płatności.</p>
   {% endif %}
-<!-- Payment method edit Modal -->
-{{ include("modal_window.html", {
-    idSuffix: 'method-edit',
-    modalTitle: 'Metoda płatności',
-    modalAriaLabel: 'Okno edycji metody płatności',
-    modalContent: '\\Categories_methods\\Forms\\method_category_edit_form.html',
-    formLabel: 'Nazwa metody',
-    formAriaLabel: 'Formularz edycji metody płatności',
-    buttonCaption: 'Zapisz metodę' }) }}
-    
-<!-- peymanet delete modal -->
-{{ include("modal_window.html", {
-    idSuffix: 'method-delete',
-    modalTitle: 'Usuwanie metody płatności',
-    modalAriaLabel: 'Okno usuwania metody płatności',
-    modalContent: '\\Categories_methods\\Forms\\method_category_delete_form.html',
-    formAction: '\\payment-methods\\delete' }) }}
+  <!-- Payment method edit Modal -->
+  {{ include("modal_window.html", {
+  idSuffix: 'method-edit',
+  modalTitle: 'Metoda płatności',
+  modalAriaLabel: 'Okno edycji metody płatności',
+  modalContent: '\\Categories_methods\\Forms\\method_category_edit_form.html',
+  formLabel: 'Nazwa metody',
+  formAriaLabel: 'Formularz edycji metody płatności',
+  buttonCaption: 'Zapisz metodę' }) }}
+
+  <!-- peymanet delete modal -->
+  {{ include("modal_window.html", {
+  idSuffix: 'method-delete',
+  modalTitle: 'Usuwanie metody płatności',
+  modalAriaLabel: 'Okno usuwania metody płatności',
+  modalContent: '\\Categories_methods\\Forms\\method_category_delete_form.html',
+  formAction: '\\payment-methods\\delete' }) }}
 </div>
 {% endblock %}
 

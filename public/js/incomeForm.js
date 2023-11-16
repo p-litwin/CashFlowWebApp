@@ -60,6 +60,7 @@ if (incomeEditModal) {
             let year = today.getFullYear();
             date = `${year}-${month}-${day}`;
             modalTitle.innerHTML = "Dodawanie nowego przychodu";
+            $("#add-income-button").addClass("active");
         }
         let idInput = document.getElementById("income-edit-id");
         idInput.value = id;
@@ -75,6 +76,9 @@ if (incomeEditModal) {
     })
     incomeEditModal.addEventListener('shown.bs.modal', event => {
         modalAmountInput.focus();
+    })
+    incomeEditModal.addEventListener('hide.bs.modal', event => {
+        $("#add-income-button").removeClass("active");
     })
 };
 

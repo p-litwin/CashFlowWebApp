@@ -23,11 +23,14 @@
                     <a class="" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical"></i>
                     </a>
-                    <ul class="dropdown-menu ellipsis-menu">
-                        <li><button class="btn btn-block" href="" data-bs-toggle="modal"
-                                data-bs-target="#category-delete-modal" data-bs-id="{{expense_category.id}}" data-bs-name="{{expense_category.name}}">
+                    <ul class="dropdown-menu ellipsis-menu p-0">
+                        <li class="dropdown-item ellipsis-dropdown-item"><button
+                                class="btn btn-block ellipsis-dropdown-button" href="" data-bs-toggle="modal"
+                                data-bs-target="#category-delete-modal" data-bs-id="{{expense_category.id}}"
+                                data-bs-name="{{expense_category.name}}">
                                 <i class="bi bi-trash text-danger"></i> Delete</button></li>
-                        <li><button class="btn btn-block transaction-form-button" data-bs-action="update"
+                        <li class="dropdown-item ellipsis-dropdown-item"><button
+                                class="btn btn-block ellipsis-dropdown-button" data-bs-action="update"
                                 data-bs-id="{{expense_category.id}}" data-bs-toggle="modal"
                                 data-bs-target="#category-edit-modal" data-bs-name="{{expense_category.name}}"><i
                                     class="bi bi-pencil-square"></i> Edit</button></li>
@@ -40,9 +43,9 @@
     {% else %}
     <p>Brak kategorii wydatków</p>
     {% endif %}
-    
-<!--Category add Modal -->
-{{ include("modal_window.html", {
+
+    <!--Category add Modal -->
+    {{ include("modal_window.html", {
     idSuffix: 'category-edit',
     modalTitle: 'Kategoria wydatku',
     modalAriaLabel: 'Okno edycji kategorii',
@@ -50,15 +53,15 @@
     formLabel: 'Nazwa kategorii',
     formAriaLabel: 'Formularz edycji kategorii wydatków',
     buttonCaption: "Zapisz kategorię" }) }}
-    
-<!-- Category delete modal -->
-{{ include("modal_window.html", {
+
+    <!-- Category delete modal -->
+    {{ include("modal_window.html", {
     idSuffix: 'category-delete',
     modalTitle: 'Usuwanie kategorii wydatku',
     modalAriaLabel: 'Okno usuwania kategorii',
     modalContent: '\\Categories_methods\\Forms\\method_category_delete_form.html',
     formAction: '\\expense-categories\\delete' }) }}
-    
+
 </div>
 {% endblock %}
 
