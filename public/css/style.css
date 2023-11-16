@@ -130,8 +130,10 @@ h2 {
     padding: 0 2rem;
 }
 
-.nav-item:active {
+.nav-link:hover, .dropdown-item:hover, .active, .dropdown-item.active {
     color:white;
+    --bs-navbar-active-color:white;
+    --bs-dropdown-link-active-bg: #59c6ed;
 }
 
 @media (max-width:993px) {
