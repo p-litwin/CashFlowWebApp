@@ -398,11 +398,11 @@ width:1200px;
 }
 
 .expense-amount {
-    color:red;
+    color:var(--bs-danger);
 }
 
 .income-amount {
-    color: green;
+    color: var(--bs-success);
 }
 .transaction-ellipsis {
     margin: auto 0;
