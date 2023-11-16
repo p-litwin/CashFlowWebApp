@@ -33,15 +33,11 @@ class Balance extends \App\Controllers\Authenticated {
         $total_income = Transactions::getTotalIncomesForGivenPeriod($balance_time_frame_start, $balance_time_frame_end);
         $balance = $total_income[0] - $total_expense[0];
         
-        $total_income = number_format($total_income[0], 2, ".", " ");
-        $total_expense = number_format($total_expense[0], 2, ".", " ");
-        $balance = number_format($balance, 2, ".", " ");
-        
         View::renderTemplate('\Balance\show.html', [
             'expenses' => $expenses,
-            'total_expense' => $total_expense,
+            'total_expense' => $total_expense[0],
             'incomes' => $incomes,
-            'total_income' => $total_income,
+            'total_income' => $total_income[0],
             'balance' => $balance,
             'balance_time_frame' => $balance_time_frame]);
 
