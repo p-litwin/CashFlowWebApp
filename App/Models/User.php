@@ -407,8 +407,14 @@ class User extends \Core\Model
      */
     protected function sendPasswordResetEmail()
     {
-
-        $url = 'http://' . $_SERVER['HTTP_HOST'] . '/password/reset/' . $this->reset_token;
+        if (isset($_SERVER['HTTPS'])) {
+            if ($_SERVER['HTTPS'] == 'on') {
+                $http_request = "https";
+            }
+        } else {
+            $http_request = "http";
+        }
+        $url = $http_request . '//' . $_SERVER['HTTP_HOST'] . '/password/reset/' . $this->reset_token;
 
         $text = View::getTemplate('Password\reset_email.txt', ['url' => $url]);
         $html = View::getTemplate('Password\reset_email.html', ['url' => $url]);
@@ -423,8 +429,14 @@ class User extends \Core\Model
      */
     public function sendActivationEmail()
     {
-
-        $url = 'http://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
+        if (isset($_SERVER['HTTPS'])) {
+            if ($_SERVER['HTTPS'] == 'on') {
+                $http_request = "https";
+            }
+        } else {
+            $http_request = "http";
+        }
+        $url = $http_request . '://' . $_SERVER['HTTP_HOST'] . '/signup/activate/' . $this->activation_token;
 
         $text = View::getTemplate('Signup\activate.txt', ['url' => $url]);
         $html = View::getTemplate('Signup\activate.html', ['url' => $url]);

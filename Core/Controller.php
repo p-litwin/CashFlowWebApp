@@ -74,7 +74,14 @@ abstract class Controller
      */
     public function redirect($url)
     {
-        header('Location: http://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
+        if (isset($_SERVER['HTTPS'])) {
+            if ($_SERVER['HTTPS'] == 'on') {
+                $http_request = "https";
+            }
+        } else {
+            $http_request = "http";
+        }
+        header('Location:' . $http_request . '://' . $_SERVER['HTTP_HOST'] . $url, true, 303);
         exit;
     }
 
@@ -104,7 +111,8 @@ abstract class Controller
      * @param string $type Flash message type, INFO, WARNING, SUCCESS
      * @return void
      */
-    public function pushFlashMessages($messages, $type = Flash::INFO){
+    public function pushFlashMessages($messages, $type = Flash::INFO)
+    {
         foreach ($messages as $message) {
             Flash::addMessage($message, $type);
         }
