@@ -473,3 +473,19 @@ padding:1.5rem;
 font-size: 0.9em;
 margin-bottom: 0.5rem;
 }
+
+/* Ellipsis dropdown menu */
+
+.ellipsis-dropdown-item:hover {
+    background:none;
+}
+
+.ellipsis-dropdown-button:hover {
+    font-weight: bold;
+    color:black;
+    font-weight: bold;
+}
+
+.ellipsis-menu {
+    width:115px;
+}
