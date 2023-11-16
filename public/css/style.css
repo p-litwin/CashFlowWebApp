@@ -130,6 +130,10 @@ h2 {
     padding: 0 2rem;
 }
 
+.nav-item:active {
+    color:white;
+}
+
 @media (max-width:993px) {
     .main-menu-dropdown {
         box-shadow:none;

@@ -63,7 +63,7 @@
                                 <tbody>
                                     {% for income in incomes %}
                                     <tr>
-                                        <td class="ps-3">{{income.name}}</td>
+                                        <td class="ps-3">{% if income.name is empty %}Bez kategorii{% else %}{{income.name}}{% endif %}</td>
                                         <td>{{income.Total_incomes}} zł</td>
                                     </tr>
                                     {% endfor %}
@@ -82,7 +82,7 @@
                                 <tbody>
                                     {% for expense in expenses  %}
                                     <tr>
-                                        <td class="ps-3">{{expense.name}}</td>
+                                        <td class="ps-3">{% if expense.name is empty %}Bez kategorii{% else %}{{expense.name}}{% endif %}</td>
                                         <td>{{expense.Total_expenses}} zł</td>
                                     </tr>
                                     {% endfor %}
