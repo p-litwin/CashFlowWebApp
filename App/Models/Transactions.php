@@ -18,15 +18,16 @@ class Transactions extends Model {
      */
     public static function getAllExpensesForGivenPeriod($start_date, $end_date) {
 
-        $sql = "SELECT user_categories.name, COALESCE(SUM(expenses.amount),0) as Total_expenses
-                FROM
-                (SELECT *
-                FROM expenses_category_assigned_to_users as ecatu
-                WHERE ecatu.user_id = :user_id) as user_categories
-                LEFT JOIN expenses
-                ON user_categories.id = expenses.expense_category_assigned_to_user_id AND expenses.date_of_expense BETWEEN :start_date AND :end_date
-                GROUP BY user_categories.name
-                ORDER BY user_categories.name";
+        $sql = "SELECT ecat.name as name, COALESCE(SUM(exp.amount),0) AS Total_expenses
+                FROM expenses_category_assigned_to_users as ecat
+                left JOIN expenses as exp
+                ON ecat.id = exp.expense_category_assigned_to_user_id and exp.date_of_expense BETWEEN :start_date AND :end_date
+                WHERE ecat.user_id = :user_id
+                GROUP BY ecat.name
+                UNION
+                SELECT NULL, COALESCE(sum(exp1.amount),0) as Total_expenses
+                FROM expenses as exp1
+                WHERE exp1.user_id =:user_id and exp1.expense_category_assigned_to_user_id is NULL and exp1.date_of_expense BETWEEN :start_date AND :end_date";
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
@@ -81,15 +82,16 @@ class Transactions extends Model {
      */
     public static function getAllIncomesForGivenPeriod($start_date, $end_date) {
 
-        $sql = "SELECT user_categories.name, COALESCE(SUM(incomes.amount),0) as Total_incomes
-                FROM
-                (SELECT *
-                FROM incomes_category_assigned_to_users as icatu
-                WHERE icatu.user_id = :user_id) as user_categories
-                LEFT JOIN incomes
-                ON user_categories.id = incomes.income_category_assigned_to_user_id AND incomes.date_of_income BETWEEN :start_date AND :end_date
-                GROUP BY user_categories.name
-                ORDER BY user_categories.name";
+        $sql = "SELECT icat.name AS name, COALESCE(SUM(inc.amount),0) AS Total_incomes
+                FROM incomes_category_assigned_to_users AS icat
+                LEFT JOIN incomes AS inc
+                ON icat.id = inc.income_category_assigned_to_user_id and inc.date_of_income BETWEEN :start_date AND :end_date
+                WHERE icat.user_id = :user_id
+                GROUP BY icat.name
+                UNION
+                SELECT NULL, COALESCE(SUM(inc1.amount),0) AS Total_incomes
+                FROM incomes AS inc1
+                WHERE inc1.user_id =:user_id AND inc1.income_category_assigned_to_user_id IS NULL AND inc1.date_of_income BETWEEN :start_date AND :end_date";
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
