@@ -21,7 +21,7 @@
                             Przychody razem
                         </div>
                         <div class="card-body text-center text-success fs-4">
-                             {{total_income}} zł
+                             {{total_income|number_format(2, ',', ' ')}} zł
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                             Wydatki razem
                         </div>
                         <div class="card-body text-center text-danger fs-4">
-                                {{total_expense}} zł
+                                {{total_expense|number_format(2, ',', ' ')}} zł
                         </div>
                     </div>
                 </div>
@@ -42,11 +42,11 @@
                         </div>
                         {% if balance == null or balance < 0 %}
                             <div class="card-body text-center text-danger fs-4">
-                                {{balance}} zł
+                                {{balance|number_format(2, ',', ' ')}} zł
                             </div>
                             {% else %}
                             <div class="card-body text-center text-success fs-4">
-                                {{balance}} zł
+                                {{balance|number_format(2, ',', ' ')}} zł
                             </div>
                             {% endif %}
                     </div>
@@ -64,7 +64,7 @@
                                     {% for income in incomes %}
                                     <tr>
                                         <td class="ps-3">{% if income.name is empty %}Bez kategorii{% else %}{{income.name}}{% endif %}</td>
-                                        <td>{{income.Total_incomes}} zł</td>
+                                        <td>{{income.Total_incomes|number_format(2, ',', ' ')}} zł</td>
                                     </tr>
                                     {% endfor %}
                                 </tfoot>
@@ -83,7 +83,7 @@
                                     {% for expense in expenses  %}
                                     <tr>
                                         <td class="ps-3">{% if expense.name is empty %}Bez kategorii{% else %}{{expense.name}}{% endif %}</td>
-                                        <td>{{expense.Total_expenses}} zł</td>
+                                        <td>{{expense.Total_expenses|number_format(2, ',', ' ')}} zł</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
