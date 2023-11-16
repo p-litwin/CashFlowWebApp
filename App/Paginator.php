@@ -67,6 +67,10 @@ namespace App;
 
         $this->total_pages = ceil($total_records / $records_per_page);
 
+        if ($this->total_pages == 0) {
+            $this->total_pages = 1;
+        }
+
         if ($page < $this->total_pages) {
             $this->next = $page + 1;
         }

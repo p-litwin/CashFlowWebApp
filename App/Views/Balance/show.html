@@ -63,8 +63,8 @@
                                 <tbody>
                                     {% for income in incomes %}
                                     <tr>
-                                        <td class="ps-3">{% if income.name is empty %}Bez kategorii{% else %}{{income.name}}{% endif %}</td>
-                                        <td>{{income.Total_incomes|number_format(2, ',', ' ')}} zł</td>
+                                        <td class="col-8 ps-3">{% if income.name is empty %}Bez kategorii{% else %}{{income.name}}{% endif %}</td>
+                                        <td class="col-4 {% if income.Total_incomes > 0 %}text-success{% endif %}">{{income.Total_incomes|number_format(2, ',', ' ')}} zł</td>
                                     </tr>
                                     {% endfor %}
                                 </tfoot>
@@ -82,8 +82,8 @@
                                 <tbody>
                                     {% for expense in expenses  %}
                                     <tr>
-                                        <td class="ps-3">{% if expense.name is empty %}Bez kategorii{% else %}{{expense.name}}{% endif %}</td>
-                                        <td>{{expense.Total_expenses|number_format(2, ',', ' ')}} zł</td>
+                                        <td class="col-8 8ps-3">{% if expense.name is empty %}Bez kategorii{% else %}{{expense.name}}{% endif %}</td>
+                                        <td class="col-4 {% if expense.Total_expenses > 0 %}text-danger{% endif %}">{{expense.Total_expenses|number_format(2, ',', ' ')}} zł</td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
