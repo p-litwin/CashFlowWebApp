@@ -66,6 +66,7 @@ if (expensesEditModal) {
             let year = today.getFullYear();
             date = `${year}-${month}-${day}`;
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
+            $("#add-expense-button").addClass("active");
         }
         let idInput = document.getElementById("expense-edit-id");
         idInput.value = id;
@@ -83,6 +84,9 @@ if (expensesEditModal) {
     })
     expensesEditModal.addEventListener('shown.bs.modal', event => {
         modalAmountInput.focus();
+    })
+    expensesEditModal.addEventListener('hide.bs.modal', event => {
+        $("#add-expense-button").removeClass("active");
     })
 };
 
