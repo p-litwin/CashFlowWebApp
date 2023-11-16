@@ -27,14 +27,6 @@ let dateRangePickerLocale = {
     ]
 };
 
-// Highlight text of the clicked textbox with auto-highlight class
-function autoHighlight(textbox) {
-    textbox.focus();
-    textbox.select();
-};
-
-$('.auto-highlight').click(function () { autoHighlight(jQuery(this)) });
-
 //Close flash message if the 'x' is clicked
 jQuery(".btn-close").click(function() {
     var contentPanelId = "#" + jQuery(this).parent().parent().parent().attr("id");
