@@ -159,6 +159,18 @@ h2 {
     margin-bottom: 10px;
 }
 
+@media ( max-width:1155px) {
+    .main-menu {
+        font-size: 0.90rem;
+    }
+}
+
+@media (max-width:1063px) {
+    .main-menu {
+        font-size: 0.78rem;
+    }
+}
+
 /* Dropdown menu */
 
 
