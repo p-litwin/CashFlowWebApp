@@ -17,7 +17,7 @@ class IncomeCategories extends Authenticated{
      */
     public function showAction()
     {
-        View::renderTemplate('Categories_methods\Income_Categories\show.html', );
+        View::renderTemplate('Categories_methods\Income_categories\show.html', );
     }
 
     /**
