@@ -271,10 +271,6 @@ font-size: 0.95em;
 
 /* Balance cards */
 
-.card-header {
-    background-color: #59c6ed;
-}
-
 .pie-chart {
     max-width: 100%;
 }
@@ -484,6 +480,16 @@ padding:1.5rem;
 .modal-form-paragraph {
 font-size: 0.9em;
 margin-bottom: 0.5rem;
+}
+
+.budget-info-header {
+    padding: 0.2rem 0 0.2rem 0.6rem;
+    font-weight: 600;
+    font-size:0.8rem;
+}
+
+.budget-text {
+    font-size:0.8rem;
 }
 
 /* Ellipsis dropdown menu */

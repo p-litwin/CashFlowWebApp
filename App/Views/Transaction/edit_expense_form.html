@@ -35,6 +35,45 @@
             {% endfor %}
         </select>
     </div>
+    <div class="row pt-2 px-4" id="budget">
+        <p class="pb-2 mb-0 budget-text">Bieżący miesiąc dla wybranej kategorii:</p>
+        <div class="col pe-1">
+            <div class="card">
+                <div class="card-header budget-info-header">
+                    Wydatki
+                </div>
+                <div class="card-body p-1">
+                    <p class="card-text text-center">- zł</p>
+                </div>
+            </div>
+        </div>
+        <div class="col px-1">
+            <div class="card">
+                <div class="card-header budget-info-header">
+                    Budżet:
+                </div>
+                <div class="card-body p-1">
+                    <p class="card-text text-center">- zł</p>
+                </div>
+            </div>
+        </div>
+        <div class="col ps-1">
+            <div class="card">
+                <div class="card-header budget-info-header">
+                  <span id="difference">Pozostało:</span>
+                </div>
+                <div class="card-body p-1 text-success">
+                  <p class="card-text text-center">- zł</p>
+                </div>
+              </div>
+        </div>
+        <div class="py-3">
+            <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                <div class="progress-bar bg-success" style="width: 0%">0%</div>
+              </div>
+            </div>
+    </div>
+    
     <div class="mb-2 has-validation px-4 pb-4">
         <label class="form-label" for="{{idSuffix}}-comment">Opis wydatku:</label>
         <textarea class="form-control cashflowapp-input" aria-label="Opis wydatku" id="{{idSuffix}}-comment"
