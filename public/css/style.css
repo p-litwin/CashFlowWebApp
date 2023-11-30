@@ -416,6 +416,12 @@ width:1200px;
     margin: auto 0;
 }
 
+.header-card {
+    border-radius: 5px 5px 0px 0px;
+    font-size:0.8rem;
+    font-weight:bold;
+}
+
 @media (max-width:928px) {
     .transaction-details {
         font-size:0.8em;
@@ -505,5 +511,5 @@ margin-bottom: 0.5rem;
 }
 
 .ellipsis-menu {
-    width:115px;
+    width:140px;
 }
