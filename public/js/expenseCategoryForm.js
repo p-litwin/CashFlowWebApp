@@ -58,6 +58,33 @@ if (categoryEditModal) {
     })
 };
 
+let budgetEditModal = document.getElementById('budget-edit-modal')
+if (budgetEditModal) {
+    const budgetInput = budgetEditModal.querySelector('#budget-edit-amount');
+    const modalTitle = budgetEditModal.querySelector('.modal-title');
+    budgetEditModal.addEventListener('show.bs.modal', event => {
+        // Button that triggered the modal
+        const button = event.relatedTarget;
+        // Extract info from data-bs-* attributes
+        let action = button.getAttribute('data-bs-action');
+        let id = "";
+        let budget = "";
+        if (action == 'update') {
+            id = button.getAttribute('data-bs-id');
+            budget = button.getAttribute('data-bs-budget');
+            modalTitle.innerHTML = "Edycja kategorii wydatku"
+        } else {
+            modalTitle.innerHTML = "Dodawanie nowej kategorii wydatku"
+        }
+        let idInput = document.getElementById("budget-edit-id");
+        idInput.value = id;
+        budgetInput.value = budget;
+    })
+    budgetEditModal.addEventListener('shown.bs.modal', event => {
+        budgetInput.focus();
+    })
+};
+
 ///************************ */
 
 const categoryDeleteModal = document.getElementById('category-delete-modal')

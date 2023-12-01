@@ -46,7 +46,7 @@ class ExpenseCategory extends TransactionCategory {
      */
     public static function getExpenseCategoriesByUserId($user_id) {
         
-        $sql = 'SELECT id, name
+        $sql = 'SELECT id, name, budget
                 FROM expenses_category_assigned_to_users
                 WHERE user_id = :user_id
                 ORDER BY name' ;

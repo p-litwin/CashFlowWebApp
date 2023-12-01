@@ -16,7 +16,7 @@
             <div class="col-lg-8 col-md-8 col-sm-8 col-8 opacity-75">
                 Nazwa kategorii
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-4 col-3 opacity-75">
+            <div class="col-lg-3 col-md-3 col-sm-4 col-3 opacity-75 text-center">
                 Budżet mies.
             </div>
             <div class="col-lg-1 col-md-1 col-sm-1 col-1">
@@ -30,8 +30,12 @@
             <div class="col-lg-8 col-md-8 col-sm-8 col-8">
                 {{expense_category.name}}
             </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 col-3 opacity-75">
-                1000 zł
+            <div class="col-lg-3 col-md-3 col-sm-3 col-3 opacity-75 text-center">
+                {% if expense_category.budget %}
+                {{expense_category.budget|number_format(2, ',', ' ')}}
+                {% else %}
+                -
+                {% endif %}
             </div>
             <div class="col-lg-1 col-md-1 col-sm-1 col-1">
                 <div class="dropdown text-end">
@@ -47,8 +51,8 @@
                         <li class="dropdown-item ellipsis-dropdown-item"><button
                                 class="btn btn-block ellipsis-dropdown-button" data-bs-action="update"
                                 data-bs-id="{{expense_category.id}}" data-bs-toggle="modal"
-                                data-bs-target="#category-edit-modal" data-bs-name="{{expense_category.name}}"><i
-                                    class="bi bi-pencil-square"></i> Zmień limit</button></li>
+                                data-bs-target="#budget-edit-modal" data-bs-budget="{{expense_category.budget}}"><i
+                                    class="bi bi-pencil-square"></i> Budżet</button></li>
                         <li class="dropdown-item ellipsis-dropdown-item"><button
                                 class="btn btn-block ellipsis-dropdown-button" data-bs-action="update"
                                 data-bs-id="{{expense_category.id}}" data-bs-toggle="modal"
@@ -81,6 +85,16 @@
     modalAriaLabel: 'Okno usuwania kategorii',
     modalContent: '\\Categories_methods\\Forms\\method_category_delete_form.html',
     formAction: '\\expense-categories\\delete' }) }}
+
+    <!-- Budget edit modal -->
+    {{ include("modal_window.html", {
+        idSuffix: 'budget-edit',
+        modalTitle: 'Edycja budżetu dla kategorii',
+        modalAriaLabel: 'Okno edycji budżetu miesięcznego dla kategorii',
+        modalContent: '\\Categories_methods\\Forms\\category_budget_edit_form.html',
+        formLabel: 'Budżet miesięczny dla kategorii',
+        formAriaLabel: 'Formularz edycji budżetu dla kategorii',
+        buttonCaption: "Zapisz"}) }}
 
 </div>
 {% endblock %}
