@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models; 
+namespace App\Models;
 
 use App\Models\TransactionCategory;
 use PDO;
@@ -8,7 +8,14 @@ use PDO;
 /**
  * Model to handle the expenses categories
  */
-class ExpenseCategory extends TransactionCategory {
+class ExpenseCategory extends TransactionCategory
+{
+
+    /**
+     * Monthly budget for expense category
+     * @var float
+     */
+    public $budget;
 
     /**
      * Save new expense category in the database
@@ -45,7 +52,6 @@ class ExpenseCategory extends TransactionCategory {
      * @return array Associative array of the expense category id and expense category name
      */
     public static function getExpenseCategoriesByUserId($user_id) {
-        
         $sql = 'SELECT id, name, budget
                 FROM expenses_category_assigned_to_users
                 WHERE user_id = :user_id
@@ -66,7 +72,6 @@ class ExpenseCategory extends TransactionCategory {
      * @return void
      */
     public static function copyDefaultExpensesCategoriesByUserId($user_id) {
-        
         $sql = 'INSERT INTO expenses_category_assigned_to_users (name, user_id)
                 SELECT name, :user_id
                 FROM expenses_category_default;';
@@ -84,7 +89,6 @@ class ExpenseCategory extends TransactionCategory {
      * @return boolean True if the category has been updated, false otherwise
      */
     public function update() {
-        
         $sql = 'UPDATE expenses_category_assigned_to_users
                 SET name = :name
                 WHERE id=:id AND user_id=:user_id;';
@@ -103,7 +107,6 @@ class ExpenseCategory extends TransactionCategory {
      * @return boolean True if the category has been removed, false otherwise
      */
     public function delete() {
-        
         $sql = 'DELETE FROM expenses_category_assigned_to_users
                 WHERE id=:id AND user_id=:user_id;';
 
@@ -121,7 +124,6 @@ class ExpenseCategory extends TransactionCategory {
      * @return boolean True if the expenses categories has been deleted, false otherwise
      */
     public static function deleteAll($user_id) {
-        
         $sql = 'DELETE FROM expenses_category_assigned_to_users
                 WHERE user_id=:user_id';
 
@@ -146,6 +148,70 @@ class ExpenseCategory extends TransactionCategory {
         $db        = static::getDB();
         $statement = $db->prepare($sql);
         $statement->bindValue(':category_name', $category_name, PDO::PARAM_STR);
+        $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+        $statement->execute();
+
+        return $statement->fetch();
+    }
+
+    /**
+     * Update the budget for expense category
+     * 
+     * @return boolean True if budget has been updated, false otherwise 
+     */
+    public function budgetUpdate()
+    {
+
+        $this->validateBudget();
+
+        if (empty($this->errors)) {
+            $sql = 'UPDATE expenses_category_assigned_to_users
+                    SET budget = :budget
+                    WHERE id=:id AND user_id=:user_id;';
+            $db        = static::getDB();
+            $statement = $db->prepare($sql);
+            $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+            $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
+            $statement->bindValue(':budget', $this->budget, PDO::PARAM_STR);
+            return $statement->execute();
+        } else {
+            return false;
+        }
+
+    }
+
+    /**
+     * Server side validation of the budget value
+     * 
+     * @return void
+     */
+    private function validateBudget()
+    {
+
+        if (!floatval($this->budget)) {
+            $this->errors[] = 'Nieprawidłowa wartość w polu budżet.';
+        }
+        if ($this->budget <= 0) {
+            $this->errors[] = 'Kwota musi być większa od 0';
+        }
+
+    }
+
+    /**
+     * Find expense category by id
+     * 
+     * @return mixed object of the ExpenseCategory class if found in the database, false otherwise
+     */
+    public static function findById($id)
+    {
+
+        $sql = 'SELECT * FROM expenses_category_assigned_to_users
+                WHERE id = :id AND user_id = :user_id';
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':id', $id, PDO::PARAM_STR);
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
         $statement->setFetchMode(PDO::FETCH_CLASS, get_called_class());
         $statement->execute();
 
