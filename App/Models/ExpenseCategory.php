@@ -218,6 +218,20 @@ class ExpenseCategory extends TransactionCategory
         return $statement->fetch();
     }
 
+    public static function getBudgetForCategory($category_id) {
+        $sql = "SELECT budget
+                FROM  expenses_category_assigned_to_users
+                WHERE id = :category_id AND user_id = :user_id";
+
+        $db        = static::getDB();
+        $statement = $db->prepare($sql);
+        $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
+        $statement->bindValue(':category_id', $category_id, PDO::PARAM_INT);
+        $statement->setFetchMode(PDO::FETCH_ASSOC);
+        $statement->execute();
+        return $statement->fetch();
+    }
+
 }
 
 ?>
