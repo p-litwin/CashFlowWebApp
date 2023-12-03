@@ -43,7 +43,7 @@
                     Wydatki
                 </div>
                 <div class="card-body p-1">
-                    <p class="card-text text-center">- zł</p>
+                    <p class="card-text text-center"><span id="new-total">-</span> zł</p>
                 </div>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     Budżet:
                 </div>
                 <div class="card-body p-1">
-                    <p class="card-text text-center">- zł</p>
+                    <p class="card-text text-center"><span id="category-budget">-</span> zł</p>
                 </div>
             </div>
         </div>
@@ -63,18 +63,18 @@
                   <span id="difference">Pozostało:</span>
                 </div>
                 <div class="card-body p-1 text-success">
-                  <p class="card-text text-center">- zł</p>
+                  <p class="card-text text-center"><span id="category-remaining">-</span> zł</p>
                 </div>
               </div>
         </div>
-        <div class="py-3">
+        <div class="py-2">
             <div class="progress" role="progressbar" aria-label="Basic example" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
                 <div class="progress-bar bg-success" style="width: 0%">0%</div>
               </div>
             </div>
     </div>
     
-    <div class="mb-2 has-validation px-4 pb-4">
+    <div class="mb-2 has-validation px-4 pb-2">
         <label class="form-label" for="{{idSuffix}}-comment">Opis wydatku:</label>
         <textarea class="form-control cashflowapp-input" aria-label="Opis wydatku" id="{{idSuffix}}-comment"
             name="comment"></textarea>
