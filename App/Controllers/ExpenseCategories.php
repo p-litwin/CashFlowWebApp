@@ -98,7 +98,7 @@ class ExpenseCategories extends Authenticated
         
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $expense_category = ExpenseCategory::findById($_POST['id']);
-            $expense_category->budget = $_POST['budget'];
+            $expense_category->budget = str_replace(',','.',$_POST['budget']);
             if ($expense_category->budgetUpdate()) {
                 Flash::addMessage('Budżet dla kategorii ' .$expense_category->name. ' został zmieniony.');
             } else {
@@ -106,6 +106,12 @@ class ExpenseCategories extends Authenticated
             }
         }
         $this->redirect('\expense-categories');
+    }
+
+    public static function categoryBudgetAction() {
+        $budget = ExpenseCategory::getBudgetForCategory($_GET['id']);
+        header('Content-Type: application/json');
+        echo json_encode($budget);
     }
 
 }
