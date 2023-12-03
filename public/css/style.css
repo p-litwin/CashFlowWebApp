@@ -224,6 +224,12 @@ textarea {
     resize: none;
 }
 
+.transaction-form-comment {
+    height:70px;
+}
+
+
+
 .form-label-two-columns {
 top: 10px;
 position: relative;
