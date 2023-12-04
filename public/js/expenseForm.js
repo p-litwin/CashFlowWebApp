@@ -59,6 +59,7 @@ if (expensesEditModal) {
             payment = button.getAttribute('data-bs-payment');
             comment = button.getAttribute('data-bs-comment');
             modalTitle.innerHTML = 'Edycja wydatku';
+            updateBudgetInfo(0, )
         } else {
             const today = new Date();
             let day = today.getDate();
@@ -109,7 +110,7 @@ document.querySelector("#expense-edit-category").addEventListener('change', asyn
     let selectedDate = new Date(dateElement.value);
     let selectedMonth = selectedDate.getMonth() + 1;
     let selectedYear = selectedDate.getUTCFullYear();
-    let totalExpense = await getCategoryTotalExpensesForCurrentMonth(categoryId, selectedYear, selectedMonth);
+    let totalExpense = await getCategoryTotalExpensesForSelectedMonth(categoryId, selectedYear, selectedMonth);
     const budgetForCategory = await getCategoryBudget(categoryId);
     let newExpense = document.querySelector("#expense-edit-amount").value;
     updateBudgetInfo(newExpense, totalExpense, budgetForCategory);
@@ -123,7 +124,7 @@ document.querySelector("#expense-edit-category").addEventListener('change', asyn
         selectedDate = new Date(event.target.value);
         let selectedMonth = selectedDate.getMonth() + 1;
         let selectedYear = selectedDate.getUTCFullYear();
-        totalExpense = await getCategoryTotalExpensesForCurrentMonth(categoryId, selectedYear, selectedMonth);
+        totalExpense = await getCategoryTotalExpensesForSelectedMonth(categoryId, selectedYear, selectedMonth);
         console.log(totalExpense);
         updateBudgetInfo(newExpense, totalExpense, budgetForCategory);
     });
@@ -133,16 +134,20 @@ document.querySelector("#expense-edit-category").addEventListener('change', asyn
         selectedDate = new Date(event.target.value);
         let selectedMonth = selectedDate.getMonth() + 1;
         let selectedYear = selectedDate.getUTCFullYear();
-        totalExpense = await getCategoryTotalExpensesForCurrentMonth(categoryId, selectedYear, selectedMonth);
+        totalExpense = await getCategoryTotalExpensesForSelectedMonth(categoryId, selectedYear, selectedMonth);
         console.log(totalExpense);
         updateBudgetInfo(newExpense, totalExpense, budgetForCategory);
     });
 
-
-
 });
-
-async function updateBudgetInfo(newExpense, previousTotal, budget) {
+/**
+ * Update the budget fields in Expense Form
+ * 
+ * @param {number} newExpense - value of the new expense. 2 decimal places.
+ * @param {number} previousTotal - Total expenses prior adding the new expense. 2 decimal places.
+ * @param {number} budget - Budget to calculate the remaining amount after adding new expense. 2 decimal places.
+ */
+async function updateBudgetInfo(newExpense = 0, previousTotal, budget) {
     const newTotalElement = document.querySelector("#new-total");
     const budgetElement = document.querySelector("#category-budget");
     const remainingElement = document.querySelector("#category-remaining");
@@ -157,24 +162,48 @@ async function updateBudgetInfo(newExpense, previousTotal, budget) {
     }
 }
 
+/**
+ * Calculate new total amount
+ * @param {number} newAmount New expense amount
+ * @param {number} total Total expenses without new expense amount
+ * @returns {number} New total  after adding new expense
+ */
 function calculateNewTotal(newAmount, total) {
     newTotal = Number(total)+Number(newAmount);
     newTotal = newTotal.toFixed(2);
     return newTotal;       
 }
 
+/**
+ * 
+ * @param {number} newTotal New total amount after adding new Expense 
+ * @param {number} budget Budget for the selected category
+ * @returns {number} Budget left after adding new expense
+ */
 function calculateRemaining(newTotal, budget){
     remaining = Number(budget) - Number(newTotal);
     remaining = remaining.toFixed(2);
     return remaining;
 }
 
-async function getCategoryTotalExpensesForCurrentMonth(categoryId, year, month) {
+/**
+ * Get the total expenses for the expense category in selected month and year. 
+ * @param {number} categoryId - Id of the expenses category 
+ * @param {number} year - Full four digit year of the expense
+ * @param {number} month - Month of the expense
+ * @returns {number} - Total expenses for selected month. 2 decimal places
+ */
+async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month) {
     const total = await fetch(`expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}`);
     const result = await total.json();
     return result.Total;
 }
 
+/**
+ * Get the budget for selected category
+ * @param {number} categoryId - Id of the expenses category
+ * @returns {number} - Budget for selected category. 2 decimal  places
+ */
 async function getCategoryBudget(categoryId) {
     const response = await fetch(`expense-categories/category-budget?id=${categoryId}`);
     const budget = await response.json();
