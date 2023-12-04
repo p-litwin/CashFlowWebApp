@@ -103,8 +103,8 @@ $('.transaction-form-button').on('click', function () {
 
 
 
-document.querySelector("#expense-edit-category").addEventListener('change', async (e) => {
-    const categoryId = e.target.value;
+document.querySelector("#expense-edit-category").addEventListener('change', async event => {
+    const categoryId = event.target.value;
     const dateElement = document.querySelector("#expense-edit-date");
     let selectedDate = new Date(dateElement.value);
     let selectedMonth = selectedDate.getMonth() + 1;
@@ -114,13 +114,13 @@ document.querySelector("#expense-edit-category").addEventListener('change', asyn
     let newExpense = document.querySelector("#expense-edit-amount").value;
     updateBudgetInfo(newExpense, totalExpense, budgetForCategory);
     
-    document.querySelector("#expense-edit-amount").addEventListener('input', async (e) => {
-        updateBudgetInfo(e.target.value, totalExpense, budgetForCategory);
+    document.querySelector("#expense-edit-amount").addEventListener('input', async event => {
+        updateBudgetInfo(event.target.value, totalExpense, budgetForCategory);
     });
 
-    document.querySelector("#expense-edit-date").addEventListener('input', async (e) => {
+    document.querySelector("#expense-edit-date").addEventListener('input', async event => {
         newExpense = document.querySelector("#expense-edit-amount").value;
-        selectedDate = new Date(e.target.value);
+        selectedDate = new Date(event.target.value);
         let selectedMonth = selectedDate.getMonth() + 1;
         let selectedYear = selectedDate.getUTCFullYear();
         totalExpense = await getCategoryTotalExpensesForCurrentMonth(categoryId, selectedYear, selectedMonth);
@@ -128,9 +128,9 @@ document.querySelector("#expense-edit-category").addEventListener('change', asyn
         updateBudgetInfo(newExpense, totalExpense, budgetForCategory);
     });
 
-    $("#expense-edit-date").on('apply.daterangepicker', async (e) => {
+    $("#expense-edit-date").on('apply.daterangepicker', async event => {
         newExpense = document.querySelector("#expense-edit-amount").value;
-        selectedDate = new Date(e.target.value);
+        selectedDate = new Date(event.target.value);
         let selectedMonth = selectedDate.getMonth() + 1;
         let selectedYear = selectedDate.getUTCFullYear();
         totalExpense = await getCategoryTotalExpensesForCurrentMonth(categoryId, selectedYear, selectedMonth);
