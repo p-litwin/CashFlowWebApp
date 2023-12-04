@@ -170,13 +170,13 @@ function calculateRemaining(newTotal, budget){
 }
 
 async function getCategoryTotalExpensesForCurrentMonth(categoryId, year, month) {
-    const total = await fetch(`http://localhost/expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}`);
+    const total = await fetch(`expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}`);
     const result = await total.json();
     return result.Total;
 }
 
 async function getCategoryBudget(categoryId) {
-    const response = await fetch(`http://localhost/expense-categories/category-budget?id=${categoryId}`);
+    const response = await fetch(`expense-categories/category-budget?id=${categoryId}`);
     const budget = await response.json();
     return budget.budget;
 }
