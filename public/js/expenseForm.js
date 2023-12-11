@@ -43,7 +43,7 @@ class BudgetWidget {
     constructor(total, budget) {
         this.total = parseFloat(total);
         this.budget = parseFloat(budget);
-        if (typeof (this.budget) =='number' && typeof(this.total) == 'number') {
+        if (typeof (this.budget) ==='number' && typeof(this.total) === 'number') {
             this.calculateRemaining();
             this.total = this.total.toFixed(2);
             this.budget = this.budget.toFixed(2);
@@ -97,7 +97,7 @@ if (expensesEditModal) {
             let month = today.getMonth() + 1;
             let year = today.getFullYear();
             date = `${year}-${month}-${day}`;
-            newTotalElement.innerText = modalAmountInput.value;
+            newTotalElement.innerText = amount;
             categoryBudget.innerText = '-';
             categoryRemainingElement.innerText = '-';
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
@@ -126,111 +126,16 @@ if (expensesEditModal) {
 };
 
 const expenseAmountInput = document.getElementById('expense-edit-amount');
-expenseAmountInput.addEventListener('input', async (e) => {
-    const categoryElemnet = document.getElementById('expense-edit-category');
-    const expenseCategory = categoryElemnet.value;
-    if (!expenseCategory) {
-        const newTotalElement = document.getElementById('new-total');
-        newTotalElement.innerText = Number(expenseAmountInput.value);
-    } else {
-        const expenseDateInput = document.getElementById('expense-edit-date');
-        const selectedDate = new Date(expenseDateInput.value);
-        const selectedMonth = selectedDate.getMonth() + 1;
-        const selectedYear = selectedDate.getUTCFullYear();
-        const newTotalElement = document.getElementById('new-total');
-        const categoryBudget = document.getElementById('category-budget');
-        const categoryRemainingElement = document.getElementById('category-remaining');
-        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth);
-        const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
-        const budgetForCategory = await getCategoryBudget(expenseCategory);
-        const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
-        newTotalElement.innerText = budgetWidget.total;
-        categoryBudget.innerText = budgetWidget.budget;
-        categoryRemainingElement.innerText = budgetWidget.remaining;
-    }
-
-});
+expenseAmountInput.addEventListener('input', refreshBudgetWidget);
 
 const expenseCategoryInput = document.getElementById('expense-edit-category');
-expenseCategoryInput.addEventListener('change', async (e) => {
-    const newTotalElement = document.getElementById('new-total');
-    const categoryBudgetElement = document.getElementById('category-budget');
-    const categoryRemainingElement = document.getElementById('category-remaining');
-    const categoryElement = document.getElementById('expense-edit-category');
-    const expenseCategory = categoryElement.value;
-    if (!expenseCategory) {
-        newTotalElement.innerText = Number(expenseAmountInput.value);
-        categoryBudgetElement.innerText = '-';
-        categoryRemainingElement.innerText = '-';
-    } else {
-        const expenseDateInput = document.getElementById('expense-edit-date');
-        const selectedDate = new Date(expenseDateInput.value);
-        const selectedMonth = selectedDate.getMonth() + 1;
-        const selectedYear = selectedDate.getUTCFullYear();
-        // tu muszę pobrać dane z bazy danych
-        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth);
-        const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
-        //tu muszę pobrać dane z bazy danych
-        const budgetForCategory = await getCategoryBudget(expenseCategory);
-        const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
-        newTotalElement.innerText = budgetWidget.total;
-        categoryBudgetElement.innerText = budgetWidget.budget;
-        categoryRemainingElement.innerText = budgetWidget.remaining;
-    }
+expenseCategoryInput.addEventListener('change', refreshBudgetWidget);
 
-});
 
-$("#expense-edit-date").on('apply.daterangepicker', async event => {
-    const newTotalElement = document.getElementById('new-total');
-    const categoryBudgetElement = document.getElementById('category-budget');
-    const categoryRemainingElement = document.getElementById('category-remaining');
-    const categoryElement = document.getElementById('expense-edit-category');
-    const expenseCategory = categoryElement.value;
-    if (!expenseCategory) {
-        newTotalElement.innerText = Number(expenseAmountInput.value);
-        categoryBudgetElement.innerText = '-';
-        categoryRemainingElement.innerText = '-';
-    } else {
-        const expenseDateInput = document.getElementById('expense-edit-date');
-        const selectedDate = new Date(expenseDateInput.value);
-        const selectedMonth = selectedDate.getMonth() + 1;
-        const selectedYear = selectedDate.getUTCFullYear();
-        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth);
-        const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
-        const budgetForCategory = await getCategoryBudget(expenseCategory);
-        const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
-        newTotalElement.innerText = budgetWidget.total;
-        categoryBudgetElement.innerText = budgetWidget.budget;
-        categoryRemainingElement.innerText = budgetWidget.remaining;
-    }
-});
 
-document.querySelector("#expense-edit-date").addEventListener('blur', async event => {
-    const newTotalElement = document.getElementById('new-total');
-    const categoryBudgetElement = document.getElementById('category-budget');
-    const categoryRemainingElement = document.getElementById('category-remaining');
-    const categoryElement = document.getElementById('expense-edit-category');
-    const expenseCategory = categoryElement.value;
-    if (!expenseCategory) {
-        newTotalElement.innerText = Number(expenseAmountInput.value);
-        categoryBudgetElement.innerText = '-';
-        categoryRemainingElement.innerText = '-';
-    } else {
-        const expenseDateInput = document.getElementById('expense-edit-date');
-        const selectedDate = new Date(expenseDateInput.value);
-        const selectedMonth = selectedDate.getMonth() + 1;
-        const selectedYear = selectedDate.getUTCFullYear();
-        // tu muszę pobrać dane z bazy danych
-        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth);
-        const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
-        //tu muszę pobrać dane z bazy danych
-        const budgetForCategory = await getCategoryBudget(expenseCategory);
-        const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
-        newTotalElement.innerText = budgetWidget.total;
-        categoryBudgetElement.innerText = budgetWidget.budget;
-        categoryRemainingElement.innerText = budgetWidget.remaining;
-    }
-});
+document.querySelector("#expense-edit-date").addEventListener('blur', refreshBudgetWidget);
+
+$("#expense-edit-date").on('apply.daterangepicker', refreshBudgetWidget);
 
 $('.transaction-form-button').on('click', function () {
     $('#expense-edit-date').daterangepicker({
@@ -242,6 +147,31 @@ $('.transaction-form-button').on('click', function () {
         parentEl: "#expense-edit-form"
     });
 });
+
+async function refreshBudgetWidget() {
+    const newTotalElement = document.getElementById('new-total');
+    const categoryBudgetElement = document.getElementById('category-budget');
+    const categoryRemainingElement = document.getElementById('category-remaining');
+    const categoryElement = document.getElementById('expense-edit-category');
+    const expenseCategory = categoryElement.value;
+    if (!expenseCategory) {
+        newTotalElement.innerText = Number(expenseAmountInput.value);
+        categoryBudgetElement.innerText = '-';
+        categoryRemainingElement.innerText = '-';
+    } else {
+        const expenseDateInput = document.getElementById('expense-edit-date');
+        const selectedDate = new Date(expenseDateInput.value);
+        const selectedMonth = selectedDate.getMonth() + 1;
+        const selectedYear = selectedDate.getUTCFullYear();
+        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth);
+        const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
+        const budgetForCategory = await getCategoryBudget(expenseCategory);
+        const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
+        newTotalElement.innerText = budgetWidget.total;
+        categoryBudgetElement.innerText = budgetWidget.budget;
+        categoryRemainingElement.innerText = budgetWidget.remaining;
+    }
+}
 
 /**
  * Get the total expenses for the expense category in selected month and year. 
