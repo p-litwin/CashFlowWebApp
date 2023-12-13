@@ -81,7 +81,7 @@ class Expenses extends \App\Controllers\Authenticated
     }
 
     public static function categoryTotalExpensesForSelectedMonthAction() {
-        $total_amount = Transactions::getTotalExpensesForCategoryInSelectedMonth($_GET['id'], $_GET['year'], $_GET['month']);
+        $total_amount = Transactions::getTotalExpensesForCategoryInSelectedMonth($_GET['id'], $_GET['year'], $_GET['month'], $_GET['ignore_expense_id']);
         header('Content-Type: application/json');
         echo json_encode($total_amount);
     }

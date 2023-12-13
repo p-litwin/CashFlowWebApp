@@ -263,11 +263,15 @@ class Transactions extends Model {
      * @param integer $month Month number 1 - 12
      * @return mixed Total amount of expenses for selected category, null if no expenses were found
      */
-    public static function getTotalExpensesForCategoryInSelectedMonth($category_id, $year, $month) {
+    public static function getTotalExpensesForCategoryInSelectedMonth($category_id, $year, $month, $expense_to_ignore = null) {
         $sql = "SELECT SUM(amount) as Total
                 FROM  expenses
                 WHERE user_id = :user_id AND expense_category_assigned_to_user_id = :category_id
                 AND date_of_expense AND MONTH(date_of_expense) = :month AND YEAR(date_of_expense) = :year";
+
+        if ($expense_to_ignore) {
+            $sql .= " AND id != :expense_to_ignore";
+        }
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
@@ -275,6 +279,9 @@ class Transactions extends Model {
         $statement->bindValue(':category_id', $category_id, PDO::PARAM_INT);
         $statement->bindValue(':month', $month, PDO::PARAM_INT);
         $statement->bindValue(':year', $year, PDO::PARAM_INT);
+        if ($expense_to_ignore) {
+            $statement->bindValue(':expense_to_ignore', $expense_to_ignore, PDO::PARAM_INT);
+        }
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->execute();
         return $statement->fetch();

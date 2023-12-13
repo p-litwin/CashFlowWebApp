@@ -85,9 +85,10 @@ if (expensesEditModal) {
             let selectedDate = new Date(date);
             let selectedMonth = selectedDate.getMonth() + 1;
             let selectedYear = selectedDate.getUTCFullYear();
-            let totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(Number(category), selectedYear, selectedMonth);
+            let totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(Number(category), selectedYear, selectedMonth, id);
+            let totalAfterNewExpense = totalBeforeNewExpense + Number(amount);
             let budgetForCategory = await getCategoryBudget(category);
-            const budgetWidget = new BudgetWidget(totalBeforeNewExpense, budgetForCategory);
+            const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
             newTotalElement.innerText = budgetWidget.total;
             categoryBudget.innerText = budgetWidget.budget;
             categoryRemainingElement.innerText = budgetWidget.remaining;
@@ -154,6 +155,8 @@ async function refreshBudgetWidget() {
     const categoryRemainingElement = document.getElementById('category-remaining');
     const categoryElement = document.getElementById('expense-edit-category');
     const expenseCategory = categoryElement.value;
+    const expenseIdElement = document.getElementById('expense-edit-id');
+    const expenseId = expenseIdElement.value;
     if (!expenseCategory) {
         newTotalElement.innerText = Number(expenseAmountInput.value);
         categoryBudgetElement.innerText = '-';
@@ -163,7 +166,7 @@ async function refreshBudgetWidget() {
         const selectedDate = new Date(expenseDateInput.value);
         const selectedMonth = selectedDate.getMonth() + 1;
         const selectedYear = selectedDate.getUTCFullYear();
-        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth);
+        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth, expenseId);
         const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
         const budgetForCategory = await getCategoryBudget(expenseCategory);
         const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
@@ -180,8 +183,8 @@ async function refreshBudgetWidget() {
  * @param {number} month - Month of the expense
  * @returns {number} - Total expenses for selected month. 2 decimal places
  */
-async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month) {
-    const total = await fetch(`expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}`);
+async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month, ignoreExpenseId = null) {
+    const total = await fetch(`expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}&ignore_expense_id=${ignoreExpenseId}`);
     const result = await total.json();
     return Number(result.Total);
 }
