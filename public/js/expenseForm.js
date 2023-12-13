@@ -36,6 +36,9 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Represents a budget widget that calculates the remaining budget based on the total and budget values.
+ */
 class BudgetWidget {
     total;
     budget;
@@ -58,9 +61,8 @@ class BudgetWidget {
 
 const expensesEditModal = document.getElementById('expense-edit-modal')
 if (expensesEditModal) {
-    const modalAmountInput = expensesEditModal.querySelector('#expense-edit-amount');
-    const modalTitle = expensesEditModal.querySelector('.modal-title');
     expensesEditModal.addEventListener('show.bs.modal', async event => {
+        const modalAmountInput = expensesEditModal.querySelector('#expense-edit-amount');
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
@@ -78,10 +80,12 @@ if (expensesEditModal) {
             category = button.getAttribute('data-bs-category');
             payment = button.getAttribute('data-bs-payment');
             comment = button.getAttribute('data-bs-comment');
+            const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Edycja wydatku';
         } else {
+            const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
-            $("#add-expense-button").addClass("active");
+            document.querySelector("#add-expense-button").classList.add("active");
         }
         const idInput = document.getElementById("expense-edit-id");
         idInput.value = id;
@@ -98,21 +102,15 @@ if (expensesEditModal) {
         form.action = "/expenses/" + action;
         await refreshBudgetWidget();
     });
-    expensesEditModal.addEventListener('shown.bs.modal', event => {
-        modalAmountInput.focus();
-    });
-    expensesEditModal.addEventListener('hide.bs.modal', (event) => {
-        document.querySelector("#add-expense-button").classList.remove("active");
-    });
 };
 
-const expenseAmountInput = document.getElementById('expense-edit-amount');
-expenseAmountInput.addEventListener('input', refreshBudgetWidget);
+expensesEditModal.addEventListener('shown.bs.modal', event => {
+    document.querySelector('#expense-edit-amount').focus();
+});
 
-const expenseCategoryInput = document.getElementById('expense-edit-category');
-expenseCategoryInput.addEventListener('change', refreshBudgetWidget);
+document.getElementById('expense-edit-amount').addEventListener('input', refreshBudgetWidget);
 
-
+document.getElementById('expense-edit-category').addEventListener('change', refreshBudgetWidget);
 
 document.querySelector("#expense-edit-date").addEventListener('blur', refreshBudgetWidget);
 
@@ -130,6 +128,7 @@ $('.transaction-form-button').on('click', function () {
 });
 
 async function refreshBudgetWidget() {
+    const expenseAmountInput = document.getElementById('expense-edit-amount');
     const newTotalElement = document.getElementById('new-total');
     const categoryBudgetElement = document.getElementById('category-budget');
     const categoryRemainingElement = document.getElementById('category-remaining');
@@ -138,7 +137,7 @@ async function refreshBudgetWidget() {
     const expenseIdElement = document.getElementById('expense-edit-id');
     const expenseId = expenseIdElement.value;
     if (!expenseCategory) {
-        newTotalElement.innerText = Number(expenseAmountInput.value);
+        newTotalElement.innerText = Number(expenseAmountInput.value).toFixed(2);
         categoryBudgetElement.innerText = '-';
         categoryRemainingElement.innerText = '-';
     } else {
@@ -166,6 +165,7 @@ async function refreshBudgetWidget() {
  * @param {number} categoryId - Id of the expenses category 
  * @param {number} year - Full four digit year of the expense
  * @param {number} month - Month of the expense
+ * @param {number} ignoreExpenseId - Id of the expense that should be ignored in the total calculation
  * @returns {number} - Total expenses for selected month. 2 decimal places
  */
 async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month, ignoreExpenseId = null) {
@@ -194,3 +194,7 @@ async function getCategoryBudget(categoryId) {
         return 0;
     }
 }
+
+expensesEditModal.addEventListener('hide.bs.modal', event => {
+    document.querySelector('#add-expense-button').classList.remove('active');
+});
