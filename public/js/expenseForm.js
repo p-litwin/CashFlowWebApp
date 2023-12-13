@@ -43,7 +43,7 @@ class BudgetWidget {
     constructor(total, budget) {
         this.total = parseFloat(total);
         this.budget = parseFloat(budget);
-        if (typeof (this.budget) ==='number' && typeof(this.total) === 'number') {
+        if (typeof (this.budget) === 'number' && typeof (this.total) === 'number') {
             this.calculateRemaining();
             this.total = this.total.toFixed(2);
             this.budget = this.budget.toFixed(2);
@@ -81,7 +81,7 @@ if (expensesEditModal) {
             category = button.getAttribute('data-bs-category');
             payment = button.getAttribute('data-bs-payment');
             comment = button.getAttribute('data-bs-comment');
-            modalTitle.innerHTML = 'Edycja wydatku';  
+            modalTitle.innerHTML = 'Edycja wydatku';
         } else {
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
             $("#add-expense-button").addClass("active");
@@ -154,8 +154,13 @@ async function refreshBudgetWidget() {
         const budgetForCategory = await getCategoryBudget(expenseCategory);
         const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
         newTotalElement.innerText = budgetWidget.total;
-        categoryBudgetElement.innerText = budgetWidget.budget;
-        categoryRemainingElement.innerText = budgetWidget.remaining;
+        if (budgetWidget.budget == 0) {
+            categoryBudgetElement.innerText = '-';
+            categoryRemainingElement.innerText = '-';
+        } else {
+            categoryBudgetElement.innerText = budgetWidget.budget;
+            categoryRemainingElement.innerText = budgetWidget.remaining;
+        }
     }
 }
 
