@@ -71,9 +71,6 @@ if (expensesEditModal) {
         let category = "";
         let payment = "";
         let comment = "";
-        const newTotalElement = document.getElementById('new-total');
-        const categoryBudget = document.getElementById('category-budget');
-        const categoryRemainingElement = document.getElementById('category-remaining');
         if (action == 'update') {
             id = button.getAttribute('data-bs-id');
             amount = button.getAttribute('data-bs-amount');
@@ -172,9 +169,14 @@ async function refreshBudgetWidget() {
  * @returns {number} - Total expenses for selected month. 2 decimal places
  */
 async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month, ignoreExpenseId = null) {
-    const total = await fetch(`expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}&ignore_expense_id=${ignoreExpenseId}`);
-    const result = await total.json();
-    return Number(result.Total);
+    try {
+        const total = await fetch(`expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}&ignore_expense_id=${ignoreExpenseId}`);
+        const result = await total.json();
+        return Number(result.Total);
+    } catch (error) {
+        console.error(error);
+        return 0;
+    }
 }
 
 /**
@@ -183,7 +185,12 @@ async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month,
  * @returns {number} - Budget for selected category. 2 decimal  places
  */
 async function getCategoryBudget(categoryId) {
-    const response = await fetch(`expense-categories/category-budget?id=${categoryId}`);
-    const budget = await response.json();
-    return Number(budget.budget);
+    try {
+        const response = await fetch(`expense-categories/category-budget?id=${categoryId}`);
+        const budget = await response.json();
+        return Number(budget.budget);
+    } catch (error) {
+        console.error(error);
+        return 0;
+    }
 }
