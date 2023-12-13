@@ -81,26 +81,8 @@ if (expensesEditModal) {
             category = button.getAttribute('data-bs-category');
             payment = button.getAttribute('data-bs-payment');
             comment = button.getAttribute('data-bs-comment');
-            modalTitle.innerHTML = 'Edycja wydatku';
-            let selectedDate = new Date(date);
-            let selectedMonth = selectedDate.getMonth() + 1;
-            let selectedYear = selectedDate.getUTCFullYear();
-            let totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(Number(category), selectedYear, selectedMonth, id);
-            let totalAfterNewExpense = totalBeforeNewExpense + Number(amount);
-            let budgetForCategory = await getCategoryBudget(category);
-            const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
-            newTotalElement.innerText = budgetWidget.total;
-            categoryBudget.innerText = budgetWidget.budget;
-            categoryRemainingElement.innerText = budgetWidget.remaining;
+            modalTitle.innerHTML = 'Edycja wydatku';  
         } else {
-            const today = new Date();
-            let day = today.getDate();
-            let month = today.getMonth() + 1;
-            let year = today.getFullYear();
-            date = `${year}-${month}-${day}`;
-            newTotalElement.innerText = amount;
-            categoryBudget.innerText = '-';
-            categoryRemainingElement.innerText = '-';
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
             $("#add-expense-button").addClass("active");
         }
@@ -117,13 +99,14 @@ if (expensesEditModal) {
         modalAmountInput.value = amount;
         const form = document.getElementById("expense-edit-form");
         form.action = "/expenses/" + action;
-    })
+        await refreshBudgetWidget();
+    });
     expensesEditModal.addEventListener('shown.bs.modal', event => {
         modalAmountInput.focus();
-    })
+    });
     expensesEditModal.addEventListener('hide.bs.modal', (event) => {
         document.querySelector("#add-expense-button").classList.remove("active");
-    })
+    });
 };
 
 const expenseAmountInput = document.getElementById('expense-edit-amount');
