@@ -157,7 +157,33 @@ async function refreshBudgetWidget() {
             categoryBudgetElement.innerText = budgetWidget.budget;
             categoryRemainingElement.innerText = budgetWidget.remaining;
         }
+        updateBudgetWidgetHeader();
     }
+    
+}
+
+function updateBudgetWidgetHeader() {
+    const monthMap = {
+        1: 'styczeń',
+        2: 'luty',
+        3: 'marzec',
+        4: 'kwiecień',
+        5: 'maj',
+        6: 'czerwiec',
+        7: 'lipiec',
+        8: 'sierpień',
+        9: 'wrzesień',
+        10: 'październik',
+        11: 'listopad',
+        12: 'grudzień'
+      };
+    const expenseDateInput = document.getElementById('expense-edit-date');
+    const selectedDate = new Date(expenseDateInput.value);
+    const selectedMonth = selectedDate.getMonth() + 1;
+    const selectedYear = selectedDate.getUTCFullYear();
+    const selectedMonthName = monthMap[selectedMonth];
+    document.querySelector("#budget-date").innerText = selectedMonthName +  ' ' + selectedYear;
+    console.log(selectedMonthName +  ' ' + selectedYear);
 }
 
 /**
@@ -170,7 +196,7 @@ async function refreshBudgetWidget() {
  */
 async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month, ignoreExpenseId = null) {
     try {
-        const total = await fetch(`expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}&ignore_expense_id=${ignoreExpenseId}`);
+        const total = await fetch(`/expenses/category-total-expenses-for-selected-month?id=${categoryId}&year=${year}&month=${month}&ignore_expense_id=${ignoreExpenseId}`);
         const result = await total.json();
         return Number(result.Total);
     } catch (error) {
@@ -186,7 +212,7 @@ async function getCategoryTotalExpensesForSelectedMonth(categoryId, year, month,
  */
 async function getCategoryBudget(categoryId) {
     try {
-        const response = await fetch(`expense-categories/category-budget?id=${categoryId}`);
+        const response = await fetch(`/expense-categories/category-budget?id=${categoryId}`);
         const budget = await response.json();
         return Number(budget.budget);
     } catch (error) {
