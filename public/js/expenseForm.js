@@ -68,7 +68,7 @@ if (expensesEditModal) {
         // Extract info from data-bs-* attributes
         let action = button.getAttribute('data-bs-action');
         let id = "";
-        let amount = 0.01;
+        let amount = "0,01";
         let date = "";
         let category = "";
         let payment = "";
@@ -82,6 +82,8 @@ if (expensesEditModal) {
             comment = button.getAttribute('data-bs-comment');
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Edycja wydatku';
+            const dateInput = document.getElementById("expense-edit-date");
+            dateInput.value = date;
         } else {
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
@@ -89,15 +91,14 @@ if (expensesEditModal) {
         }
         const idInput = document.getElementById("expense-edit-id");
         idInput.value = id;
-        const dateInput = document.getElementById("expense-edit-date");
-        dateInput.value = date;
+
         const categorySelect = document.getElementById("expense-edit-category");
         categorySelect.value = category;
         const paymentSelect = document.getElementById("expense-edit-method");
         paymentSelect.value = payment;
         const commentTexarea = document.getElementById("expense-edit-comment");
         commentTexarea.textContent = comment;
-        modalAmountInput.value = amount;
+        modalAmountInput.value = amount.replace(/\./g, ',');
         const form = document.getElementById("expense-edit-form");
         form.action = "/expenses/" + action;
         await refreshBudgetWidget();
@@ -137,7 +138,7 @@ async function refreshBudgetWidget() {
     const expenseIdElement = document.getElementById('expense-edit-id');
     const expenseId = expenseIdElement.value;
     if (!expenseCategory) {
-        newTotalElement.innerText = Number(expenseAmountInput.value).toFixed(2);
+        newTotalElement.innerText = Number(expenseAmountInput.value).toFixed(2).replace(/\./g, ',');
         categoryBudgetElement.innerText = '-';
         categoryRemainingElement.innerText = '-';
     } else {
@@ -149,13 +150,13 @@ async function refreshBudgetWidget() {
         const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
         const budgetForCategory = await getCategoryBudget(expenseCategory);
         const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
-        newTotalElement.innerText = budgetWidget.total;
+        newTotalElement.innerText = budgetWidget.total.replace(/\./g, ',');
         if (budgetWidget.budget == 0) {
             categoryBudgetElement.innerText = '-';
             categoryRemainingElement.innerText = '-';
         } else {
-            categoryBudgetElement.innerText = budgetWidget.budget;
-            categoryRemainingElement.innerText = budgetWidget.remaining;
+            categoryBudgetElement.innerText = budgetWidget.budget.replace(/\./g, ',');
+            categoryRemainingElement.innerText = budgetWidget.remaining.replace(/\./g, ',');
         }
         updateBudgetWidgetHeader();
     }
@@ -183,7 +184,6 @@ function updateBudgetWidgetHeader() {
     const selectedYear = selectedDate.getUTCFullYear();
     const selectedMonthName = monthMap[selectedMonth];
     document.querySelector("#budget-date").innerText = selectedMonthName +  ' ' + selectedYear;
-    console.log(selectedMonthName +  ' ' + selectedYear);
 }
 
 /**

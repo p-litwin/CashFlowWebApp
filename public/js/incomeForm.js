@@ -42,7 +42,7 @@ if (incomeEditModal) {
         // Extract action from data-bs-* attributes
         let action = button.getAttribute('data-bs-action');
         let id = "";
-        let amount = 0.01;
+        let amount = "0,01";
         let date = "";
         let category = "";
         let comment = "";
@@ -70,7 +70,7 @@ if (incomeEditModal) {
         categorySelect.value = category;
         let commentTexarea = document.getElementById("income-edit-comment");
         commentTexarea.textContent = comment;
-        modalAmountInput.value = amount;
+        modalAmountInput.value = amount.replace(/\./g, ',');
         let form = document.getElementById("income-edit-form");
         form.action = "/incomes/" + action;
     })
