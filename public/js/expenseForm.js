@@ -66,42 +66,41 @@ if (expensesEditModal) {
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
-        let action = button.getAttribute('data-bs-action');
-        let id = "";
-        let amount = "0,01";
-        let date = "";
-        let category = "";
-        let payment = "";
-        let comment = "";
+        const action = button.getAttribute('data-action');
         if (action == 'update') {
-            id = button.getAttribute('data-bs-id');
-            amount = button.getAttribute('data-bs-amount');
-            date = button.getAttribute('data-bs-date');
-            category = button.getAttribute('data-bs-category');
-            payment = button.getAttribute('data-bs-payment');
-            comment = button.getAttribute('data-bs-comment');
+            const {id, amount, date, category, payment, comment } = button.dataset;
+            
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Edycja wydatku';
+            
             const dateInput = document.getElementById("expense-edit-date");
             dateInput.value = date;
+            
+            const idInput = document.getElementById("expense-edit-id");
+            idInput.value = id;
+
+            const categorySelect = document.getElementById("expense-edit-category");
+            categorySelect.value = category;
+            
+            const paymentSelect = document.getElementById("expense-edit-method");
+            paymentSelect.value = payment;
+            
+            const commentTexarea = document.getElementById("expense-edit-comment");
+            commentTexarea.textContent = comment;
+            modalAmountInput.value = amount.replace(/\./g, ',');
+
         } else {
+           
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
             document.querySelector("#add-expense-button").classList.add("active");
+        
         }
-        const idInput = document.getElementById("expense-edit-id");
-        idInput.value = id;
-
-        const categorySelect = document.getElementById("expense-edit-category");
-        categorySelect.value = category;
-        const paymentSelect = document.getElementById("expense-edit-method");
-        paymentSelect.value = payment;
-        const commentTexarea = document.getElementById("expense-edit-comment");
-        commentTexarea.textContent = comment;
-        modalAmountInput.value = amount.replace(/\./g, ',');
+ 
         const form = document.getElementById("expense-edit-form");
         form.action = "/expenses/" + action;
         await refreshBudgetWidget();
+
     });
 };
 
