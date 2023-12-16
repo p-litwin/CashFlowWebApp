@@ -156,6 +156,7 @@ async function refreshBudgetWidget() {
             categoryRemainingElement.innerText = '-';
         } else {
             categoryBudgetElement.innerText = budgetWidget.budget.replace(/\./g, ',');
+            styleBudgetFields(budgetWidget.total, budgetWidget.remaining);
             categoryRemainingElement.innerText = budgetWidget.remaining.replace(/\./g, ',');
         }
         updateBudgetWidgetHeader();
@@ -224,3 +225,23 @@ async function getCategoryBudget(categoryId) {
 expensesEditModal.addEventListener('hide.bs.modal', event => {
     document.querySelector('#add-expense-button').classList.remove('active');
 });
+
+function styleBudgetFields(total, remaining) {
+    const totalFieldParent = document.getElementById('new-total').parentElement;
+    const remainingFieldParent = document.getElementById('category-remaining').parentElement;
+    const remainingFieldHeader = document.getElementById('category-remaining-header');
+    if (remaining < 0) {
+        remainingFieldParent.classList.add('text-danger');
+        remainingFieldParent.classList.remove('text-success');
+        remainingFieldHeader.innerText = "Przekroczono o:"
+        totalFieldParent.classList.add('text-danger');
+        totalFieldParent.classList.remove('text-success');
+    } else {
+        remainingFieldHeader.innerText = "Pozostało:"
+        remainingFieldParent.classList.remove('text-danger');
+        remainingFieldParent.classList.add('text-success');
+        totalFieldParent.classList.remove('text-danger');
+        totalFieldParent.classList.add('text-success');
+    }
+
+}
