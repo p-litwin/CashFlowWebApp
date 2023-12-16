@@ -32,7 +32,7 @@ $(document).ready(function () {
     });
 });
 
-let incomeEditModal = document.getElementById('income-edit-modal')
+const incomeEditModal = document.getElementById('income-edit-modal')
 if (incomeEditModal) {
     incomeEditModal.addEventListener('show.bs.modal', event => {
         // Button that triggered the modal
@@ -63,6 +63,11 @@ if (incomeEditModal) {
             modalTitle.innerHTML = "Edycja przychodu";
 
         } else {
+
+            const incomeFormFields = document.querySelector("#expense-edit-form").querySelectorAll("input, select, textarea");
+            incomeFormFields.forEach(field => {
+                field.value = '';
+            })
 
             const modalTitle = incomeEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = "Dodawanie nowego przychodu";

@@ -62,41 +62,48 @@ class BudgetWidget {
 const expensesEditModal = document.getElementById('expense-edit-modal')
 if (expensesEditModal) {
     expensesEditModal.addEventListener('show.bs.modal', async event => {
-        const modalAmountInput = expensesEditModal.querySelector('#expense-edit-amount');
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
         const action = button.getAttribute('data-action');
         if (action == 'update') {
-            const {id, amount, date, category, payment, comment } = button.dataset;
-            
+            const { id, amount, date, category, payment, comment } = button.dataset;
+
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Edycja wydatku';
-            
+
             const dateInput = document.getElementById("expense-edit-date");
             dateInput.value = date;
-            
+
             const idInput = document.getElementById("expense-edit-id");
             idInput.value = id;
 
             const categorySelect = document.getElementById("expense-edit-category");
             categorySelect.value = category;
-            
+
             const paymentSelect = document.getElementById("expense-edit-method");
             paymentSelect.value = payment;
-            
+
             const commentTexarea = document.getElementById("expense-edit-comment");
             commentTexarea.textContent = comment;
+
+            const modalAmountInput = expensesEditModal.querySelector('#expense-edit-amount');
             modalAmountInput.value = amount.replace(/\./g, ',');
 
         } else {
-           
+
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
+
+            const expenseFormFields = document.querySelector("#expense-edit-form").querySelectorAll("input, select, textarea");
+            expenseFormFields.forEach(field => {
+                field.value = '';
+            })
+
             document.querySelector("#add-expense-button").classList.add("active");
-        
+
         }
- 
+
         const form = document.getElementById("expense-edit-form");
         form.action = "/expenses/" + action;
         await refreshBudgetWidget();
@@ -160,7 +167,7 @@ async function refreshBudgetWidget() {
         }
         updateBudgetWidgetHeader();
     }
-    
+
 }
 
 function updateBudgetWidgetHeader() {
@@ -177,13 +184,13 @@ function updateBudgetWidgetHeader() {
         10: 'październik',
         11: 'listopad',
         12: 'grudzień'
-      };
+    };
     const expenseDateInput = document.getElementById('expense-edit-date');
     const selectedDate = new Date(expenseDateInput.value);
     const selectedMonth = selectedDate.getMonth() + 1;
     const selectedYear = selectedDate.getUTCFullYear();
     const selectedMonthName = monthMap[selectedMonth];
-    document.querySelector("#budget-date").innerText = selectedMonthName +  ' ' + selectedYear;
+    document.querySelector("#budget-date").innerText = selectedMonthName + ' ' + selectedYear;
 }
 
 /**
