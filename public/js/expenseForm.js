@@ -111,7 +111,7 @@ if (expensesEditModal) {
     });
 };
 
-expensesEditModal.addEventListener('shown.bs.modal', event => {
+expensesEditModal.addEventListener('shown.bs.modal', () => {
     document.querySelector('#expense-edit-amount').focus();
 });
 
@@ -123,7 +123,7 @@ document.querySelector("#expense-edit-date").addEventListener('blur', refreshBud
 
 $("#expense-edit-date").on('apply.daterangepicker', refreshBudgetWidget);
 
-$('.transaction-form-button').on('click', function () {
+$('.transaction-form-button').on('click', () => {
     $('#expense-edit-date').daterangepicker({
         singleDatePicker: true,
         autoUpdateInput: true,
@@ -228,7 +228,7 @@ async function getCategoryBudget(categoryId) {
     }
 }
 
-expensesEditModal.addEventListener('hide.bs.modal', event => {
+expensesEditModal.addEventListener('hidden.bs.modal', () => {
     document.querySelector('#add-expense-button').classList.remove('active');
 });
 

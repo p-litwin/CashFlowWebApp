@@ -83,14 +83,14 @@ if (incomeEditModal) {
     
 };
 
-incomeEditModal.addEventListener('shown.bs.modal', event => {
+incomeEditModal.addEventListener('shown.bs.modal', () => {
     modalAmountInput.focus();
 })
-incomeEditModal.addEventListener('hide.bs.modal', event => {
+incomeEditModal.addEventListener('hidden.bs.modal', () => {
     $("#add-income-button").removeClass("active");
 })
 
-$('.transaction-form-button').on('click', function () {
+$('.transaction-form-button').on('click', () => {
     $('#income-edit-date').daterangepicker({
         singleDatePicker: true,
         autoUpdateInput: true,
