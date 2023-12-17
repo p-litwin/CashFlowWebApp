@@ -42,15 +42,15 @@ if (expensesEditModal) {
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
-        
+
         const form = expensesEditModal.querySelector("#expense-edit-form");
         const action = button.getAttribute('data-action');
-        
+
         if (action == 'update') {
-            
+
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Edycja wydatku';
-           
+
             fillTheTransactionForm(form, button);
 
         } else {
@@ -60,12 +60,14 @@ if (expensesEditModal) {
 
             form.clearAllFields();
 
+            form.querySelector("#expense-edit-date").value = new Date().toISOString().slice(0, 10);
+
             button.classList.add("active");
 
         }
 
         form.action = "/expenses/" + action;
-        await refreshBudgetWidget();
+        await refreshBudgetTiles();
 
     });
 };
@@ -74,13 +76,17 @@ expensesEditModal.addEventListener('shown.bs.modal', () => {
     document.querySelector('#expense-edit-amount').focus();
 });
 
-document.getElementById('expense-edit-amount').addEventListener('input', refreshBudgetWidget);
+document.getElementById('expense-edit-amount').addEventListener('input', refreshBudgetTiles);
 
-document.getElementById('expense-edit-category').addEventListener('change', refreshBudgetWidget);
+document.getElementById('expense-edit-category').addEventListener('change', refreshBudgetTiles);
 
-document.querySelector("#expense-edit-date").addEventListener('blur', refreshBudgetWidget);
+document.querySelector("#expense-edit-date").addEventListener('blur', refreshBudgetTiles);
 
-$("#expense-edit-date").on('apply.daterangepicker', refreshBudgetWidget);
+expensesEditModal.addEventListener('hidden.bs.modal', () => {
+    document.querySelector('#add-expense-button').classList.remove('active');
+});
+
+$("#expense-edit-date").on('apply.daterangepicker', refreshBudgetTiles);
 
 $('.transaction-form-button').on('click', () => {
     $('#expense-edit-date').daterangepicker({
@@ -93,40 +99,49 @@ $('.transaction-form-button').on('click', () => {
     });
 });
 
-async function refreshBudgetWidget() {
-    
+/**
+ * Refreshes the budget tiles based on the expense form inputs.
+ * 
+ * @returns {Promise<void>} A promise that resolves when the budget tiles are updated.
+ */
+async function refreshBudgetTiles() {
+
     const expenseAmountInput = document.getElementById('expense-edit-amount');
     const categoryElement = document.getElementById('expense-edit-category');
     const expenseCategory = categoryElement.value;
-    
+    const expenseDateInput = document.getElementById('expense-edit-date');
+    const selectedDate = new Date(expenseDateInput.value);
+
     if (!expenseCategory) {
 
-        updateBudgetUIElements(expenseAmountInput.value, 0, 0);
+        updateBudgetUIElements(expenseAmountInput.value, 0, 0, selectedDate);
 
     } else {
-        
+
         const expenseIdElement = document.getElementById('expense-edit-id');
         const expenseId = expenseIdElement.value;
-        const totalBeforeNewExpense = await calculateTotalBeforeNewExpense(expenseCategory, expenseId);
+
+        const totalBeforeNewExpense = await calculateTotalBeforeNewExpense(expenseCategory, selectedDate, expenseId);
         const totalAfterNewExpense = calculateNewTotal(totalBeforeNewExpense, expenseAmountInput.value);
         const budgetForCategory = await getCategoryBudget(expenseCategory);
         const remainingBudget = calculateRemainingBudget(totalAfterNewExpense, budgetForCategory);
-        updateBudgetUIElements(totalAfterNewExpense, budgetForCategory, remainingBudget);
+        updateBudgetUIElements(totalAfterNewExpense, budgetForCategory, remainingBudget, selectedDate);
 
     }
 
 }
 
+
 /**
- * Calculates the total expenses for a given expense category and month, excluding the expense with the specified ID.
- * 
+ * Calculates the total expenses for a given expense category in a selected month and year,
+ * excluding the expense with the specified expenseId.
+ *
  * @param {string} expenseCategory - The category of the expense.
+ * @param {Date} selectedDate - The selected date.
  * @param {string} expenseId - The ID of the expense to exclude from the calculation.
- * @returns {Promise<number>} - The total expenses for the selected month and category.
+ * @returns {Promise<number>} - The total expenses for the given expense category in the selected month and year.
  */
-async function calculateTotalBeforeNewExpense(expenseCategory, expenseId) {
-    const expenseDateInput = document.getElementById('expense-edit-date');
-    const selectedDate = new Date(expenseDateInput.value);
+async function calculateTotalBeforeNewExpense(expenseCategory, selectedDate, expenseId) {
     const selectedMonth = selectedDate.getMonth() + 1;
     const selectedYear = selectedDate.getUTCFullYear();
     return await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth, expenseId);
@@ -160,13 +175,21 @@ function calculateNewTotal(totalBeforeNewExpense, expenseAmount) {
     return Number(totalBeforeNewExpense) + Number(expenseAmount);
 }
 
-function updateBudgetUIElements(totalAfterNewExpense, categoryBudget, remainingBudget) {
-    
+/**
+ * Updates the UI elements related to the budget.
+ * 
+ * @param {number} totalAfterNewExpense - The total amount after adding a new expense.
+ * @param {number} categoryBudget - The budget allocated for the category.
+ * @param {number} remainingBudget - The remaining budget for the category.
+ * @param {string} selectedDate - The selected date for the budget.
+ */
+function updateBudgetUIElements(totalAfterNewExpense, categoryBudget, remainingBudget, selectedDate) {
     const newTotalElement = document.getElementById('new-total');
     newTotalElement.innerText = convertToFloatWithComma(totalAfterNewExpense);
-    
+
     const categoryBudgetElement = document.getElementById('category-budget');
     const categoryRemainingElement = document.getElementById('category-remaining');
+    
     if (categoryBudget == 0) {
         categoryBudgetElement.innerText = '-';
         categoryRemainingElement.innerText = '-';
@@ -176,33 +199,20 @@ function updateBudgetUIElements(totalAfterNewExpense, categoryBudget, remainingB
         categoryRemainingElement.innerText = convertToFloatWithComma(remainingBudget);
         updateBudgetFieldsStyleAndCaption(remainingBudget);
     }
-    
-    updateBudgetWidgetHeader();
+
+    updateBudgetWidgetDateCaption(selectedDate);
 }
 
 /**
- * Updates the header of the budget widget with the selected month and year.
+ * Updates the budget widget date caption with the selected date.
+ * 
+ * @param {Date} selectedDate - The selected date.
+ * @returns {void}
  */
-function updateBudgetWidgetHeader() {
-    const monthMap = {
-        1: 'styczeń',
-        2: 'luty',
-        3: 'marzec',
-        4: 'kwiecień',
-        5: 'maj',
-        6: 'czerwiec',
-        7: 'lipiec',
-        8: 'sierpień',
-        9: 'wrzesień',
-        10: 'październik',
-        11: 'listopad',
-        12: 'grudzień'
-    };
-    const expenseDateInput = document.getElementById('expense-edit-date');
-    const selectedDate = new Date(expenseDateInput.value);
+function updateBudgetWidgetDateCaption(selectedDate) {
     const selectedMonth = selectedDate.getMonth() + 1;
     const selectedYear = selectedDate.getUTCFullYear();
-    const selectedMonthName = monthMap[selectedMonth];
+    const selectedMonthName = MONTH_NAMES[selectedMonth];
     document.querySelector("#budget-date").innerText = selectedMonthName + ' ' + selectedYear;
 }
 
@@ -241,11 +251,6 @@ async function getCategoryBudget(categoryId) {
     }
 }
 
-expensesEditModal.addEventListener('hidden.bs.modal', () => {
-    document.querySelector('#add-expense-button').classList.remove('active');
-});
-
-
 /**
  * Change text color of the remaining value and total expense to red and header text to "Przekroczono o:"
  * if total expense is greater than the budget. 
@@ -278,7 +283,7 @@ function updateBudgetFieldsStyleAndCaption(remaining) {
  */
 function fillTheTransactionForm(form, button) {
     const { id, amount, date, category, payment, comment } = button.dataset;
-            
+
     const dateInput = form.querySelector("#expense-edit-date");
     dateInput.value = date;
 
