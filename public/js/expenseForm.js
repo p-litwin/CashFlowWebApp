@@ -65,46 +65,28 @@ if (expensesEditModal) {
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
+        
+        const form = expensesEditModal.querySelector("#expense-edit-form");
         const action = button.getAttribute('data-action');
+        
         if (action == 'update') {
-            const { id, amount, date, category, payment, comment } = button.dataset;
-
+            
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Edycja wydatku';
-
-            const dateInput = document.getElementById("expense-edit-date");
-            dateInput.value = date;
-
-            const idInput = document.getElementById("expense-edit-id");
-            idInput.value = id;
-
-            const categorySelect = document.getElementById("expense-edit-category");
-            categorySelect.value = category;
-
-            const paymentSelect = document.getElementById("expense-edit-method");
-            paymentSelect.value = payment;
-
-            const commentTexarea = document.getElementById("expense-edit-comment");
-            commentTexarea.textContent = comment;
-
-            const modalAmountInput = expensesEditModal.querySelector('#expense-edit-amount');
-            modalAmountInput.value = amount.replace(/\./g, ',');
+           
+            fillTheTransactionForm(form, button);
 
         } else {
 
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
 
-            const expenseFormFields = document.querySelector("#expense-edit-form").querySelectorAll("input, select, textarea");
-            expenseFormFields.forEach(field => {
-                field.value = '';
-            })
+            form.clearAllFields();
 
             document.querySelector("#add-expense-button").classList.add("active");
 
         }
 
-        const form = document.getElementById("expense-edit-form");
         form.action = "/expenses/" + action;
         await refreshBudgetWidget();
 
@@ -162,7 +144,7 @@ async function refreshBudgetWidget() {
             categoryRemainingElement.innerText = '-';
         } else {
             categoryBudgetElement.innerText = budgetWidget.budget.replace(/\./g, ',');
-            styleBudgetFields(budgetWidget.total, budgetWidget.remaining);
+            styleBudgetFields(budgetWidget.remaining);
             categoryRemainingElement.innerText = budgetWidget.remaining.replace(/\./g, ',');
         }
         updateBudgetWidgetHeader();
@@ -232,7 +214,8 @@ expensesEditModal.addEventListener('hidden.bs.modal', () => {
     document.querySelector('#add-expense-button').classList.remove('active');
 });
 
-function styleBudgetFields(total, remaining) {
+
+function styleBudgetFields(remaining) {
     const totalFieldParent = document.getElementById('new-total').parentElement;
     const remainingFieldParent = document.getElementById('category-remaining').parentElement;
     const remainingFieldHeader = document.getElementById('category-remaining-header');
@@ -249,5 +232,32 @@ function styleBudgetFields(total, remaining) {
         totalFieldParent.classList.remove('text-danger');
         totalFieldParent.classList.add('text-success');
     }
+
+}
+
+/**
+ * Fills the transaction form with data from the provided button's dataset.
+ * @param {HTMLButtonElement} button - The button element containing the dataset with transaction information.
+ */
+function fillTheTransactionForm(form, button) {
+    const { id, amount, date, category, payment, comment } = button.dataset;
+            
+    const dateInput = form.querySelector("#expense-edit-date");
+    dateInput.value = date;
+
+    const idInput = form.querySelector("#expense-edit-id");
+    idInput.value = id;
+
+    const categorySelect = form.querySelector("#expense-edit-category");
+    categorySelect.value = category;
+
+    const paymentSelect = form.querySelector("#expense-edit-method");
+    paymentSelect.value = payment;
+
+    const commentTexarea = form.querySelector("#expense-edit-comment");
+    commentTexarea.innerText = comment;
+
+    const amountInput = form.querySelector('#expense-edit-amount');
+    amountInput.value = amount.replace(/\./g, ',');
 
 }

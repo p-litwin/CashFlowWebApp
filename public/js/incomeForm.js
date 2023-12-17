@@ -38,14 +38,15 @@ if (incomeEditModal) {
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract action from data-* attributes
+        const form = incomeEditModal.querySelector('#income-edit-form');
         const action = button.getAttribute('data-action');
         if (action == 'update') {
             
             // Extract transaction data from data-* attributes
             const {id, amount, date, category, comment} = button.dataset;
 
-            const modalAmountInput = incomeEditModal.querySelector('#income-edit-amount');
-            modalAmountInput.value = amount.replace(/\./g, ',');
+            const amountInput = incomeEditModal.querySelector('#income-edit-amount');
+            amountInput.value = amount.replace(/\./g, ',');
             
             const idInput = document.getElementById("income-edit-id");
             idInput.value = id;
@@ -64,19 +65,15 @@ if (incomeEditModal) {
 
         } else {
 
-            const incomeFormFields = document.querySelector("#expense-edit-form").querySelectorAll("input, select, textarea");
-            incomeFormFields.forEach(field => {
-                field.value = '';
-            })
-
             const modalTitle = incomeEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = "Dodawanie nowego przychodu";
-            $("#add-income-button").addClass("active");
+            
+            form.clearAllFields();
+
+            document.querySelector("#add-income-button").classList.add("active");
 
         }
-        
-        modalAmountInput.value = amount.replace(/\./g, ',');
-        const form = document.getElementById("income-edit-form");
+
         form.action = "/incomes/" + action;
 
     })
@@ -84,7 +81,7 @@ if (incomeEditModal) {
 };
 
 incomeEditModal.addEventListener('shown.bs.modal', () => {
-    modalAmountInput.focus();
+    document.querySelector('#income-edit-amount').focus();
 })
 incomeEditModal.addEventListener('hidden.bs.modal', () => {
     $("#add-income-button").removeClass("active");
