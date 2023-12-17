@@ -41,7 +41,6 @@ if (expensesEditModal) {
     expensesEditModal.addEventListener('show.bs.modal', async event => {
         // Button that triggered the modal
         const button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
 
         const form = expensesEditModal.querySelector("#expense-edit-form");
         const action = button.getAttribute('data-action');
@@ -51,7 +50,7 @@ if (expensesEditModal) {
             const modalTitle = expensesEditModal.querySelector('.modal-title');
             modalTitle.innerHTML = 'Edycja wydatku';
 
-            fillTheTransactionForm(form, button);
+            fillTheExpenseForm(form, button);
 
         } else {
 
@@ -281,7 +280,7 @@ function updateBudgetFieldsStyleAndCaption(remaining) {
  * Fills the transaction form with data from the provided button's dataset.
  * @param {HTMLButtonElement} button - The button element containing the dataset with transaction information.
  */
-function fillTheTransactionForm(form, button) {
+function fillTheExpenseForm(form, button) {
     const { id, amount, date, category, payment, comment } = button.dataset;
 
     const dateInput = form.querySelector("#expense-edit-date");

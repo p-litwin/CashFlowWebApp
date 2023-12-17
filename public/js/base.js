@@ -1,3 +1,7 @@
+/**
+ * Object containing month names in Polish.
+ * @type {Object<number, string>}
+ */
 const MONTH_NAMES = {
     1: 'Styczeń',
     2: 'Luty',
