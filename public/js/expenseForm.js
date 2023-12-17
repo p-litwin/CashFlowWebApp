@@ -37,12 +37,33 @@ $(document).ready(function () {
 });
 
 /**
- * Represents a budget widget that calculates the remaining budget based on the total and budget values.
+ * Represents a budget widget that calculates the remaining budget based on the total
+ * expenses for selected category and budget values.
  */
 class BudgetWidget {
+    /**
+     * Represents the total value of expenses.
+     * @type {number}
+     */
     total;
+    
+    /**
+     * Represents the budget for expense category
+     * @type {number}
+     */
     budget;
+    
+    /**
+     * Represents the remaining amount.
+     * @type {number}
+     */
     remaining;
+    /**
+     * Represents a ExpenseForm object.
+     * @constructor
+     * @param {number} total - The total expense.
+     * @param {number} budget - The budget amount.
+     */
     constructor(total, budget) {
         this.total = parseFloat(total);
         this.budget = parseFloat(budget);
@@ -53,6 +74,11 @@ class BudgetWidget {
             this.remaining = this.remaining.toFixed(2);
         }
     }
+    
+    /**
+     * Calculates the remaining budget by subtracting the total expenses from the budget.
+     * @returns {Promise<void>}
+     */
     async calculateRemaining() {
         this.remaining = this.budget - this.total;
     }
@@ -83,7 +109,7 @@ if (expensesEditModal) {
 
             form.clearAllFields();
 
-            document.querySelector("#add-expense-button").classList.add("active");
+            button.classList.add("active");
 
         }
 
@@ -215,6 +241,13 @@ expensesEditModal.addEventListener('hidden.bs.modal', () => {
 });
 
 
+/**
+ * Change text color of the remaining value and total expense to red and header text to "Przekroczono o:"
+ * if total expense is greater than the budget
+ * If it's less than the budget, change the text color to green and the header text to "Pozostało:"
+ * 
+ * @param {number} remaining - The remaining value.
+ */
 function styleBudgetFields(remaining) {
     const totalFieldParent = document.getElementById('new-total').parentElement;
     const remainingFieldParent = document.getElementById('category-remaining').parentElement;
@@ -232,7 +265,6 @@ function styleBudgetFields(remaining) {
         totalFieldParent.classList.remove('text-danger');
         totalFieldParent.classList.add('text-success');
     }
-
 }
 
 /**
