@@ -45,3 +45,11 @@ $(document).ready(function(){
         keyboard: true
       })
 })
+
+HTMLElement.prototype.clearAllFields = function () {
+    const containerId = this.getAttribute('id');
+    const expenseFormFields = document.querySelector(`#${containerId}`).querySelectorAll("input, select, textarea, checkbox, radio");
+    expenseFormFields.forEach(field => {
+        field.value = '';
+    })
+};
