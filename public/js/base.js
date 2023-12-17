@@ -53,3 +53,28 @@ HTMLElement.prototype.clearAllFields = function () {
         field.value = '';
     })
 };
+
+/**
+ * Converts a number to a float with comma as decimal separator and two decimal places.
+ * If the input is not a valid number, it returns 0.
+ *
+ * @param {number|string} number - The number to be converted.
+ * @returns {string} The converted number as a string with comma as decimal separator and two decimal places.
+ */
+function convertToFloatWithComma(number) {
+    if (typeof number !== 'number' && typeof number !== 'string') {
+        return '0';
+    }
+    
+    if (typeof number === 'string') {
+        number = number.trim();
+    }
+
+    const parsedNumber = Number.parseFloat(number);
+
+    if (Number.isNaN(parsedNumber)) {
+        return '0';
+    }
+
+    return parsedNumber.toFixed(2).replace('.', ',');
+}

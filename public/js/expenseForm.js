@@ -36,55 +36,6 @@ $(document).ready(function () {
     });
 });
 
-/**
- * Represents a budget widget that calculates the remaining budget based on the total
- * expenses for selected category and budget values.
- */
-class BudgetWidget {
-    /**
-     * Represents the total value of expenses.
-     * @type {number}
-     */
-    total;
-    
-    /**
-     * Represents the budget for expense category
-     * @type {number}
-     */
-    budget;
-    
-    /**
-     * Represents the remaining amount.
-     * @type {number}
-     */
-    remaining;
-    /**
-     * Represents a ExpenseForm object.
-     * @constructor
-     * @param {number} total - The total expense.
-     * @param {number} budget - The budget amount.
-     */
-    constructor(total, budget) {
-        this.total = parseFloat(total);
-        this.budget = parseFloat(budget);
-        if (typeof (this.budget) === 'number' && typeof (this.total) === 'number') {
-            this.calculateRemaining();
-            this.total = this.total.toFixed(2);
-            this.budget = this.budget.toFixed(2);
-            this.remaining = this.remaining.toFixed(2);
-        }
-    }
-    
-    /**
-     * Calculates the remaining budget by subtracting the total expenses from the budget.
-     * @returns {Promise<void>}
-     */
-    async calculateRemaining() {
-        this.remaining = this.budget - this.total;
-    }
-
-}
-
 const expensesEditModal = document.getElementById('expense-edit-modal')
 if (expensesEditModal) {
     expensesEditModal.addEventListener('show.bs.modal', async event => {
@@ -149,33 +100,51 @@ async function refreshBudgetWidget() {
     const categoryRemainingElement = document.getElementById('category-remaining');
     const categoryElement = document.getElementById('expense-edit-category');
     const expenseCategory = categoryElement.value;
-    const expenseIdElement = document.getElementById('expense-edit-id');
-    const expenseId = expenseIdElement.value;
     if (!expenseCategory) {
-        newTotalElement.innerText = Number(expenseAmountInput.value).toFixed(2).replace(/\./g, ',');
+        newTotalElement.innerText = convertToFloatWithComma(expenseAmountInput.value);
         categoryBudgetElement.innerText = '-';
         categoryRemainingElement.innerText = '-';
     } else {
-        const expenseDateInput = document.getElementById('expense-edit-date');
-        const selectedDate = new Date(expenseDateInput.value);
-        const selectedMonth = selectedDate.getMonth() + 1;
-        const selectedYear = selectedDate.getUTCFullYear();
-        const totalBeforeNewExpense = await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth, expenseId);
+        const expenseIdElement = document.getElementById('expense-edit-id');
+        const expenseId = expenseIdElement.value;
+        const totalBeforeNewExpense = await calculateTotalBeforeNewExpense(expenseCategory, expenseId);
         const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
         const budgetForCategory = await getCategoryBudget(expenseCategory);
-        const budgetWidget = new BudgetWidget(totalAfterNewExpense, budgetForCategory);
-        newTotalElement.innerText = budgetWidget.total.replace(/\./g, ',');
-        if (budgetWidget.budget == 0) {
-            categoryBudgetElement.innerText = '-';
-            categoryRemainingElement.innerText = '-';
-        } else {
-            categoryBudgetElement.innerText = budgetWidget.budget.replace(/\./g, ',');
-            styleBudgetFields(budgetWidget.remaining);
-            categoryRemainingElement.innerText = budgetWidget.remaining.replace(/\./g, ',');
-        }
-        updateBudgetWidgetHeader();
+        const remainingBudget = calculateRemainingBudget(totalAfterNewExpense, budgetForCategory);
+        updateBudgetUIElements(totalAfterNewExpense, budgetForCategory);
     }
 
+}
+
+async function calculateTotalBeforeNewExpense(expenseCategory, expenseId) {
+    const expenseDateInput = document.getElementById('expense-edit-date');
+    const selectedDate = new Date(expenseDateInput.value);
+    const selectedMonth = selectedDate.getMonth() + 1;
+    const selectedYear = selectedDate.getUTCFullYear();
+    return await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth, expenseId);
+}
+
+function calculateRemainingBudget(totalAfterNewExpense, budgetForCategory) {
+    return budgetForCategory - totalAfterNewExpense;
+}
+
+function updateBudgetUIElements(totalAfterNewExpense, budgetForCategory) {
+    const newTotalElement = document.getElementById('new-total');
+    const categoryBudgetElement = document.getElementById('category-budget');
+    const categoryRemainingElement = document.getElementById('category-remaining');
+    newTotalElement.innerText = convertToFloatWithComma(totalAfterNewExpense);
+    const budgetRemaining = Number(budgetForCategory) - Number(totalAfterNewExpense);
+    if (budgetForCategory == 0) {
+        categoryBudgetElement.innerText = '-';
+        categoryRemainingElement.innerText = '-';
+        styleBudgetFields(0);
+    } else {
+        categoryBudgetElement.innerText = convertToFloatWithComma(budgetForCategory);
+        categoryRemainingElement.innerText = convertToFloatWithComma(budgetRemaining);
+        styleBudgetFields(budgetRemaining);
+    }
+    
+    updateBudgetWidgetHeader();
 }
 
 function updateBudgetWidgetHeader() {
