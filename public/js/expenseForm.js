@@ -94,28 +94,36 @@ $('.transaction-form-button').on('click', () => {
 });
 
 async function refreshBudgetWidget() {
+    
     const expenseAmountInput = document.getElementById('expense-edit-amount');
-    const newTotalElement = document.getElementById('new-total');
-    const categoryBudgetElement = document.getElementById('category-budget');
-    const categoryRemainingElement = document.getElementById('category-remaining');
     const categoryElement = document.getElementById('expense-edit-category');
     const expenseCategory = categoryElement.value;
+    
     if (!expenseCategory) {
-        newTotalElement.innerText = convertToFloatWithComma(expenseAmountInput.value);
-        categoryBudgetElement.innerText = '-';
-        categoryRemainingElement.innerText = '-';
+
+        updateBudgetUIElements(expenseAmountInput.value, 0, 0);
+
     } else {
+        
         const expenseIdElement = document.getElementById('expense-edit-id');
         const expenseId = expenseIdElement.value;
         const totalBeforeNewExpense = await calculateTotalBeforeNewExpense(expenseCategory, expenseId);
-        const totalAfterNewExpense = totalBeforeNewExpense + Number(expenseAmountInput.value);
+        const totalAfterNewExpense = calculateNewTotal(totalBeforeNewExpense, expenseAmountInput.value);
         const budgetForCategory = await getCategoryBudget(expenseCategory);
         const remainingBudget = calculateRemainingBudget(totalAfterNewExpense, budgetForCategory);
-        updateBudgetUIElements(totalAfterNewExpense, budgetForCategory);
+        updateBudgetUIElements(totalAfterNewExpense, budgetForCategory, remainingBudget);
+
     }
 
 }
 
+/**
+ * Calculates the total expenses for a given expense category and month, excluding the expense with the specified ID.
+ * 
+ * @param {string} expenseCategory - The category of the expense.
+ * @param {string} expenseId - The ID of the expense to exclude from the calculation.
+ * @returns {Promise<number>} - The total expenses for the selected month and category.
+ */
 async function calculateTotalBeforeNewExpense(expenseCategory, expenseId) {
     const expenseDateInput = document.getElementById('expense-edit-date');
     const selectedDate = new Date(expenseDateInput.value);
@@ -124,29 +132,57 @@ async function calculateTotalBeforeNewExpense(expenseCategory, expenseId) {
     return await getCategoryTotalExpensesForSelectedMonth(expenseCategory, selectedYear, selectedMonth, expenseId);
 }
 
-function calculateRemainingBudget(totalAfterNewExpense, budgetForCategory) {
-    return budgetForCategory - totalAfterNewExpense;
+/**
+ * Calculates the remaining budget after deducting the total after a new expense from the category budget.
+ * @param {number} totalAfterNewExpense - The total amount after deducting the new expense.
+ * @param {number} categoryBudget - The budget allocated for the category.
+ * @returns {number} - The remaining budget after deducting the total after a new expense.
+ * @throws {Error} - If the input is not a valid number.
+ */
+function calculateRemainingBudget(totalAfterNewExpense, categoryBudget) {
+    if (isNaN(totalAfterNewExpense) || isNaN(categoryBudget)) {
+        throw new Error('Invalid input. Please provide valid numbers.');
+    }
+    return Number(categoryBudget) - Number(totalAfterNewExpense);
 }
 
-function updateBudgetUIElements(totalAfterNewExpense, budgetForCategory) {
+/**
+ * Calculates the new total by adding the expense amount to the total before the new expense.
+ * @param {number} totalBeforeNewExpense - The total before the new expense.
+ * @param {number} expenseAmount - The amount of the new expense.
+ * @returns {number} - The new total after adding the expense amount.
+ * @throws {Error} - If either totalBeforeNewExpense or expenseAmount is not a valid number.
+ */
+function calculateNewTotal(totalBeforeNewExpense, expenseAmount) {
+    if (isNaN(totalBeforeNewExpense) || isNaN(expenseAmount)) {
+        throw new Error('Invalid input. Please provide valid numbers.');
+    }
+    return Number(totalBeforeNewExpense) + Number(expenseAmount);
+}
+
+function updateBudgetUIElements(totalAfterNewExpense, categoryBudget, remainingBudget) {
+    
     const newTotalElement = document.getElementById('new-total');
+    newTotalElement.innerText = convertToFloatWithComma(totalAfterNewExpense);
+    
     const categoryBudgetElement = document.getElementById('category-budget');
     const categoryRemainingElement = document.getElementById('category-remaining');
-    newTotalElement.innerText = convertToFloatWithComma(totalAfterNewExpense);
-    const budgetRemaining = Number(budgetForCategory) - Number(totalAfterNewExpense);
-    if (budgetForCategory == 0) {
+    if (categoryBudget == 0) {
         categoryBudgetElement.innerText = '-';
         categoryRemainingElement.innerText = '-';
-        styleBudgetFields(0);
+        updateBudgetFieldsStyleAndCaption(0);
     } else {
-        categoryBudgetElement.innerText = convertToFloatWithComma(budgetForCategory);
-        categoryRemainingElement.innerText = convertToFloatWithComma(budgetRemaining);
-        styleBudgetFields(budgetRemaining);
+        categoryBudgetElement.innerText = convertToFloatWithComma(categoryBudget);
+        categoryRemainingElement.innerText = convertToFloatWithComma(remainingBudget);
+        updateBudgetFieldsStyleAndCaption(remainingBudget);
     }
     
     updateBudgetWidgetHeader();
 }
 
+/**
+ * Updates the header of the budget widget with the selected month and year.
+ */
 function updateBudgetWidgetHeader() {
     const monthMap = {
         1: 'styczeń',
@@ -212,12 +248,12 @@ expensesEditModal.addEventListener('hidden.bs.modal', () => {
 
 /**
  * Change text color of the remaining value and total expense to red and header text to "Przekroczono o:"
- * if total expense is greater than the budget
+ * if total expense is greater than the budget. 
  * If it's less than the budget, change the text color to green and the header text to "Pozostało:"
  * 
  * @param {number} remaining - The remaining value.
  */
-function styleBudgetFields(remaining) {
+function updateBudgetFieldsStyleAndCaption(remaining) {
     const totalFieldParent = document.getElementById('new-total').parentElement;
     const remainingFieldParent = document.getElementById('category-remaining').parentElement;
     const remainingFieldHeader = document.getElementById('category-remaining-header');
