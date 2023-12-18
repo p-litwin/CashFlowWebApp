@@ -58,6 +58,7 @@ if (expensesEditModal) {
             modalTitle.innerHTML = 'Dodawanie nowego wydatku';
 
             form.clearAllFields();
+            form.removeValidation();
 
             form.querySelector("#expense-edit-date").value = new Date().toISOString().slice(0, 10);
 

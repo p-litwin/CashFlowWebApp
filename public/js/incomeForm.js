@@ -54,6 +54,7 @@ if (incomeEditModal) {
             modalTitle.innerHTML = "Dodawanie nowego przychodu";
             
             form.clearAllFields();
+            form.removeValidation();
 
             form.querySelector("#income-edit-date").value = new Date().toISOString().slice(0, 10);
 

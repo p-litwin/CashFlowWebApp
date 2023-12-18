@@ -73,6 +73,22 @@ HTMLElement.prototype.clearAllFields = function () {
     })
 };
 
+HTMLElement.prototype.removeValidation = function () {
+    const containerId = this.getAttribute('id');
+    const expenseFormFields = document.querySelector(`#${containerId}`).querySelectorAll("input, select, textarea, checkbox, radio");
+    expenseFormFields.forEach(field => {
+        field.classList.remove('is-invalid');
+        field.classList.remove('is-valid');
+        if (field.previousElementSibling) {
+            field.previousElementSibling.classList.remove('is-invalid');
+            field.previousElementSibling.classList.remove('is-valid');
+        }
+        if (field.nextElementSibling && field.nextElementSibling.classList.contains('is-invalid')) {
+            field.nextElementSibling.remove();
+        }
+    })
+};
+
 
 /**
  * Converts a number or string to a float with comma as decimal separator.
