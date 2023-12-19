@@ -16,13 +16,20 @@ $(document).ready(function () {
         },
         rules: {
             name: {
+                required: true,
                 maxlength: 50,
                 remote: '/expense-categories/validate-expense-category'
+            },
+            budget: {
+                pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/
             }
         },
         messages: {
             name: {
                 remote: 'Kategoria już istnieje w bazie'
+            },
+            budget: {
+                pattern: "Podaj wartość w formacie 0,00"
             }
         }
     });
@@ -44,6 +51,7 @@ if (categoryEditModal) {
 
             modalTitle.innerText = "Edycja kategorii wydatku"
             fillExpenseCategoryForm(form, button);
+            form.removeValidation();
 
         } else {
             
@@ -53,6 +61,7 @@ if (categoryEditModal) {
         }
         
         form.action = "/expense-categories/" + action;
+
     })
 };
 

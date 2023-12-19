@@ -25,17 +25,25 @@ class ExpenseCategory extends TransactionCategory
     {
 
         $this->validate();
+        if($this->budget){
+            $this->validateBudget();
+        }
+
+        if (empty($this->budget)){
+            $this->budget = null;
+        }
 
         if (empty($this->errors)) {
 
-            $sql = "INSERT INTO expenses_category_assigned_to_users (user_id, name)
-                VALUES (:user_id, :name)";
+            $sql = "INSERT INTO expenses_category_assigned_to_users (user_id, name, budget)
+                VALUES (:user_id, :name, :budget)";
 
             $db        = static::getDB();
             $statement = $db->prepare($sql);
 
             $statement->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
             $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+            $statement->bindValue(':budget', $this->budget, PDO::PARAM_STR);
 
             return $statement->execute();
 
@@ -191,6 +199,7 @@ class ExpenseCategory extends TransactionCategory
         if (!floatval($this->budget)) {
             $this->errors[] = 'Nieprawidłowa wartość w polu budżet.';
         }
+        
         if ($this->budget <= 0) {
             $this->errors[] = 'Kwota musi być większa od 0';
         }
