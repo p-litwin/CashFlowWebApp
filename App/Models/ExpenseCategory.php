@@ -25,6 +25,7 @@ class ExpenseCategory extends TransactionCategory
     {
 
         $this->validate();
+        
         if($this->budget){
             $this->validateBudget();
         }
@@ -97,8 +98,19 @@ class ExpenseCategory extends TransactionCategory
      * @return boolean True if the category has been updated, false otherwise
      */
     public function update() {
+
+        $this->validate();
+        
+        if($this->budget){
+            $this->validateBudget();
+        }
+
+        if (empty($this->budget)){
+            $this->budget = null;
+        }
+
         $sql = 'UPDATE expenses_category_assigned_to_users
-                SET name = :name
+                SET name = :name, budget = :budget
                 WHERE id=:id AND user_id=:user_id;';
 
         $db = static::getDB();
@@ -106,6 +118,7 @@ class ExpenseCategory extends TransactionCategory
         $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
         $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
         $statement->bindValue(':name', $this->name, PDO::PARAM_STR);
+        $statement->bindValue(':budget', $this->budget, PDO::PARAM_STR);
         return $statement->execute();
     }
 
@@ -160,32 +173,6 @@ class ExpenseCategory extends TransactionCategory
         $statement->execute();
 
         return $statement->fetch();
-    }
-
-    /**
-     * Update the budget for expense category
-     * 
-     * @return boolean True if budget has been updated, false otherwise 
-     */
-    public function budgetUpdate()
-    {
-
-        $this->validateBudget();
-
-        if (empty($this->errors)) {
-            $sql = 'UPDATE expenses_category_assigned_to_users
-                    SET budget = :budget
-                    WHERE id=:id AND user_id=:user_id;';
-            $db        = static::getDB();
-            $statement = $db->prepare($sql);
-            $statement->bindValue(':user_id', $_SESSION['user_id'], PDO::PARAM_INT);
-            $statement->bindValue(':id', $this->id, PDO::PARAM_INT);
-            $statement->bindValue(':budget', $this->budget, PDO::PARAM_STR);
-            return $statement->execute();
-        } else {
-            return false;
-        }
-
     }
 
     /**
