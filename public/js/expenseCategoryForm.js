@@ -18,7 +18,17 @@ $(document).ready(function () {
             name: {
                 required: true,
                 maxlength: 50,
-                remote: '/expense-categories/validate-expense-category'
+                remote: {
+                    url: '/expense-categories/validate-expense-category',
+                    data: {
+                        name: function () {
+                            return $("#category-edit-name").val();
+                        },
+                        ignore_id: function () {
+                            return $("#category-edit-id").val();
+                        }
+                    }
+                }
             },
             budget: {
                 pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/

@@ -84,7 +84,7 @@ class ExpenseCategories extends Authenticated
      */
     public static function validateExpenseCategoryAction()
     {
-        $is_valid = !ExpenseCategory::categoryExists($_GET['name']);
+        $is_valid = !ExpenseCategory::categoryExists($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($is_valid);
     }
