@@ -50,7 +50,7 @@ class ExpenseCategories extends Authenticated
             $expense_category = new ExpenseCategory($_POST);
             $expense_category->user_id = $this->user_id;
             if ($expense_category->update()) {
-                Flash::addMessage('Nazwa kategorii została zmieniona.');
+                Flash::addMessage('Kategoria wydatku została zaktualizowana.');
             } else {
                 Flash::addMessage('Nie udało się zmienić kategorii wydatku', Flash::WARNING);
             }
@@ -87,25 +87,6 @@ class ExpenseCategories extends Authenticated
         $is_valid = !ExpenseCategory::categoryExists($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($is_valid);
-    }
-
-    /**
-     * Action to update the budget for expense category
-     * 
-     * @return void
-     */
-    public function updateCategoryBudgetAction() {
-        
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $expense_category = ExpenseCategory::findById($_POST['id']);
-            $expense_category->budget = str_replace(',','.',$_POST['budget']);
-            if ($expense_category->budgetUpdate()) {
-                Flash::addMessage('Budżet dla kategorii ' .$expense_category->name. ' został zmieniony.');
-            } else {
-                Flash::addMessage('Nie udało się zmienić budżetu', Flash::WARNING);
-            }
-        }
-        $this->redirect('\expense-categories');
     }
 
     public static function categoryBudgetAction() {
