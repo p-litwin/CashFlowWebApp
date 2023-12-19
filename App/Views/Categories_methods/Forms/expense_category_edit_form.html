@@ -1,0 +1,15 @@
+<form method="post" aria-label="{{formAriaLabel}}" id="{{idSuffix}}-form" action="">
+    <input type="hidden" id="{{idSuffix}}-id" name="id" value="">
+    <div class="px-4 has-validation">
+        <label class="form-label" for="{{idSuffix}}-name">Nazwa kategorii</label>
+        <input class="form-control cashflowapp-input" aria-label="Podaj nazwę kategorii" type="text" id="{{idSuffix}}-name"
+            name="name" value="">
+    </div>
+    <div class="px-4 mb-4 has-validation">
+        <label class="form-label" for="{{idSuffix}}-budget">Budżet (opcjonalnie)</label>
+        <input class="form-control cashflowapp-input" aria-label="Budżet miesięczny dla kategorii" type="text" id="{{idSuffix}}-budget"
+            name="budget" value="">
+    </div>    
+    <button type="submit" class="btn btn-block m-0 btn-success btn-lg save-button"><i class="bi bi-floppy"></i>
+            {{buttonCaption}}</button>
+</form>
