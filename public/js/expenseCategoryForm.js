@@ -16,47 +16,68 @@ $(document).ready(function () {
         },
         rules: {
             name: {
+                required: true,
                 maxlength: 50,
-                remote: '/expense-categories/validate-expense-category'
+                remote: {
+                    url: '/expense-categories/validate-expense-category',
+                    data: {
+                        name: function () {
+                            return $("#category-edit-name").val();
+                        },
+                        ignore_id: function () {
+                            return $("#category-edit-id").val();
+                        }
+                    }
+                }
+            },
+            budget: {
+                pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/
             }
         },
         messages: {
             name: {
                 remote: 'Kategoria już istnieje w bazie'
+            },
+            budget: {
+                pattern: "Podaj wartość w formacie 0,00"
             }
         }
     });
 
 });
 
-let categoryEditModal = document.getElementById('category-edit-modal')
+const categoryEditModal = document.getElementById('category-edit-modal')
 if (categoryEditModal) {
-    const nameInput = categoryEditModal.querySelector('#category-edit-name');
+
     const modalTitle = categoryEditModal.querySelector('.modal-title');
+    const form = categoryEditModal.querySelector("#category-edit-form");
+
     categoryEditModal.addEventListener('show.bs.modal', event => {
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
-        let action = button.getAttribute('data-bs-action');
-        let id = "";
-        let name = "";
+        const action = button.getAttribute('data-action');
         if (action == 'update') {
-            id = button.getAttribute('data-bs-id');
-            name = button.getAttribute('data-bs-name');
-            modalTitle.innerHTML = "Edycja kategorii wydatku"
+
+            modalTitle.innerText = "Edycja kategorii wydatku"
+            fillExpenseCategoryForm(form, button);
+            form.removeValidation();
+
         } else {
-            modalTitle.innerHTML = "Dodawanie nowej kategorii wydatku"
+            
+            modalTitle.innerHTML = "Dodawanie nowej kategorii wydatku";
+            form.clearAllFields();
+            form.removeValidation();
         }
-        let idInput = document.getElementById("category-edit-id");
-        idInput.value = id;
-        nameInput.value = name;
-        let form = document.getElementById("category-edit-form");
+        
         form.action = "/expense-categories/" + action;
-    })
-    categoryEditModal.addEventListener('shown.bs.modal', event => {
-        nameInput.focus();
+
     })
 };
+
+categoryEditModal.addEventListener('shown.bs.modal', event => {
+    categoryEditModal.querySelector('#category-edit-name').focus();
+})
 
 ///************************ */
 
@@ -78,3 +99,16 @@ if (categoryDeleteModal) {
         categoryName.innerHTML = name;
     })
 };
+
+function fillExpenseCategoryForm(form, button) {
+    const {id,  name, budget} = button.dataset;
+    
+    const idInput = form.querySelector("#category-edit-id");
+    idInput.value = id;
+
+    const nameInput = form.querySelector("#category-edit-name");
+    nameInput.value = name;
+
+    const categoryBudget = form.querySelector("#category-edit-budget");
+    categoryBudget.value = budget;
+}

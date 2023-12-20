@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Flash;
 use App\Models\PaymentMethod;
+use App\Models\Transactions;
 use Core\View;
 use App\Models\ExpenseCategory;
 use App\Models\Expense;
@@ -77,6 +78,12 @@ class Expenses extends \App\Controllers\Authenticated
             } 
             $this->redirect($_SESSION['return_to']);
         }
+    }
+
+    public static function categoryTotalExpensesForSelectedMonthAction() {
+        $total_amount = Transactions::getTotalExpensesForCategoryInSelectedMonth($_GET['id'], $_GET['year'], $_GET['month'], $_GET['ignore_expense_id']);
+        header('Content-Type: application/json');
+        echo json_encode($total_amount);
     }
 
 }
