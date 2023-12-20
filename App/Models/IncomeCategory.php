@@ -141,7 +141,7 @@ class IncomeCategory extends TransactionCategory {
     public static function findByName($category_name)
     {
         $sql = 'SELECT * FROM incomes_category_assigned_to_users
-                WHERE name = :category_name';
+                WHERE name COLLATE utf8_bin = :category_name';
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);

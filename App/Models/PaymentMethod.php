@@ -215,7 +215,7 @@ class PaymentMethod extends Model
     public static function findByName($method_name)
     {
         $sql = 'SELECT * FROM payment_methods_assigned_to_users
-                WHERE name = :category_name';
+                WHERE name COLLATE utf8_bin = :category_name';
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
