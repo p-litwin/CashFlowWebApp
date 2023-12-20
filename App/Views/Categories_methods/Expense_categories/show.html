@@ -51,7 +51,7 @@
                         <li class="dropdown-item ellipsis-dropdown-item"><button
                                 class="btn btn-block ellipsis-dropdown-button" data-bs-toggle="modal" data-bs-target="#category-edit-modal" 
                                 data-id="{{expense_category.id}}"  data-action="update" data-id="{{expense_category.id}}"
-                                data-name="{{expense_category.name}}" data-budget="{{expense_category.budget|number_format(2, ',', ' ')}}">
+                                data-name="{{expense_category.name}}" data-budget="{{expense_category.budget|number_format(2, ',', '')}}">
                                 <i class="bi bi-pencil-square"></i> Edytuj</button></li>
                     </ul>
                 </div>
@@ -68,10 +68,7 @@
     idSuffix: 'category-edit',
     modalTitle: 'Kategoria wydatku',
     modalAriaLabel: 'Okno edycji kategorii',
-    modalContent: '\\Categories_methods\\Forms\\expense_category_edit_form.html',
-    formLabel: 'Nazwa kategorii',
-    formAriaLabel: 'Formularz edycji kategorii wydatków',
-    buttonCaption: "Zapisz kategorię" }) }}
+    modalContent: '\\Categories_methods\\Forms\\expense_category_edit_form.html' }) }}
 
     <!-- Category delete modal -->
     {{ include("modal_window.html", {
