@@ -79,25 +79,17 @@ categoryEditModal.addEventListener('shown.bs.modal', event => {
     categoryEditModal.querySelector('#category-edit-name').focus();
 })
 
-///************************ */
-
 const categoryDeleteModal = document.getElementById('category-delete-modal')
 if (categoryDeleteModal) {
 
-    categoryDeleteModal.addEventListener('show.bs.modal', event => {
-        // Button that triggered the modal
-        const button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
-        const id = button.getAttribute('data-bs-id');
-        const name = button.getAttribute('data-bs-name');
-        // If necessary, you could initiate an Ajax request here
-        // and then do the updating in a callback.
-        // Update the modal's content.
-        const idInput = categoryDeleteModal.querySelector('#category-delete-id');
-        idInput.value = id;
-        const categoryName = categoryDeleteModal.querySelector('#parameter-to-delete');
-        categoryName.innerHTML = name;
-    })
+  const form = categoryDeleteModal.querySelector("#category-delete-form");
+
+  categoryDeleteModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    fillDeleteCategoryForm(form, button);
+
+  })
 };
 
 function fillExpenseCategoryForm(form, button) {
@@ -111,4 +103,15 @@ function fillExpenseCategoryForm(form, button) {
 
     const categoryBudget = form.querySelector("#category-edit-budget");
     categoryBudget.value = budget;
+}
+
+function fillDeleteCategoryForm(form, button) {
+    const {id,  name} = button.dataset;
+    
+    const idInput = form.querySelector("#category-delete-id");
+    idInput.value = id;
+
+    const nameInput = form.querySelector("#category-delete-name");
+    nameInput.inerText = name;
+
 }

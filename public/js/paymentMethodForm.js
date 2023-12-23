@@ -16,7 +16,17 @@ $(document).ready(function () {
         rules: {
             name: {
                 maxlength: 50,
-                remote: '/payment-methods/validate'
+                remote: {
+                    url: '/payment-methods/validate',
+                    data: {
+                        name: function () {
+                            return $("#method-edit-name").val();
+                        },
+                        ignore_id: function () {
+                            return $("#method-edit-id").val();
+                        }
+                    }
+                }
             }
         },
         messages: {

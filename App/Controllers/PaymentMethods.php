@@ -88,7 +88,7 @@ class PaymentMethods extends Authenticated
      */
     public static function validateAction()
     {
-        $is_valid = !PaymentMethod::methodExists($_GET['name']);
+        $is_valid = !PaymentMethod::methodExists($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($is_valid);
     }

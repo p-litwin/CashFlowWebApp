@@ -87,7 +87,7 @@ class IncomeCategories extends Authenticated{
      */
     public static function validateIncomeCategoryAction()
     {
-        $is_valid = !IncomeCategory::categoryExists($_GET['name']);
+    $is_valid = !IncomeCategory::categoryExists($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($is_valid);
     }
