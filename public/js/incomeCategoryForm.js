@@ -16,7 +16,17 @@ $(document).ready(function () {
     rules: {
       name: {
           maxlength: 50,
-          remote: '/income-categories/validate-income-category'
+          remote: {
+            url: '/income-categories/validate-income-category',
+            data: {
+                name: function () {
+                    return $("#category-edit-name").val();
+                },
+                ignore_id: function () {
+                    return $("#category-edit-id").val();
+                }
+            }
+        }
       }
   },
   messages: {

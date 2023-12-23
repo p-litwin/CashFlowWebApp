@@ -3,6 +3,7 @@
 namespace App\Models; 
 
 use App\Models\TransactionCategory;
+use Core\Text;
 use PDO;
 
 /**
@@ -150,6 +151,31 @@ class IncomeCategory extends TransactionCategory {
         $statement->execute();
 
         return $statement->fetch();
+    }
+
+        /**
+     * Check if category already exists in the database for logged in user
+     * @param string $category_name
+     * @return bool true if category exists, false otherwise
+     */
+    public static function categoryExists($category_name, $ignore_id = null)
+    {
+        $newCategoryNormalizedName = Text::normalize($category_name);
+        $categories =  $_SESSION['incomes_categories'];
+        if (!$categories) {
+            $categories = IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['incomes_categories'] = $categories;
+        }
+
+        foreach ($categories as $category) {
+            $normalizedCategoryName = Text::normalize($category['name']);
+            if ($category['id'] != $ignore_id) {
+                if ($normalizedCategoryName == $newCategoryNormalizedName) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

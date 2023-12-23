@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\Text;
 use PDO;
 
 /**
@@ -196,12 +197,22 @@ class PaymentMethod extends Model
      * @param string $method_name name of the payment method
      * @return bool true if the payment method exists, false otherwise
      */
-    public static function methodExists($method_name) {
+    public static function methodExists($method_name, $ignore_id = null) {
         
-        $method = static::findByName($method_name);
+        $newMethodNameNormalized = Text::normalize($method_name);
+        $methods =  $_SESSION['payment_methods'];
+        if (!$methods) {
+            $methods = PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']);
+            $_SESSION['payment_methods'] = $methods;
+        }
 
-        if ($method && $method->user_id == $_SESSION['user_id']) {
-            return true;
+        foreach ($methods as $method) {
+            $normalizedMethodName = Text::normalize($method['name']);
+            if ($method['id'] != $ignore_id) {
+                if ($normalizedMethodName == $newMethodNameNormalized) {
+                    return true;
+                }
+            }
         }
         return false;
     }
