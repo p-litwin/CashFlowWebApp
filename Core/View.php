@@ -55,10 +55,14 @@ class View {
             $twig->addGlobal('flash_messages', \App\Flash::getMessage());
             $twig->addGlobal('current_date', Date('Y-m-d'));
             $twig->addGlobal('request_uri', $_SERVER['REQUEST_URI']);
-            if (isset($_SESSION['user_id'])) {
-                $twig->addGlobal('expenses_categories', \App\Models\ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']));
-                $twig->addGlobal('incomes_categories', \App\Models\IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']));
-                $twig->addGlobal('payment_methods', \App\Models\PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']));
+            if (isset($_SESSION['expenses_categories'])) {
+                $twig->addGlobal('expenses_categories', $_SESSION['expenses_categories']);
+            }
+            if (isset($_SESSION['incomes_categories'])) {
+                $twig->addGlobal('incomes_categories', $_SESSION['incomes_categories']);
+            }
+            if (isset($_SESSION['payment_methods'])) {
+                $twig->addGlobal('payment_methods', $_SESSION['payment_methods']);
             }
         }
  

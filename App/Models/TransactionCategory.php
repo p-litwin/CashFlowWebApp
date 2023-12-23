@@ -76,7 +76,6 @@ abstract class TransactionCategory extends Model
     {
         $newCategoryNormalized = static::normalize($category_name);
         $categories =  $_SESSION['expenses_categories'];
-        
         if (!$categories) {
             $categories = ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']);
             $_SESSION['expenses_categories'] = $categories;

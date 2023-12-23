@@ -21,6 +21,7 @@ class ExpenseCategories extends Authenticated
             $expense_category = new ExpenseCategory($_POST);
             $expense_category->user_id = $this->user_id;
             if ($expense_category->save()) {
+                $_SESSION['expenses_categories'] = ExpenseCategory::getExpenseCategoriesByUserId($this->user_id);
                 Flash::addMessage('Kategoria wydatku została dodana.');
             } else {
                 $this->pushFlashMessages($expense_category->errors, Flash::WARNING);
@@ -50,6 +51,7 @@ class ExpenseCategories extends Authenticated
             $expense_category = new ExpenseCategory($_POST);
             $expense_category->user_id = $this->user_id;
             if ($expense_category->update()) {
+                $_SESSION['expenses_categories'] = ExpenseCategory::getExpenseCategoriesByUserId($this->user_id);
                 Flash::addMessage('Kategoria wydatku została zaktualizowana.');
             } else {
                 Flash::addMessage('Nie udało się zmienić kategorii wydatku', Flash::WARNING);
@@ -69,6 +71,7 @@ class ExpenseCategories extends Authenticated
             $expense_category = new ExpenseCategory($_POST);
             $expense_category->user_id = $this->user_id;
             if ($expense_category->delete()) {
+                $_SESSION['expenses_categories'] = ExpenseCategory::getExpenseCategoriesByUserId($this->user_id);
                 Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
             } else {
                 Flash::addMessage('Nie udało się usunąć kategorii wydatku', Flash::WARNING);

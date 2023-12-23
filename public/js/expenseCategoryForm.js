@@ -1,50 +1,50 @@
-// $(document).ready(function () {
+$(document).ready(function () {
 
-//     $("#category-edit-form").validate({
-//         errorClass: "is-invalid",
-//         validClass: "is-valid",
-//         errorElement: "span",
-//         highlight: function (element, errorClass, validClass) {
-//             $(element).addClass(errorClass).removeClass(validClass);
-//             $(element.form).find("label[for=" + element.id + "]")
-//                 .addClass(errorClass);
-//         },
-//         unhighlight: function (element, errorClass, validClass) {
-//             $(element).removeClass(errorClass).addClass(validClass);
-//             $(element.form).find("label[for=" + element.id + "]")
-//                 .removeClass(errorClass);
-//         },
-//         rules: {
-//             name: {
-//                 required: true,
-//                 maxlength: 50,
-//                 remote: {
-//                     url: '/expense-categories/validate-expense-category',
-//                     data: {
-//                         name: function () {
-//                             return $("#category-edit-name").val();
-//                         },
-//                         ignore_id: function () {
-//                             return $("#category-edit-id").val();
-//                         }
-//                     }
-//                 }
-//             },
-//             budget: {
-//                 pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/
-//             }
-//         },
-//         messages: {
-//             name: {
-//                 remote: 'Kategoria już istnieje w bazie'
-//             },
-//             budget: {
-//                 pattern: "Podaj wartość w formacie 0,00"
-//             }
-//         }
-//     });
+    $("#category-edit-form").validate({
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "span",
+        highlight: function (element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+            $(element.form).find("label[for=" + element.id + "]")
+                .addClass(errorClass);
+        },
+        unhighlight: function (element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
+            $(element.form).find("label[for=" + element.id + "]")
+                .removeClass(errorClass);
+        },
+        rules: {
+            name: {
+                required: true,
+                maxlength: 50,
+                remote: {
+                    url: '/expense-categories/validate-expense-category',
+                    data: {
+                        name: function () {
+                            return $("#category-edit-name").val();
+                        },
+                        ignore_id: function () {
+                            return $("#category-edit-id").val();
+                        }
+                    }
+                }
+            },
+            budget: {
+                pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/
+            }
+        },
+        messages: {
+            name: {
+                remote: 'Kategoria już istnieje w bazie'
+            },
+            budget: {
+                pattern: "Podaj wartość w formacie 0,00"
+            }
+        }
+    });
 
-// });
+});
 
 const categoryEditModal = document.getElementById('category-edit-modal')
 if (categoryEditModal) {

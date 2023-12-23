@@ -33,6 +33,7 @@ class PaymentMethods extends Authenticated
             $payment_method = new PaymentMethod($_POST);
             $payment_method->user_id = $this->user_id;
             if ($payment_method->save()) {
+                $_SESSION['payment_methods'] = PaymentMethod::getPaymentMethodsByUserId($this->user_id);
                 Flash::addMessage('Metoda płatności została dodana');
             } else {
                 $this->pushFlashMessages($payment_method->errors, Flash::WARNING);
@@ -52,6 +53,7 @@ class PaymentMethods extends Authenticated
             $payment_method = new PaymentMethod($_POST);
             $payment_method->user_id = $this->user_id;
             if ($payment_method->update()) {
+                $_SESSION['payment_methods'] = PaymentMethod::getPaymentMethodsByUserId($this->user_id);
                 Flash::addMessage('Metoda płatności została zmieniona.');
             } else {
                 $this->pushFlashMessages($payment_method->errors, Flash::WARNING);
@@ -70,6 +72,7 @@ class PaymentMethods extends Authenticated
             $payment_method = new PaymentMethod($_POST);
             $payment_method->user_id = $this->user_id;
             if ($payment_method->delete()) {
+                $_SESSION['payment_methods'] = PaymentMethod::getPaymentMethodsByUserId($this->user_id);
                 Flash::addMessage('Metoda płatności usunięta z bazy i z wszystkich transakcji, do których była przypisana.');
             } else {
                 Flash::addMessage('Nie udało się usunąć metody płatności', Flash::WARNING);
