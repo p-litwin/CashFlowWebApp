@@ -100,7 +100,7 @@ function fillDeleteCategoryForm(form, button) {
   const idInput = form.querySelector("#category-delete-id");
   idInput.value = id;
 
-  const nameInput = form.querySelector("#parameter-to-delete");
-  nameInput.innerText = name;
+  const nameElement = form.querySelector("#parameter-to-delete");
+  nameElement.innerText = name;
 
 }
