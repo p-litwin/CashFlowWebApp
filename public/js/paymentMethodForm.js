@@ -37,50 +37,70 @@ $(document).ready(function () {
     });
 });
 
-let paymentMethodEditModal = document.getElementById('method-edit-modal')
+const paymentMethodEditModal = document.getElementById('method-edit-modal')
 if (paymentMethodEditModal) {
-    const nameInput = paymentMethodEditModal.querySelector('#method-edit-name');
+
     const modalTitle = paymentMethodEditModal.querySelector('.modal-title');
+    const form = paymentMethodEditModal.querySelector("#method-edit-form");
+
     paymentMethodEditModal.addEventListener('show.bs.modal', event => {
         // Button that triggered the modal
         const button = event.relatedTarget;
         // Extract info from data-bs-* attributes
-        let action = button.getAttribute('data-bs-action');
-        let id = "";
-        let name = "";
+        const action = button.getAttribute('data-action');
         if (action == 'update') {
-            id = button.getAttribute('data-bs-id');
-            name = button.getAttribute('data-bs-name');
-            modalTitle.innerHTML = "Edycja metody płatności"
+
+            modalTitle.innerText = "Edycja metody płatności"
+            fillPaymentMethodForm(form, button);
+            form.removeValidation();
+
         } else {
-            modalTitle.innerHTML = "Dodawanie nowej metody płatności"
+            
+            modalTitle.innerHTML = "Dodawanie nowej metody płatności";
+            form.clearAllFields();
+            form.removeValidation();
         }
-        let idInput = document.getElementById("method-edit-id");
-        idInput.value = id;
-        nameInput.value = name;
-        let form = document.getElementById("method-edit-form");
+        
         form.action = "/payment-methods/" + action;
-    })
-    paymentMethodEditModal.addEventListener('shown.bs.modal', event => {
-        nameInput.focus();
+
     })
 };
 
-const categoryDeleteModal = document.getElementById('method-delete-modal')
-if (categoryDeleteModal) {
+paymentMethodEditModal.addEventListener('shown.bs.modal', event => {
+    nameInput.focus();
+});
 
-    categoryDeleteModal.addEventListener('show.bs.modal', event => {
-        // Button that triggered the modal
-        const button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
-        const id = button.getAttribute('data-bs-id');
-        const name = button.getAttribute('data-bs-name');
-        // If necessary, you could initiate an Ajax request here
-        // and then do the updating in a callback.
-        // Update the modal's content.
-        const idInput = categoryDeleteModal.querySelector('#method-delete-id');
-        idInput.value = id;
-        const parameterName = categoryDeleteModal.querySelector('#parameter-to-delete');
-        parameterName.innerHTML = name;
-    })
+const methodDeleteModal = document.getElementById('method-delete-modal')
+if (methodDeleteModal) {
+
+  const form = methodDeleteModal.querySelector("#method-delete-form");
+
+  methodDeleteModal.addEventListener('show.bs.modal', event => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    fillDeletePaymentMethodForm(form, button);
+
+  })
 };
+
+function fillPaymentMethodForm(form, button) {
+    const {id,  name} = button.dataset;
+    
+    const idInput = form.querySelector("#method-edit-id");
+    idInput.value = id;
+  
+    const nameInput = form.querySelector("#method-edit-name");
+    nameInput.value = name;
+  
+  }
+  
+  function fillDeletePaymentMethodForm(form, button) {
+    const {id,  name} = button.dataset;
+    
+    const idInput = form.querySelector("#method-delete-id");
+    idInput.value = id;
+  
+    const nameElement = form.querySelector("#parameter-to-delete");
+    nameElement.innerText = name;
+  
+  }
