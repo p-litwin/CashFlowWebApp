@@ -31,7 +31,7 @@ class IncomeCategories extends Authenticated{
             $income_category = new IncomeCategory($_POST);
             $income_category->user_id = $this->user_id;
             if ($income_category->save()) {
-                $_SESSION['income_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
+                $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
                 Flash::addMessage('Kategoria przychodu została dodana.');
             } else {
                 $this->pushFlashMessages($income_category->errors, Flash::WARNING);
@@ -51,7 +51,7 @@ class IncomeCategories extends Authenticated{
             $income_category = new IncomeCategory($_POST);
             $income_category->user_id = $this->user_id;
             if ($income_category->update()) {
-                $_SESSION['income_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
+                $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
                 Flash::addMessage('Nazwa kategorii została zmieniona.');
             } else {
                 Flash::addMessage('Nie udało się zmienić kategorii przychodu', Flash::WARNING);
@@ -71,7 +71,7 @@ class IncomeCategories extends Authenticated{
             $income_category = new IncomeCategory($_POST);
             $income_category->user_id = $this->user_id;
             if ($income_category->delete()) {
-                $_SESSION['income_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
+                $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
                 Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
             } else {
                 Flash::addMessage('Nie udało się usunąć kategorii wydatku', Flash::WARNING);
