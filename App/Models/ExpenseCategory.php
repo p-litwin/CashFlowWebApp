@@ -255,6 +255,28 @@ class ExpenseCategory extends TransactionCategory
         return false;
     }
 
+    public static function getSimilarCategories($category_name, $ignore_id = null) {
+        $newCategoryNormalizedName = Text::normalize($category_name);
+        $categories = $_SESSION['expenses_categories'];
+        $similarCategories = [];
+        
+        if (!$categories) {
+            $categories = ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['expenses_categories'] = $categories;
+        }
+
+        foreach ($categories as $category) {
+            if ($category['id'] != $ignore_id) {
+            $normalizedCategoryName = Text::normalize($category['name']);
+            similar_text($normalizedCategoryName, $newCategoryNormalizedName, $percent);
+            if ($percent > 60 && $percent < 100) {
+                $similarCategories[] = $category['name'];
+            }   
+            }
+        }
+        return $similarCategories;
+    }
+
 }
 
 ?>
