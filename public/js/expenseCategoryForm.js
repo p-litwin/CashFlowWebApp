@@ -62,6 +62,7 @@ if (categoryEditModal) {
             modalTitle.innerText = "Edycja kategorii wydatku"
             fillExpenseCategoryForm(form, button);
             form.removeValidation();
+            
 
         } else {
 
@@ -69,7 +70,8 @@ if (categoryEditModal) {
             form.clearAllFields();
             form.removeValidation();
         }
-
+        document.querySelector("#similar-categories-notification").style.display = "none";
+        enableSubmitButton("#category-edit-form");
         form.action = "/expense-categories/" + action;
 
     })
@@ -91,6 +93,20 @@ if (categoryDeleteModal) {
 
     })
 };
+const similarCategoriesNotification = `
+<div id="similar-categories-notification" style="display:none" class="mx-4 mt-2 mb-2 p-2 alert alert-warning similar-categories">
+        W bazie już istnieją podobne kategorie:
+        <ul id="similar-categories-list" class="similar-categories-list mb-1">
+
+        </ul>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="similar-category-checkbox">
+            <label class="form-check-label" for="similar-category-checkbox"></label>
+              Zaznacz, aby dodać kategorię mimo wszystko
+            </label>
+          </div> 
+    </div>
+`;
 
 function fillExpenseCategoryForm(form, button) {
     const { id, name, budget } = button.dataset;
@@ -120,7 +136,9 @@ document.querySelector("#category-edit-name").addEventListener('blur', async (ev
     const categoryName = event.target.value;
     const categoryId = document.querySelector("#category-edit-id").value;
     const similarCategories = await getSimilarCategories(categoryName, categoryId);
+    const firstDivOfTheForm = document.querySelector("#category-edit-form > div:first-child");
     if (similarCategories.length > 0) {
+        
         const similarCategoriesList = document.querySelector("#similar-categories-list");
         similarCategoriesList.innerHTML = "";
         similarCategories.forEach(category => {
@@ -128,11 +146,12 @@ document.querySelector("#category-edit-name").addEventListener('blur', async (ev
             categoryElement.classList.add("similar-category-item");
             categoryElement.innerText = category;
             similarCategoriesList.appendChild(categoryElement);
-            const similarCategoriesNotification = document.getElementById("similar-categories-notification");
-            similarCategoriesNotification.style.display = "block";
+            showElement("#similar-categories-notification");
         });
-        const submitButton = document.querySelector("#category-edit-form > button[type='submit']");
-        submitButton.disabled = true;
+        disableSubmitButton("#category-edit-form");
+    } else {
+        hideElement("#similar-categories-notification");
+        enableSubmitButton("#category-edit-form");
     }
 });
 
@@ -153,3 +172,22 @@ async function getSimilarCategories(categoryName, ignoreCategoryId = null) {
     }
 }
 
+function enableSubmitButton(formId) {
+    const submitButton = document.querySelector(`${formId} > button[type='submit']`);
+    submitButton.disabled = false;
+}
+
+function disableSubmitButton(formId) {
+    const submitButton = document.querySelector(`${formId} > button[type='submit']`);
+    submitButton.disabled = true;
+}
+
+function showElement(elementId) {
+    const element = document.querySelector(elementId);
+    element.style.display = "block";
+}
+
+function hideElement(elementId) {
+    const element = document.querySelector(elementId);
+    element.style.display = "none";
+}
