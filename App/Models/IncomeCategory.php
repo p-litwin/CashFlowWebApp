@@ -3,6 +3,7 @@
 namespace App\Models; 
 
 use App\Models\TransactionCategory;
+use Core\Text;
 use PDO;
 
 /**
@@ -141,7 +142,7 @@ class IncomeCategory extends TransactionCategory {
     public static function findByName($category_name)
     {
         $sql = 'SELECT * FROM incomes_category_assigned_to_users
-                WHERE name = :category_name';
+                WHERE name COLLATE utf8_bin = :category_name';
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
@@ -150,6 +151,60 @@ class IncomeCategory extends TransactionCategory {
         $statement->execute();
 
         return $statement->fetch();
+    }
+
+    /**
+     * Check if category already exists in the database for logged in user
+     * @param string $category_name
+     * @return bool true if category exists, false otherwise
+     */
+    public static function categoryExists($category_name, $ignore_id = null)
+    {
+        $newCategoryNormalizedName = Text::normalize($category_name);
+        $categories =  $_SESSION['incomes_categories'];
+        if (!$categories) {
+            $categories = IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['incomes_categories'] = $categories;
+        }
+
+        foreach ($categories as $category) {
+            $normalizedCategoryName = Text::normalize($category['name']);
+            if ($category['id'] != $ignore_id) {
+                if ($normalizedCategoryName == $newCategoryNormalizedName) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retrieves a list of similar income categories based on a given category name.
+     *
+     * @param string $category_name The name of the category to find similar categories for.
+     * @param int|null $ignore_id (Optional) The ID of a category to ignore during the search.
+     * @return array The list of similar category names.
+     */
+    public static function getSimilarCategories($category_name, $ignore_id = null) {
+        $newCategoryNormalizedName = Text::normalize($category_name);
+        $categories = $_SESSION['incomes_categories'];
+        $similarCategories = [];
+        
+        if (!$categories) {
+            $categories = IncomeCategory::getIncomeCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['incomes_categories'] = $categories;
+        }
+
+        foreach ($categories as $category) {
+            if ($category['id'] != $ignore_id) {
+            $normalizedCategoryName = Text::normalize($category['name']);
+            similar_text($normalizedCategoryName, $newCategoryNormalizedName, $percent);
+            if ($percent > 60 && $percent < 100) {
+                $similarCategories[] = $category['name'];
+            }   
+            }
+        }
+        return $similarCategories;
     }
 
 }

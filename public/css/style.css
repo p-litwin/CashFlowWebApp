@@ -532,3 +532,17 @@ input[type=number] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+.similar-categories {
+    font-size: 0.8em;
+}
+
+.similar-categories>ul {
+    padding-left: 0;
+
+}
+
+.similar-category-item {
+    list-style: none;
+    font-weight: 600;
+}

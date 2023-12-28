@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 use App\Auth;
-
+use App\Models\ExpenseCategory;
+use App\Models\IncomeCategory;
+use App\Models\PaymentMethod;
 /**
  * Authenticated base controller
  */
@@ -28,7 +30,15 @@ abstract class Authenticated extends \Core\Controller {
         } else {
             $this->user_id = $_SESSION['user_id'];
         }
-    
+        if (!isset($_SESSION['income_categories'])) {
+            $_SESSION['income_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
+        }
+        if (!isset($_SESSION['expenses_categories'])) {
+            $_SESSION['expenses_categories'] = ExpenseCategory::getExpenseCategoriesByUserId($this->user_id);
+        }
+        if (!isset($_SESSION['payment_methods'])) {
+            $_SESSION['payment_methods'] = PaymentMethod::getPaymentMethodsByUserId($this->user_id);
+        }
     }
 }
 

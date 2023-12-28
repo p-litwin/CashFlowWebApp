@@ -8,7 +8,7 @@
   <h1>Ustawienia - Kategorie przychodów</h1>
   <div class="mb-3 col-md-6 col-sm-12 shadow-sm">
     <button class="btn btn-primary btn-block" data-bs-toggle="modal" data-bs-target="#category-edit-modal"
-      data-bs-action="add">
+      data-action="add">
       <i class="bi bi-plus-circle"></i> Dodaj nową kategorię przychodów</button>
   </div>
   <h2>Lista kategorii wydatków</h2>
@@ -27,11 +27,11 @@
           <ul class="dropdown-menu ellipsis-menu p-0">
             <li class="dropdown-item ellipsis-dropdown-item"><button class="btn btn-block  ellipsis-dropdown-button"
                 href="" data-bs-toggle="modal" data-bs-target="#category-delete-modal"
-                data-bs-id="{{income_category.id}}" data-bs-name="{{income_category.name}}">
+                data-id="{{income_category.id}}" data-name="{{income_category.name}}">
                 <i class="bi bi-trash text-danger"></i> Delete</button></li>
             <li class="dropdown-item ellipsis-dropdown-item"><button class="btn btn-block ellipsis-dropdown-button"
-                data-bs-action="update" data-bs-id="{{income_category.id}}" data-bs-toggle="modal"
-                data-bs-target="#category-edit-modal" data-bs-name="{{income_category.name}}"><i
+                data-action="update" data-id="{{income_category.id}}" data-bs-toggle="modal"
+                data-bs-target="#category-edit-modal" data-name="{{income_category.name}}"><i
                   class="bi bi-pencil-square"></i> Edit</button></li>
           </ul>
         </div>

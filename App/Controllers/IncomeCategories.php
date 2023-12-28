@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Controllers\Authenticated;
 use App\Flash;
-use App\Models\ExpenseCategory;
 use App\Models\IncomeCategory;
 use Core\View;
 
@@ -31,6 +30,7 @@ class IncomeCategories extends Authenticated{
             $income_category = new IncomeCategory($_POST);
             $income_category->user_id = $this->user_id;
             if ($income_category->save()) {
+                $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
                 Flash::addMessage('Kategoria przychodu została dodana.');
             } else {
                 $this->pushFlashMessages($income_category->errors, Flash::WARNING);
@@ -50,6 +50,7 @@ class IncomeCategories extends Authenticated{
             $income_category = new IncomeCategory($_POST);
             $income_category->user_id = $this->user_id;
             if ($income_category->update()) {
+                $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
                 Flash::addMessage('Nazwa kategorii została zmieniona.');
             } else {
                 Flash::addMessage('Nie udało się zmienić kategorii przychodu', Flash::WARNING);
@@ -69,6 +70,7 @@ class IncomeCategories extends Authenticated{
             $income_category = new IncomeCategory($_POST);
             $income_category->user_id = $this->user_id;
             if ($income_category->delete()) {
+                $_SESSION['incomes_categories'] = IncomeCategory::getIncomeCategoriesByUserId($this->user_id);
                 Flash::addMessage('Kategoria została usunięta. Wszystkie transakcje z tej kategorii pozostały bez kategorii.');
             } else {
                 Flash::addMessage('Nie udało się usunąć kategorii wydatku', Flash::WARNING);
@@ -84,9 +86,20 @@ class IncomeCategories extends Authenticated{
      */
     public static function validateIncomeCategoryAction()
     {
-        $is_valid = !IncomeCategory::categoryExists($_GET['name']);
+    $is_valid = !IncomeCategory::categoryExists($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($is_valid);
+    }
+
+    /**
+     * Finds similar income categories based on the provided name and optional ignore ID.
+     *
+     * @return void
+     */
+    public static function findSimilarCategoryAction() {
+        $similarCategory = IncomeCategory::getSimilarCategories($_GET['name'], $_GET['ignore_id'] ?? null);
+        header('Content-Type: application/json');
+        echo json_encode($similarCategory);
     }
 
 

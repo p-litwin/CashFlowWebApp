@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\Model;
+use Core\Text;
 use PDO;
 
 /**
@@ -196,12 +197,22 @@ class PaymentMethod extends Model
      * @param string $method_name name of the payment method
      * @return bool true if the payment method exists, false otherwise
      */
-    public static function methodExists($method_name) {
+    public static function methodExists($method_name, $ignore_id = null) {
         
-        $method = static::findByName($method_name);
+        $newMethodNameNormalized = Text::normalize($method_name);
+        $methods =  $_SESSION['payment_methods'];
+        if (!$methods) {
+            $methods = PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']);
+            $_SESSION['payment_methods'] = $methods;
+        }
 
-        if ($method && $method->user_id == $_SESSION['user_id']) {
-            return true;
+        foreach ($methods as $method) {
+            $normalizedMethodName = Text::normalize($method['name']);
+            if ($method['id'] != $ignore_id) {
+                if ($normalizedMethodName == $newMethodNameNormalized) {
+                    return true;
+                }
+            }
         }
         return false;
     }
@@ -215,7 +226,7 @@ class PaymentMethod extends Model
     public static function findByName($method_name)
     {
         $sql = 'SELECT * FROM payment_methods_assigned_to_users
-                WHERE name = :category_name';
+                WHERE name COLLATE utf8_bin = :category_name';
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
@@ -224,6 +235,35 @@ class PaymentMethod extends Model
         $statement->execute();
 
         return $statement->fetch();
+    }
+
+    /**
+     * Get similar payment methods from the database
+     * 
+     * @param string $method_name Name of the payment method
+     * @param int $ignore_id Id of the payment method to ignore
+     * @return array Array of the similar payment methods
+     */
+    public static function getSimilarPaymentMethods($method_name, $ignore_id = null) {
+        $newMethodNormalizedName = Text::normalize($method_name);
+        $methods = $_SESSION['payment_methods'];
+        $similarMethods = [];
+        
+        if (!$methods) {
+            $methods = PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']);
+            $_SESSION['payment_methods'] = $methods;
+        }
+
+        foreach ($methods as $method) {
+            if ($method['id'] != $ignore_id) {
+            $normalizedMethodName = Text::normalize($method['name']);
+            similar_text($normalizedMethodName, $newMethodNormalizedName, $percent);
+            if ($percent > 60 && $percent < 100) {
+                $similarMethods[] = $method['name'];
+            }   
+            }
+        }
+        return $similarMethods;
     }
 
 }

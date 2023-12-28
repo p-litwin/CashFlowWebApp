@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\TransactionCategory;
+use Core\Text;
 use PDO;
 
 /**
@@ -164,7 +165,7 @@ class ExpenseCategory extends TransactionCategory
     public static function findByName($category_name)
     {
         $sql = 'SELECT * FROM expenses_category_assigned_to_users
-                WHERE name = :category_name';
+                WHERE name COLLATE utf8_bin = :category_name';
 
         $db        = static::getDB();
         $statement = $db->prepare($sql);
@@ -226,6 +227,54 @@ class ExpenseCategory extends TransactionCategory
         $statement->setFetchMode(PDO::FETCH_ASSOC);
         $statement->execute();
         return $statement->fetch();
+    }
+
+    /**
+     * Check if category already exists in the database for logged in user
+     * @param string $category_name
+     * @return bool true if category exists, false otherwise
+     */
+
+    public static function categoryExists($category_name, $ignore_id = null)
+    {
+        $newCategoryNormalized = Text::normalize($category_name);
+        $categories =  $_SESSION['expenses_categories'];
+        if (!$categories) {
+            $categories = ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['expenses_categories'] = $categories;
+        }
+
+        foreach ($categories as $category) {
+            $normalizedCategory = Text::normalize($category['name']);
+            if ($category['id'] != $ignore_id) {
+                if ($normalizedCategory == $newCategoryNormalized) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static function getSimilarCategories($category_name, $ignore_id = null) {
+        $newCategoryNormalizedName = Text::normalize($category_name);
+        $categories = $_SESSION['expenses_categories'];
+        $similarCategories = [];
+        
+        if (!$categories) {
+            $categories = ExpenseCategory::getExpenseCategoriesByUserId($_SESSION['user_id']);
+            $_SESSION['expenses_categories'] = $categories;
+        }
+
+        foreach ($categories as $category) {
+            if ($category['id'] != $ignore_id) {
+            $normalizedCategoryName = Text::normalize($category['name']);
+            similar_text($normalizedCategoryName, $newCategoryNormalizedName, $percent);
+            if ($percent > 60 && $percent < 100) {
+                $similarCategories[] = $category['name'];
+            }   
+            }
+        }
+        return $similarCategories;
     }
 
 }
