@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Controllers\Authenticated;
 use App\Flash;
-use App\Models\ExpenseCategory;
 use App\Models\IncomeCategory;
 use Core\View;
 
@@ -90,6 +89,17 @@ class IncomeCategories extends Authenticated{
     $is_valid = !IncomeCategory::categoryExists($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($is_valid);
+    }
+
+    /**
+     * Finds similar income categories based on the provided name and optional ignore ID.
+     *
+     * @return void
+     */
+    public static function findSimilarCategoryAction() {
+        $similarCategory = IncomeCategory::getSimilarCategories($_GET['name'], $_GET['ignore_id'] ?? null);
+        header('Content-Type: application/json');
+        echo json_encode($similarCategory);
     }
 
 

@@ -69,7 +69,7 @@ if (categoryEditModal) {
     categoryEditModal.addEventListener('show.bs.modal', handleCategoryEditModalShow);
     categoryEditModal.addEventListener('shown.bs.modal', event => {
         categoryEditModal.querySelector(`${CATEGORY_EDIT_NAME_ID}`).focus();
-    })
+    });
 };
 
 const categoryDeleteModal = document.getElementById('category-delete-modal')
