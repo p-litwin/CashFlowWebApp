@@ -237,4 +237,33 @@ class PaymentMethod extends Model
         return $statement->fetch();
     }
 
+    /**
+     * Get similar payment methods from the database
+     * 
+     * @param string $method_name Name of the payment method
+     * @param int $ignore_id Id of the payment method to ignore
+     * @return array Array of the similar payment methods
+     */
+    public static function getSimilarPaymentMethods($method_name, $ignore_id = null) {
+        $newMethodNormalizedName = Text::normalize($method_name);
+        $methods = $_SESSION['payment_methods'];
+        $similarMethods = [];
+        
+        if (!$methods) {
+            $methods = PaymentMethod::getPaymentMethodsByUserId($_SESSION['user_id']);
+            $_SESSION['payment_methods'] = $methods;
+        }
+
+        foreach ($methods as $method) {
+            if ($method['id'] != $ignore_id) {
+            $normalizedMethodName = Text::normalize($method['name']);
+            similar_text($normalizedMethodName, $newMethodNormalizedName, $percent);
+            if ($percent > 60 && $percent < 100) {
+                $similarMethods[] = $method['name'];
+            }   
+            }
+        }
+        return $similarMethods;
+    }
+
 }

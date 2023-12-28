@@ -92,7 +92,17 @@ class PaymentMethods extends Authenticated
         header('Content-Type: application/json');
         echo json_encode($is_valid);
     }
-
+    
+    /**
+     * Finds similar payment methods based on the provided name and optional ignore ID.
+     *
+     * @return void
+     */
+    public static function findSimilarPaymentMethodAction() {
+        $similarMethods = PaymentMethod::getSimilarPaymentMethods($_GET['name'], $_GET['ignore_id'] ?? null);
+        header('Content-Type: application/json');
+        echo json_encode($similarMethods);
+    }
     
 
 }
