@@ -65,7 +65,7 @@ $(document).ready(function(){
       })
 })
 
-HTMLElement.prototype.clearAllFields = function () {
+HTMLElement.prototype.clearAllFields = function() {
     const containerId = this.getAttribute('id');
     const expenseFormFields = document.querySelector(`#${containerId}`).querySelectorAll("input, select, textarea, checkbox, radio");
     expenseFormFields.forEach(field => {
@@ -73,7 +73,7 @@ HTMLElement.prototype.clearAllFields = function () {
     })
 };
 
-HTMLElement.prototype.removeValidation = function () {
+HTMLElement.prototype.removeValidation = function() {
     const containerId = this.getAttribute('id');
     const expenseFormFields = document.querySelector(`#${containerId}`).querySelectorAll("input, select, textarea, checkbox, radio");
     expenseFormFields.forEach(field => {
@@ -88,6 +88,33 @@ HTMLElement.prototype.removeValidation = function () {
         }
     })
 };
+
+HTMLElement.prototype.enableSubmitButton = function() {
+    const formId = this.getAttribute('id');
+    const submitButton = document.querySelector(`#${formId} > button[type='submit']`);
+    submitButton.disabled = false;
+};
+
+HTMLElement.prototype.disableSubmitButton = function() {
+    const formId = this.getAttribute('id');
+    const submitButton = document.querySelector(`#${formId} > button[type='submit']`);
+    submitButton.disabled = true;
+};
+
+/**
+ * Shows the specified element by changing its display style.
+ * @param {string} [type='block'] - The display style to be applied to the element. Defaults to 'block'.
+ */
+HTMLElement.prototype.showElement = function(type = `block`) {
+    this.style.display = type;
+}
+
+/**
+ * Hides the specified element by setting its display property to "none".
+ */
+HTMLElement.prototype.hideElement = function() {
+    this.style.display = "none";
+}
 
 
 /**
