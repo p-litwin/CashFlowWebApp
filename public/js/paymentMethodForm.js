@@ -1,5 +1,13 @@
+const METHOD_EDIT_FORM_ID = "#method-edit-form";
+const SIMILAR_METHODS_NOTIFICATION_ID = "#similar-methods-notification";
+const METHOD_EDIT_ID = "#method-edit-id";
+const METHOD_EDIT_NAME_ID = "#method-edit-name";
+const METHOD_DELETE_FORM_ID = "#method-delete-form";
+const METHOD_DELETE_ID = "#method-delete-id";
+const SIMILAR_METHOD_CHECKBOX_ID = "#similar-method-checkbox";
+
 $(document).ready(function () {
-    $("#method-edit-form").validate({
+    $(`${METHOD_EDIT_FORM_ID}`).validate({
         errorClass: "is-invalid",
         validClass: "is-valid",
         errorElement: "span",
@@ -20,10 +28,10 @@ $(document).ready(function () {
                     url: '/payment-methods/validate',
                     data: {
                         name: function () {
-                            return $("#method-edit-name").val();
+                            return $(`${METHOD_EDIT_NAME_ID}`).val();
                         },
                         ignore_id: function () {
-                            return $("#method-edit-id").val();
+                            return $(`${METHOD_EDIT_ID}`).val();
                         }
                     }
                 }
@@ -37,70 +45,87 @@ $(document).ready(function () {
     });
 });
 
+// Event listeners for payment methods forms
+
 const paymentMethodEditModal = document.getElementById('method-edit-modal')
 if (paymentMethodEditModal) {
-
-    const modalTitle = paymentMethodEditModal.querySelector('.modal-title');
-    const form = paymentMethodEditModal.querySelector("#method-edit-form");
-
-    paymentMethodEditModal.addEventListener('show.bs.modal', event => {
-        // Button that triggered the modal
-        const button = event.relatedTarget;
-        // Extract info from data-bs-* attributes
-        const action = button.getAttribute('data-action');
-        if (action == 'update') {
-
-            modalTitle.innerText = "Edycja metody płatności"
-            fillPaymentMethodForm(form, button);
-            form.removeValidation();
-
-        } else {
-            
-            modalTitle.innerHTML = "Dodawanie nowej metody płatności";
-            form.clearAllFields();
-            form.removeValidation();
-        }
-        
-        form.action = "/payment-methods/" + action;
-
-    })
+    paymentMethodEditModal.addEventListener('show.bs.modal', handlePaymentMethodEditModalShow);
+    paymentMethodEditModal.addEventListener('shown.bs.modal', () => {
+        paymentMethodEditModal.querySelector(`${METHOD_EDIT_NAME_ID}`).focus();
+    });
 };
-
-paymentMethodEditModal.addEventListener('shown.bs.modal', event => {
-    nameInput.focus();
-});
 
 const methodDeleteModal = document.getElementById('method-delete-modal')
 if (methodDeleteModal) {
-
-  const form = methodDeleteModal.querySelector("#method-delete-form");
-
-  methodDeleteModal.addEventListener('show.bs.modal', event => {
-    // Button that triggered the modal
-    const button = event.relatedTarget;
-    fillDeletePaymentMethodForm(form, button);
-
-  })
+    methodDeleteModal.addEventListener('show.bs.modal', handlePaymentMethodDeleteModalShow);
 };
 
+/**
+ * Handles the event when the payment method edit modal is shown.
+ * 
+ * @param {Event} event - The event object.
+ */
+function handlePaymentMethodEditModalShow(event) {
+    const modalTitle = paymentMethodEditModal.querySelector('.modal-title');
+    const form = paymentMethodEditModal.querySelector(`${METHOD_EDIT_FORM_ID}`);
+    const button = event.relatedTarget;
+    const action = button.getAttribute('data-action');
+
+    if (action == 'update') {
+
+        modalTitle.innerText = "Edycja metody płatności"
+        fillPaymentMethodForm(form, button);
+        form.removeValidation();
+
+    } else {
+
+        modalTitle.innerHTML = "Dodawanie nowej metody płatności";
+        form.clearAllFields();
+        form.removeValidation();
+    }
+
+    form.action = "/payment-methods/" + action;
+}
+
+/**
+ * Handles the event when the payment method delete modal is shown.
+ * 
+ * @param {Event} event - The event object.
+ */
+function handlePaymentMethodDeleteModalShow(event) {
+    const form = methodDeleteModal.querySelector(`${METHOD_DELETE_FORM_ID}`);
+    const button = event.relatedTarget;
+    fillDeletePaymentMethodForm(form, button);
+};
+
+/**
+ * Fills the payment method form with data from the provided button.
+ * @param {HTMLFormElement} form - The payment method form.
+ * @param {HTMLButtonElement} button - The button containing the data to fill the form.
+ */
 function fillPaymentMethodForm(form, button) {
-    const {id,  name} = button.dataset;
-    
-    const idInput = form.querySelector("#method-edit-id");
+    const {id, name} = button.dataset;
+
+    const idInput = form.querySelector(`${METHOD_EDIT_ID}`);
     idInput.value = id;
-  
-    const nameInput = form.querySelector("#method-edit-name");
+
+    const nameInput = form.querySelector(`${METHOD_EDIT_NAME_ID}`);
     nameInput.value = name;
-  
-  }
-  
-  function fillDeletePaymentMethodForm(form, button) {
-    const {id,  name} = button.dataset;
-    
-    const idInput = form.querySelector("#method-delete-id");
+
+}
+
+/**
+ * Fills the delete payment method form with the provided data.
+ * @param {HTMLFormElement} form - The form element to fill.
+ * @param {HTMLButtonElement} button - The button element containing the data.
+ */
+function fillDeletePaymentMethodForm(form, button) {
+    const {id, name} = button.dataset;
+
+    const idInput = form.querySelector(`${METHOD_DELETE_ID}`);
     idInput.value = id;
-  
+
     const nameElement = form.querySelector("#parameter-to-delete");
     nameElement.innerText = name;
-  
-  }
+
+}
