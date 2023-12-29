@@ -414,7 +414,7 @@ class User extends \Core\Model
         } else {
             $http_request = "http";
         }
-        $url = $http_request . '//' . $_SERVER['HTTP_HOST'] . '/password/reset/' . $this->reset_token;
+        $url = $http_request . '://' . $_SERVER['HTTP_HOST'] . '/password/reset/' . $this->reset_token;
 
         $text = View::getTemplate('Password\reset_email.txt', ['url' => $url]);
         $html = View::getTemplate('Password\reset_email.html', ['url' => $url]);
