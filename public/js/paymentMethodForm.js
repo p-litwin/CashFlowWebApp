@@ -63,6 +63,7 @@ if (methodDeleteModal) {
 const methodNameInput = document.querySelector(`${METHOD_EDIT_NAME_ID}`);
 if (methodNameInput) {
     methodNameInput.addEventListener('blur', handleSimilarMethodNotification);
+    methodNameInput.addEventListener('keydown', handleEnterKeydown);
 }
 
 document.querySelector(`${SIMILAR_METHOD_CHECKBOX_ID}`).addEventListener('click', event => {
@@ -142,6 +143,17 @@ function fillDeletePaymentMethodForm(form, button) {
     const nameElement = form.querySelector("#parameter-to-delete");
     nameElement.innerText = name;
 
+}
+
+/**
+ * Handles the keydown event for the Enter key in category name input.
+ * @param {KeyboardEvent} event - The keydown event object.
+ */
+function handleEnterKeydown(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        handleSimilarMethodNotification(event);
+    }
 }
 
 /**

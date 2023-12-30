@@ -71,6 +71,7 @@ if (categoryDeleteModal) {
 const categoryNameInput = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`);
 if (categoryNameInput) {
     categoryNameInput.addEventListener('blur', handleSimilarCategoryNotification);
+    categoryNameInput.addEventListener('keydown', handleEnterKeydown);
 }
 
 document.querySelector(`${SIMILAR_CATEGORY_CHECKBOX_ID}`).addEventListener('click', event => {
@@ -154,6 +155,17 @@ function fillDeleteCategoryForm(form, button) {
   const nameElement = form.querySelector("#parameter-to-delete");
   nameElement.innerText = name;
 
+}
+
+/**
+ * Handles the keydown event for the Enter key in category name input.
+ * @param {KeyboardEvent} event - The keydown event object.
+ */
+function handleEnterKeydown(event) {
+  if (event.key === "Enter") {
+      event.preventDefault();
+      handleSimilarCategoryNotification(event);
+  }
 }
 
 /**
