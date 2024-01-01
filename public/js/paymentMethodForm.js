@@ -71,6 +71,7 @@ if (nameInput) {
             handleSubmitForm(event);
         }
     });
+    nameInput.addEventListener('input', handleSimilarMethodNotification);
 }
 
 const similarMethodCheckBox = document.querySelector(`${SIMILAR_METHOD_CHECKBOX_ID}`);
