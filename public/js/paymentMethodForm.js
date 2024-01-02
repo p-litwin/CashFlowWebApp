@@ -65,12 +65,7 @@ if (methodDeleteModal) {
 
 const nameInput = document.querySelector(`${METHOD_EDIT_NAME_ID}`);
 if (nameInput) {
-    nameInput.addEventListener('keydown', event => {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            handleSubmitForm(event);
-        }
-    });
+    nameInput.addEventListener('keydown', handleEnterKeydown);
     nameInput.addEventListener('input', handleSimilarMethodNotification);
 }
 
@@ -190,7 +185,7 @@ function fillDeletePaymentMethodForm(form, button) {
 function handleEnterKeydown(event) {
     if (event.key === "Enter") {
         event.preventDefault();
-        handleSimilarMethodNotification(event);
+        handleSubmitForm(event);
     }
 }
 
