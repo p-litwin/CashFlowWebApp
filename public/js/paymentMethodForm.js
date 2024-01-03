@@ -170,25 +170,27 @@ function handleEnterKeydown(event) {
     }
 }
 
+
 /**
- * Handles the notification for similar payment methods in the category.
- * @param {Event} event - The event object triggered by the input change.
- * @returns {Promise<void>} - A promise that resolves when the notification is handled.
+ * Handles the input event for the payment method form.
+ * @param {Event} event - The input event object.
+ * @returns {Promise<void>} - A promise that resolves once the input event is handled.
  */
 async function handleInputEvent(event) {
     const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const methodName = event.target.value;
     const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-    const similarMethods = await getSimilarMethods(methodName, methodId);
-    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const similarMethodsNotification = document.querySelector(`${SIMILAR_METHODS_NOTIFICATION_ID}`);
-    if (similarMethods.length > 0) {
-        displaySimilarMethodsListBelowInput(similarMethods);
-        form.disableSubmitButton();
-    } else {
-        similarMethodsNotification.hideElement();
-        form.enableSubmitButton();
+    if (methodName != "") {
+        const similarMethods = await getSimilarMethods(methodName, methodId);
+        if (similarMethods.length > 0) {
+            displaySimilarMethodsListBelowInput(similarMethods);
+            form.disableSubmitButton();
+            return;
+        }
     }
+    similarMethodsNotification.hideElement();
+    form.enableSubmitButton();
 }
 
 /**
