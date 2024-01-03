@@ -48,7 +48,7 @@ if (methodDeleteModal) {
 const nameInput = document.querySelector(`${METHOD_EDIT_NAME_ID}`);
 if (nameInput) {
     nameInput.addEventListener('keydown', handleEnterKeydown);
-    nameInput.addEventListener('input', handleSimilarMethodNotification);
+    nameInput.addEventListener('input', handleInputEvent);
 }
 
 const similarMethodCheckBox = document.querySelector(`${SIMILAR_METHOD_CHECKBOX_ID}`);
@@ -175,7 +175,8 @@ function handleEnterKeydown(event) {
  * @param {Event} event - The event object triggered by the input change.
  * @returns {Promise<void>} - A promise that resolves when the notification is handled.
  */
-async function handleSimilarMethodNotification(event) {
+async function handleInputEvent(event) {
+    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const methodName = event.target.value;
     const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
     const similarMethods = await getSimilarMethods(methodName, methodId);
