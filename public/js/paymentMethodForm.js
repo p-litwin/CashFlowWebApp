@@ -6,46 +6,28 @@ const METHOD_DELETE_FORM_ID = "#method-delete-form";
 const METHOD_DELETE_ID = "#method-delete-id";
 const SIMILAR_METHOD_CHECKBOX_ID = "#similar-method-checkbox";
 
-const validationParameters = {
-    errorClass: "is-invalid",
-    validClass: "is-valid",
-    errorElement: "span",
-    highlight: function (element, errorClass, validClass) {
-        $(element).addClass(errorClass).removeClass(validClass);
-        $(element.form).find("label[for=" + element.id + "]")
-            .addClass(errorClass);
-    },
-    unhighlight: function (element, errorClass, validClass) {
-        $(element).removeClass(errorClass).addClass(validClass);
-        $(element.form).find("label[for=" + element.id + "]")
-            .removeClass(errorClass);
-    },
-    rules: {
-        name: {
-            required: true,
-            maxlength: 50,
-            remote: {
-                url: '/payment-methods/validate',
-                data: {
-                    name: function () {
-                        return $(`${METHOD_EDIT_NAME_ID}`).val();
-                    },
-                    ignore_id: function () {
-                        return $(`${METHOD_EDIT_ID}`).val();
-                    }
-                }
+const PAYMENT_METHOD_VALIDATION_RULES = {
+    required: true,
+    maxlength: 50,
+    remote: {
+        url: '/payment-methods/validate',
+        data: {
+            name: function () {
+                return $(`${METHOD_EDIT_NAME_ID}`).val();
+            },
+            ignore_id: function () {
+                return $(`${METHOD_EDIT_ID}`).val();
             }
         }
     },
     messages: {
-        name: {
-            remote: 'Metoda płatności już istnieje w bazie'
-        }
+        remote: 'Metoda płatności już istnieje w bazie'
     }
 };
 
 $(document).ready(function () {
-    $(`${METHOD_EDIT_FORM_ID}`).validate(validationParameters);
+    $(`${METHOD_EDIT_FORM_ID}`).validate(COMMON_VALIDATION_PARAMETERS);
+    $(`${METHOD_EDIT_NAME_ID}`).rules("add", PAYMENT_METHOD_VALIDATION_RULES);
 });
 
 // Event listeners for payment methods forms
@@ -91,7 +73,7 @@ async function handleSubmitForm(event) {
             displaySimilarMethodsListBelowInput(similarMethods);
             form.disableSubmitButton();
         } else {
-            const isFormInvalid = $(`${METHOD_EDIT_FORM_ID}`).validate(validationParameters).invalid;
+            const isFormInvalid = $(`${METHOD_EDIT_FORM_ID}`).validate().invalid;
             if (isFormInvalid.name === false) {
                 form.submit();
             }
