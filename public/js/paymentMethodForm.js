@@ -167,7 +167,6 @@ function fillDeletePaymentMethodForm(form, button) {
 function handleEnterKeydown(event) {
     if (event.key === "Enter") {
         event.preventDefault();
-        handleSubmitForm(event);
     }
 }
 
