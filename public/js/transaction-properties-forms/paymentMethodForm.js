@@ -1,10 +1,8 @@
 const METHOD_EDIT_FORM_ID = "#method-edit-form";
-const SIMILAR_METHODS_NOTIFICATION_ID = "#similar-methods-notification";
 const METHOD_EDIT_ID = "#method-edit-id";
 const METHOD_EDIT_NAME_ID = "#method-edit-name";
 const METHOD_DELETE_FORM_ID = "#method-delete-form";
 const METHOD_DELETE_ID = "#method-delete-id";
-const SIMILAR_METHOD_CHECKBOX_ID = "#similar-method-checkbox";
 
 const PAYMENT_METHOD_VALIDATION_RULES = {
     required: true,
@@ -24,6 +22,8 @@ const PAYMENT_METHOD_VALIDATION_RULES = {
         remote: 'Metoda płatności już istnieje w bazie'
     }
 };
+
+// Turn on the validation for payment method forms
 
 $(document).ready(function () {
     $(`${METHOD_EDIT_FORM_ID}`).validate(COMMON_VALIDATION_PARAMETERS);
@@ -48,12 +48,7 @@ if (methodDeleteModal) {
 const nameInput = document.querySelector(`${METHOD_EDIT_NAME_ID}`);
 if (nameInput) {
     nameInput.addEventListener('keydown', handleEnterKeydown);
-    nameInput.addEventListener('input', handleInputEvent);
-}
-
-const similarMethodCheckBox = document.querySelector(`${SIMILAR_METHOD_CHECKBOX_ID}`);
-if (similarMethodCheckBox) {
-    similarMethodCheckBox.addEventListener('click', toggleSubmitButton);
+    nameInput.addEventListener('input', handleSubmitForm);
 }
 
 const submitButton = document.querySelector(`${METHOD_EDIT_FORM_ID} > button[type='submit']`);
@@ -61,32 +56,84 @@ if (submitButton) {
     submitButton.addEventListener('click', handleSubmitForm);
 };
 
+/**
+ * Handles the form submission event.
+ * 
+ * @param {Event} event - The form submission event.
+ * @returns {Promise<void>} - A promise that resolves when the form submission is handled.
+ */
 async function handleSubmitForm(event) {
     const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
     const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-    const similarMethodCheckBox = document.querySelector(`${SIMILAR_METHOD_CHECKBOX_ID}`);
+
     if (methodName != "") {
-        event.preventDefault();
-        const similarMethods = await getSimilarMethods(methodName, methodId);
-        if (similarMethods.length > 0 && similarMethodCheckBox.checked === false) {
-            displaySimilarMethodsListBelowInput(similarMethods);
-            form.disableSubmitButton();
+        
+        const similarMethodsList = new similarItemsDialog();
+
+        if (!similarMethodsList.isConfirmationCheckboxChecked()) {
+            if (event.type === "click") {
+                event.preventDefault();
+            }
+            const similarMethods = await getSimilarMethods(methodName, methodId);
+            if (similarMethods.length > 0) {
+                similarMethodsList.udpateAndDisplayList(similarMethods);
+                form.disableSubmitButton();
+                delete similarMethodsList;
+                return;
+            }
         } else {
-            const isFormInvalid = $(`${METHOD_EDIT_FORM_ID}`).validate().invalid;
-            if (isFormInvalid.name === false) {
-                form.submit();
+            if (event.type === "click") {
+                const isFormInvalid = $(`${METHOD_EDIT_FORM_ID}`).validate().invalid;
+                if (isFormInvalid.name === false) {
+                    form.submit();
+                }
+            } else {
+                similarMethodsList.hide();
+                form.enableSubmitButton(); 
             }
         }
     }
 }
 
-function toggleSubmitButton(event) {
+/**
+ * Handles the input event triggered by a form element.
+ * 
+ * @param {Event} event - The input event object.
+ * @returns {Promise<void>} - A promise that resolves when the handling is complete.
+ */
+async function handleInputEvent(event) {
     const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
-    if (event.target.checked) {
+    const methodName = event.target.value;
+    const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
+
+    if (methodName != "") {
+        if (event.type === "click") {
+            event.preventDefault();
+        }
+        const similarMethodsList = new similarItemsDialog();
+
+        if (!similarMethodsList.isConfirmationCheckboxChecked()) {
+            const similarMethods = await getSimilarMethods(methodName, methodId);
+            if (similarMethods.length > 0) {
+                similarMethodsList.udpateAndDisplayList(similarMethods);
+                form.disableSubmitButton();
+                delete similarMethodsList;
+                return;
+            }
+        }
+        similarMethodsList.hide();
         form.enableSubmitButton();
-    } else {
-        form.disableSubmitButton();
+    }
+}
+
+/**
+ * Handles the keydown event for the Enter key in category name input.
+ * @param {KeyboardEvent} event - The keydown event object.
+ */
+function handleEnterKeydown(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
     }
 }
 
@@ -100,7 +147,7 @@ function updatePaymentMethodEditModalOnLoad(event) {
     const form = paymentMethodEditModal.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const button = event.relatedTarget;
     const action = button.getAttribute('data-action');
-    const similarMethodsNotification = document.querySelector(`${SIMILAR_METHODS_NOTIFICATION_ID}`);
+    const similarMethodsDialog = new similarItemsDialog();
     if (action == 'update') {
 
         modalTitle.innerText = "Edycja metody płatności"
@@ -112,7 +159,7 @@ function updatePaymentMethodEditModalOnLoad(event) {
         form.clearAllFields();
     }
     form.removeValidation();
-    similarMethodsNotification.hideElement();
+    similarMethodsDialog.hide();
     form.enableSubmitButton();
     form.action = "/payment-methods/" + action;
 }
@@ -158,60 +205,6 @@ function fillDeletePaymentMethodForm(form, button) {
     const nameElement = form.querySelector("#parameter-to-delete");
     nameElement.innerText = name;
 
-}
-
-/**
- * Handles the keydown event for the Enter key in category name input.
- * @param {KeyboardEvent} event - The keydown event object.
- */
-function handleEnterKeydown(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-    }
-}
-
-
-/**
- * Handles the input event for the payment method form.
- * @param {Event} event - The input event object.
- * @returns {Promise<void>} - A promise that resolves once the input event is handled.
- */
-async function handleInputEvent(event) {
-    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
-    const methodName = event.target.value;
-    const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-    const similarMethodsNotification = document.querySelector(`${SIMILAR_METHODS_NOTIFICATION_ID}`);
-    if (methodName != "") {
-        const similarMethods = await getSimilarMethods(methodName, methodId);
-        if (similarMethods.length > 0) {
-            displaySimilarMethodsListBelowInput(similarMethods);
-            form.disableSubmitButton();
-            return;
-        }
-    }
-    similarMethodsNotification.hideElement();
-    form.enableSubmitButton();
-}
-
-/**
- * Displays a list of similar categories below the input field.
- * 
- * @param {Array} similarCategories - An array of similar categories.
- * @returns {void}
- */
-function displaySimilarMethodsListBelowInput(similarCategories) {
-    const similarCategoriesNotification = document.querySelector(`${SIMILAR_METHODS_NOTIFICATION_ID}`);
-    const similarCategoriesList = document.querySelector("#similar-methods-list");
-    similarCategoriesList.innerHTML = "";
-    similarCategories.forEach(category => {
-        const categoryElement = document.createElement("li");
-        categoryElement.classList.add("similar-category-item");
-        categoryElement.innerText = category;
-        similarCategoriesList.appendChild(categoryElement);
-        similarCategoriesNotification.showElement();
-        const confirmationCheckbox = document.querySelector(`${SIMILAR_METHOD_CHECKBOX_ID}`);
-        confirmationCheckbox.checked = false;
-    });
 }
 
 /**
