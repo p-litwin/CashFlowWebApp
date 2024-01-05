@@ -5,18 +5,7 @@
         <input class="form-control cashflowapp-input" aria-label="Podaj nazwę kategorii" type="text"
             id="method-edit-name" name="name" value="" required autofocus>
     </div>
-    <div id="similar-methods-notification" style="display:none"
-        class="mx-4 mt-2 mb-4 p-2 alert alert-warning similar-categories">
-        W bazie już istnieją podobne metody płatności:
-        <ul id="similar-methods-list" class="similar-categories-list mb-1">
-        </ul>
-        <div class="form-check">
-            <label class="form-check-label" for="similar-category-checkbox">
-                <input class="form-check-input" type="checkbox" id="similar-method-checkbox">
-                Zaznacz, aby dodać metodę płatności mimo wszystko
-            </label>
-        </div>
-    </div>
+    {% include "Categories_methods/Forms/similar-items.html" %}
     <button type="submit" class="btn btn-block m-0 btn-success btn-lg save-button"><i class="bi bi-floppy"></i>
         Zapisz metodę</button>
 </form>

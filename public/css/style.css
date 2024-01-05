@@ -546,3 +546,17 @@ input[type=number] {
     list-style: none;
     font-weight: 600;
 }
+
+.similar-items {
+    font-size: 0.8em;
+}
+
+.similar-items>ul {
+    padding-left: 0;
+
+}
+
+.similar-item {
+    list-style: none;
+    font-weight: 600;
+}
