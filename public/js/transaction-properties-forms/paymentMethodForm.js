@@ -48,12 +48,12 @@ if (methodDeleteModal) {
 const nameInput = document.querySelector(`${METHOD_EDIT_NAME_ID}`);
 if (nameInput) {
     nameInput.addEventListener('keydown', handleEnterKeydown);
-    nameInput.addEventListener('input', handleSubmitForm);
+    nameInput.addEventListener('input', checkForSimilarItems);
 }
 
 const submitButton = document.querySelector(`${METHOD_EDIT_FORM_ID} > button[type='submit']`);
 if (submitButton) {
-    submitButton.addEventListener('click', handleSubmitForm);
+    submitButton.addEventListener('click', checkForSimilarItems);
 };
 
 /**
@@ -62,7 +62,7 @@ if (submitButton) {
  * @param {Event} event - The form submission event.
  * @returns {Promise<void>} - A promise that resolves when the form submission is handled.
  */
-async function handleSubmitForm(event) {
+async function checkForSimilarItems(event) {
     const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
     const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
@@ -72,9 +72,7 @@ async function handleSubmitForm(event) {
         const similarMethodsList = new similarItemsDialog();
 
         if (!similarMethodsList.isConfirmationCheckboxChecked()) {
-            if (event.type === "click") {
-                event.preventDefault();
-            }
+            event.type === "click" ? event.preventDefault() : null;
             const similarMethods = await getSimilarMethods(methodName, methodId);
             if (similarMethods.length > 0) {
                 similarMethodsList.udpateAndDisplayList(similarMethods);
@@ -97,44 +95,11 @@ async function handleSubmitForm(event) {
 }
 
 /**
- * Handles the input event triggered by a form element.
- * 
- * @param {Event} event - The input event object.
- * @returns {Promise<void>} - A promise that resolves when the handling is complete.
- */
-async function handleInputEvent(event) {
-    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
-    const methodName = event.target.value;
-    const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-
-    if (methodName != "") {
-        if (event.type === "click") {
-            event.preventDefault();
-        }
-        const similarMethodsList = new similarItemsDialog();
-
-        if (!similarMethodsList.isConfirmationCheckboxChecked()) {
-            const similarMethods = await getSimilarMethods(methodName, methodId);
-            if (similarMethods.length > 0) {
-                similarMethodsList.udpateAndDisplayList(similarMethods);
-                form.disableSubmitButton();
-                delete similarMethodsList;
-                return;
-            }
-        }
-        similarMethodsList.hide();
-        form.enableSubmitButton();
-    }
-}
-
-/**
  * Handles the keydown event for the Enter key in category name input.
  * @param {KeyboardEvent} event - The keydown event object.
  */
 function handleEnterKeydown(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-    }
+    event.key === "Enter" ? event.preventDefault() : null;
 }
 
 /**
@@ -157,6 +122,7 @@ function updatePaymentMethodEditModalOnLoad(event) {
 
         modalTitle.innerHTML = "Dodawanie nowej metody płatności";
         form.clearAllFields();
+        
     }
     form.removeValidation();
     similarMethodsDialog.hide();
