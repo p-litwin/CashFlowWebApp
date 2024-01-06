@@ -6,9 +6,6 @@
  * @since
  */
 
-const SIMILAR_CATEGORIES_NOTIFICATION_ID = "#similar-categories-notification";
-const SIMILAR_CATEGORY_CHECKBOX_ID = "#similar-category-checkbox";
-
 const CATEGORY_EDIT_FORM_ID = "#category-edit-form";
 const CATEGORY_EDIT_ID = "#category-edit-id";
 const CATEGORY_EDIT_NAME_ID = "#category-edit-name";

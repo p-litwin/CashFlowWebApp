@@ -147,18 +147,6 @@ function fillDeleteCategoryForm(form, button) {
 }
 
 /**
- * Handles the keydown event for the Enter key in category name input.
- * @param {KeyboardEvent} event - The keydown event object.
- */
-function handleEnterKeydown(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        handleSimilarCategoryNotification(event);
-    }
-}
-
-
-/**
  * Checks for similar items on category name input.
  * 
  * @param {Event} event - The input event.
