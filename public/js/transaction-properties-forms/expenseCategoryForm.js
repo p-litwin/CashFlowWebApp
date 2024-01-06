@@ -46,9 +46,10 @@ $(document).ready(function () {
 });
 
 // Event listeners for expense category forms
+
 const categoryEditModal = document.getElementById('category-edit-modal')
 if (categoryEditModal) {
-    categoryEditModal.addEventListener('show.bs.modal', updateCategoryEditModalShow);
+    categoryEditModal.addEventListener('show.bs.modal', updateCategoryEditModalOnLoad);
     categoryEditModal.addEventListener('shown.bs.modal', event => {
         categoryEditModal.querySelector(`${CATEGORY_EDIT_NAME_ID}`).focus();
     });
@@ -56,8 +57,8 @@ if (categoryEditModal) {
 
 const categoryDeleteModal = document.getElementById('category-delete-modal')
 if (categoryDeleteModal) {
-    categoryDeleteModal.addEventListener('show.bs.modal', handleCategoryDeleteModalShow);
-}
+    categoryDeleteModal.addEventListener('show.bs.modal', updateCategoryDeleteModalOnLoad);
+};
 
 const categoryNameInput = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`);
 if (categoryNameInput) {
@@ -75,7 +76,7 @@ if (submitButton) {
  * 
  * @param {Event} event - The event object.
  */
-function updateCategoryEditModalShow(event) {
+export function updateCategoryEditModalOnLoad(event) {
 
     const modalTitle = categoryEditModal.querySelector('.modal-title');
     const form = categoryEditModal.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
@@ -106,10 +107,82 @@ function updateCategoryEditModalShow(event) {
  * 
  * @param {Event} event - The event object.
  */
-function handleCategoryDeleteModalShow(event) {
+function updateCategoryDeleteModalOnLoad(event) {
     const form = categoryDeleteModal.querySelector(`${CATEGORY_DELETE_FORM_ID}`);
     const button = event.relatedTarget;
     fillDeleteCategoryForm(form, button);
+};
+
+/**
+ * Checks for similar items on category name input.
+ * 
+ * @param {Event} event - The input event.
+ * @returns {Promise<void>} - A promise that resolves when the function completes.
+ */
+async function checkForSimilarItemsOnInput(event) {
+
+    const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
+    const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
+    const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
+    const similarCategoriesList = new similarItemsDialog();
+
+    if (categoryName != "") {
+
+        similarCategoriesList.setConfirmationCheckboxValue(false);
+        const similarCategories = await getSimilarCategories(categoryName, categoryId);
+
+        if (similarCategories.length > 0) {
+
+            similarCategoriesList.udpateAndDisplayList(similarCategories);
+            form.disableSubmitButton();
+            return;
+
+        }
+    }
+
+    similarCategoriesList.hide();
+    form.enableSubmitButton();
+
+}
+
+/**
+ * Checks for similar items on category name input.
+ * 
+ * @param {Event} event - The input event.
+ * @returns {Promise<void>} - A promise that resolves when the function completes.
+ */
+async function checkForSimilarItemsOnSubmit(event) {
+
+    const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
+    const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
+    const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
+    const similarCategoriesList = new similarItemsDialog();
+
+    if (categoryName != "") {
+
+        if (!similarCategoriesList.isConfirmationCheckboxChecked()) {
+
+            event.preventDefault();
+            const similarCategories = await getSimilarCategories(categoryName, categoryId);
+
+            if (similarCategories.length > 0) {
+
+                similarCategoriesList.udpateAndDisplayList(similarCategories);
+                form.disableSubmitButton();
+                return;
+
+            }
+        } else {
+
+            const isFormInvalid = $(`${CATEGORY_EDIT_FORM_ID}`).validate().invalid;
+            isFormInvalid.name === false ? form.submit() : null;
+
+        }
+
+        similarCategoriesList.hide();
+        form.enableSubmitButton();
+
+    }
 };
 
 /**
@@ -145,82 +218,6 @@ function fillDeleteCategoryForm(form, button) {
     nameElement.innerText = name;
 
 }
-
-/**
- * Checks for similar items on category name input.
- * 
- * @param {Event} event - The input event.
- * @returns {Promise<void>} - A promise that resolves when the function completes.
- */
-async function checkForSimilarItemsOnInput(event) {
-
-    const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
-    const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
-    const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
-    const similarCategoriesList = new similarItemsDialog();
-
-    if (categoryName != "") {
-
-        similarCategoriesList.setConfirmationCheckboxValue(false);
-        const similarCategories = await getSimilarCategories(categoryName, categoryId);
-
-        if (similarCategories.length > 0) {
-
-            similarCategoriesList.udpateAndDisplayList(similarCategories);
-            form.disableSubmitButton();
-            delete similarCategoriesList;
-            return;
-
-        }
-    }
-
-    similarCategoriesList.hide();
-    delete similarCategoriesList;
-    form.enableSubmitButton();
-
-}
-
-/**
- * Checks for similar items on category name input.
- * 
- * @param {Event} event - The input event.
- * @returns {Promise<void>} - A promise that resolves when the function completes.
- */
-async function checkForSimilarItemsOnSubmit(event) {
-
-    const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
-    const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
-    const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
-    const similarCategoriesList = new similarItemsDialog();
-
-    if (categoryName != "") {
-
-        if (!similarCategoriesList.isConfirmationCheckboxChecked()) {
-
-            event.preventDefault();
-            const similarCategories = await getSimilarCategories(categoryName, categoryId);
-
-            if (similarCategories.length > 0) {
-
-                similarCategoriesList.udpateAndDisplayList(similarCategories);
-                form.disableSubmitButton();
-                delete similarCategoriesList;
-                return;
-
-            }
-        } else {
-
-            const isFormInvalid = $(`${CATEGORY_EDIT_FORM_ID}`).validate().invalid;
-            isFormInvalid.name === false ? form.submit() : null;
-
-        }
-
-        similarCategoriesList.hide();
-        delete similarCategoriesList;
-        form.enableSubmitButton();
-
-    }
-};
 
 /**
  * Retrieves similar expense categories based on the provided category name.

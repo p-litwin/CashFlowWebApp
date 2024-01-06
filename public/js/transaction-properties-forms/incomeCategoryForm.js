@@ -204,7 +204,7 @@ function fillIncomeCategoryForm(form, button) {
 function fillDeleteCategoryForm(form, button) {
     const { id, name } = button.dataset;
 
-    const idInput = form.querySelector("#category-delete-id");
+    const idInput = form.querySelector(`${CATEGORY_DELETE_ID}`);
     idInput.value = id;
 
     const nameElement = form.querySelector("#parameter-to-delete");

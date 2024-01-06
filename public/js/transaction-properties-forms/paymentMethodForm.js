@@ -79,14 +79,12 @@ async function checkForSimilarItemsOnInput(event) {
             
             similarMethodsList.udpateAndDisplayList(similarMethods);
             form.disableSubmitButton();
-            delete similarMethodsList;
             return;
 
         }
     }
 
     similarMethodsList.hide();
-    delete similarMethodsList;
     form.enableSubmitButton();
 
 }
@@ -113,7 +111,6 @@ async function checkForSimilarItemsOnSubmit(event) {
             if (similarMethods.length > 0) {
                 similarMethodsList.udpateAndDisplayList(similarMethods);
                 form.disableSubmitButton();
-                delete similarMethodsList;
                 return;
 
             }
@@ -127,7 +124,6 @@ async function checkForSimilarItemsOnSubmit(event) {
     }
 
     similarMethodsList.hide();
-    delete similarMethodsList;
     form.enableSubmitButton();
 
 }
