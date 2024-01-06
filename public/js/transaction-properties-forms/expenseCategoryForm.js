@@ -2,7 +2,7 @@
  * This file contains the JavaScript code for the expense category form functionality.
  * It includes form validation, event listeners, and functions for handling modals and notifications.
  * 
- * @file FILEPATH: /public/js/expenseCategoryForm.js
+ * @file FILEPATH: /public/js/transaction-properties-forms/expenseCategoryForm.js
  * @since
  */
 
