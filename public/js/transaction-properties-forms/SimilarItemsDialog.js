@@ -1,7 +1,7 @@
 /**
  * Represents a dialog for displaying similar items.
  */
-class similarItemsDialog {
+export class SimilarItemsDialog {
     constructor() {
         this.dialog = document.querySelector("#similar-items-notification");
         this.list = document.querySelector("#similar-items-list");

@@ -68,7 +68,7 @@ async function checkForSimilarItemsOnInput(event) {
     const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
     const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-    const similarMethodsList = new similarItemsDialog();
+    const similarMethodsList = new SimilarItemsDialog();
 
     if (methodName != "") {
 
@@ -99,7 +99,7 @@ async function checkForSimilarItemsOnSubmit(event) {
     const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
     const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-    const similarMethodsList = new similarItemsDialog();
+    const similarMethodsList = new SimilarItemsDialog();
 
     if (methodName != "") {
 
@@ -138,7 +138,7 @@ function updatePaymentMethodEditModalOnLoad(event) {
     const form = paymentMethodEditModal.querySelector(`${METHOD_EDIT_FORM_ID}`);
     const button = event.relatedTarget;
     const action = button.getAttribute('data-action');
-    const similarMethodsDialog = new similarItemsDialog();
+    const similarMethodsDialog = new SimilarItemsDialog();
     if (action == 'update') {
 
         modalTitle.innerText = "Edycja metody płatności"

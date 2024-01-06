@@ -76,7 +76,7 @@ if (submitButton) {
  * 
  * @param {Event} event - The event object.
  */
-export function updateCategoryEditModalOnLoad(event) {
+function updateCategoryEditModalOnLoad(event) {
 
     const modalTitle = categoryEditModal.querySelector('.modal-title');
     const form = categoryEditModal.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
