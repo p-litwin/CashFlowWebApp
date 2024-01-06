@@ -2,7 +2,7 @@
  * This file contains the JavaScript code for the income category form functionality.
  * It includes form validation, event listeners, and functions for handling modals and notifications.
  * 
- * @file FILEPATH: /public/js/incomeCategoryForm.js
+ * @file FILEPATH: /public/js/transaction-properties-forms/incomeCategoryForm.js
  * @since
  */
 
