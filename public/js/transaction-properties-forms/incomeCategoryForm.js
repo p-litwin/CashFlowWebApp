@@ -6,111 +6,93 @@
  * @since
  */
 
-const CATEGORY_EDIT_FORM_ID = "#category-edit-form";
 const SIMILAR_CATEGORIES_NOTIFICATION_ID = "#similar-categories-notification";
+const SIMILAR_CATEGORY_CHECKBOX_ID = "#similar-category-checkbox";
+
+const CATEGORY_EDIT_FORM_ID = "#category-edit-form";
 const CATEGORY_EDIT_ID = "#category-edit-id";
 const CATEGORY_EDIT_NAME_ID = "#category-edit-name";
 const CATEGORY_DELETE_FORM_ID = "#category-delete-form";
 const CATEGORY_DELETE_ID = "#category-delete-id";
-const SIMILAR_CATEGORY_CHECKBOX_ID = "#similar-category-checkbox";
 
-$(document).ready(function () {
-  $("#category-edit-form").validate({
-    errorClass: "is-invalid",
-    validClass: "is-valid",
-    errorElement: "span",
-    highlight: function (element, errorClass, validClass) {
-        $(element).addClass(errorClass).removeClass(validClass);
-        $(element.form).find("label[for=" + element.id + "]")
-            .addClass(errorClass);
-    },
-    unhighlight: function (element, errorClass, validClass) {
-        $(element).removeClass(errorClass).addClass(validClass);
-        $(element.form).find("label[for=" + element.id + "]")
-            .removeClass(errorClass);
-    },
-    rules: {
-      name: {
-          maxlength: 50,
-          remote: {
-            url: '/income-categories/validate-income-category',
-            data: {
-                name: function () {
-                    return $(`${CATEGORY_EDIT_NAME_ID}`).val();
-                },
-                ignore_id: function () {
-                    return $(`${CATEGORY_EDIT_ID}`).val();
-                }
+const INCOME_CATEGORY_VALIDATION_RULES = {
+    required: true,
+    maxlength: 50,
+    remote: {
+        url: '/income-categories/validate-income-category',
+        data: {
+            name: function () {
+                return $(`${CATEGORY_EDIT_NAME_ID}`).val();
+            },
+            ignore_id: function () {
+                return $(`${CATEGORY_EDIT_ID}`).val();
             }
         }
-      }
-  },
-  messages: {
-      name: {
-          remote: 'Kategoria już istnieje w bazie'
-      }
-  }
-  });
+    },
+    messages: {
+        remote: 'Kategoria przychodu już istnieje w bazie',
+    }
+};
+
+$(document).ready(function () {
+    $(`${CATEGORY_EDIT_FORM_ID}`).validate(COMMON_VALIDATION_PARAMETERS);
+    $(`${CATEGORY_EDIT_NAME_ID}`).rules("add", INCOME_CATEGORY_VALIDATION_RULES);
 });
 
 // Event listeners for expense category forms
 
 const categoryEditModal = document.getElementById('category-edit-modal')
 if (categoryEditModal) {
-    categoryEditModal.addEventListener('show.bs.modal', handleCategoryEditModalShow);
+    categoryEditModal.addEventListener('show.bs.modal', updateCategoryEditModalOnLoad);
     categoryEditModal.addEventListener('shown.bs.modal', () => {
-      categoryEditModal.querySelector(`${CATEGORY_EDIT_NAME_ID}`).focus();
-  });
+        categoryEditModal.querySelector(`${CATEGORY_EDIT_NAME_ID}`).focus();
+    });
 };
 
 const categoryDeleteModal = document.getElementById('category-delete-modal')
 if (categoryDeleteModal) {
-  categoryDeleteModal.addEventListener('show.bs.modal', handleCategoryDeleteModalShow);
+    categoryDeleteModal.addEventListener('show.bs.modal', updateCategoryDeleteModalOnLoad);
 };
 
 const categoryNameInput = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`);
 if (categoryNameInput) {
-    categoryNameInput.addEventListener('blur', handleSimilarCategoryNotification);
-    categoryNameInput.addEventListener('keydown', handleEnterKeydown);
+    categoryNameInput.addEventListener('keydown', preventDefaultEnterKeyBehoviour);
+    categoryNameInput.addEventListener('input', checkForSimilarItemsOnInput);
 }
 
-document.querySelector(`${SIMILAR_CATEGORY_CHECKBOX_ID}`).addEventListener('click', event => {
-  const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
-  if (event.target.checked) {
-      form.enableSubmitButton();
-  } else {
-      form.disableSubmitButton();
-  }
-});
+const submitButton = document.querySelector(`${CATEGORY_EDIT_FORM_ID} > button[type='submit']`);
+if (submitButton) {
+    submitButton.addEventListener('click', checkForSimilarItemsOnSubmit);
+};
 
 /**
  * Handles the event when the category edit modal is shown.
  * 
  * @param {Event} event - The event object.
  */
-function handleCategoryEditModalShow(event) {
+function updateCategoryEditModalOnLoad(event) {
 
-  const modalTitle = categoryEditModal.querySelector('.modal-title');
-  const form = categoryEditModal.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
-  const button = event.relatedTarget;
-  const action = button.getAttribute('data-action');
-  const similarCategoriesNotification = document.querySelector(`${SIMILAR_CATEGORIES_NOTIFICATION_ID}`);
+    const modalTitle = categoryEditModal.querySelector('.modal-title');
+    const form = categoryEditModal.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
+    const button = event.relatedTarget;
+    const action = button.getAttribute('data-action');
+    const similarCategoriesDialog = new similarItemsDialog();
 
-  if (action == 'update') {
+    if (action == 'update') {
 
-      modalTitle.innerText = "Edycja kategorii przychodu"
-      fillIncomeCategoryForm(form, button);
+        modalTitle.innerText = "Edycja kategorii przychodu"
+        fillIncomeCategoryForm(form, button);
 
-  } else {
+    } else {
 
-      modalTitle.innerText = "Dodawanie nowej kategorii przychodu";
-      form.clearAllFields();
+        modalTitle.innerText = "Dodawanie nowej kategorii przychodu";
+        form.clearAllFields();
 
-  }
-  form.removeValidation();
-  similarCategoriesNotification.hideElement();
-  form.enableSubmitButton();
-  form.action = "/income-categories/" + action;
+    }
+    form.removeValidation();
+    similarCategoriesDialog.hide();
+    form.enableSubmitButton();
+    form.action = "/income-categories/" + action;
 
 }
 
@@ -119,10 +101,86 @@ function handleCategoryEditModalShow(event) {
  * 
  * @param {Event} event - The event object.
  */
-function handleCategoryDeleteModalShow(event) {
-  const form = categoryDeleteModal.querySelector(`${CATEGORY_DELETE_FORM_ID}`);
-  const button = event.relatedTarget;
-  fillDeleteCategoryForm(form, button);
+function updateCategoryDeleteModalOnLoad(event) {
+    const form = categoryDeleteModal.querySelector(`${CATEGORY_DELETE_FORM_ID}`);
+    const button = event.relatedTarget;
+    fillDeleteCategoryForm(form, button);
+};
+
+/**
+ * Checks for similar items on category name input.
+ * 
+ * @param {Event} event - The input event.
+ * @returns {Promise<void>} - A promise that resolves when the function completes.
+ */
+async function checkForSimilarItemsOnInput(event) {
+
+    const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
+    const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
+    const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
+    const similarCategoriesList = new similarItemsDialog();
+
+    if (categoryName != "") {
+
+        similarCategoriesList.setConfirmationCheckboxValue(false);
+        const similarCategories = await getSimilarCategories(categoryName, categoryId);
+
+        if (similarCategories.length > 0) {
+
+            similarCategoriesList.udpateAndDisplayList(similarCategories);
+            form.disableSubmitButton();
+            delete similarCategoriesList;
+            return;
+
+        }
+    }
+
+    similarCategoriesList.hide();
+    delete similarCategoriesList;
+    form.enableSubmitButton();
+
+}
+
+/**
+ * Checks for similar items on category name input.
+ * 
+ * @param {Event} event - The input event.
+ * @returns {Promise<void>} - A promise that resolves when the function completes.
+ */
+async function checkForSimilarItemsOnSubmit(event) {
+
+    const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
+    const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
+    const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
+    const similarCategoriesList = new similarItemsDialog();
+
+    if (categoryName != "") {
+
+        if (!similarCategoriesList.isConfirmationCheckboxChecked()) {
+
+            event.preventDefault();
+            const similarCategories = await getSimilarCategories(categoryName, categoryId);
+
+            if (similarCategories.length > 0) {
+
+                similarCategoriesList.udpateAndDisplayList(similarCategories);
+                form.disableSubmitButton();
+                delete similarCategoriesList;
+                return;
+
+            }
+        } else {
+
+            const isFormInvalid = $(`${CATEGORY_EDIT_FORM_ID}`).validate().invalid;
+            isFormInvalid.name === false ? form.submit() : null;
+
+        }
+
+        similarCategoriesList.hide();
+        delete similarCategoriesList;
+        form.enableSubmitButton();
+
+    }
 };
 
 /**
@@ -131,13 +189,13 @@ function handleCategoryDeleteModalShow(event) {
  * @param {HTMLButtonElement} button - The button element containing the data.
  */
 function fillIncomeCategoryForm(form, button) {
-  const {id,  name} = button.dataset;
-  
-  const idInput = form.querySelector("#category-edit-id");
-  idInput.value = id;
+    const { id, name } = button.dataset;
 
-  const nameInput = form.querySelector("#category-edit-name");
-  nameInput.value = name;
+    const idInput = form.querySelector("#category-edit-id");
+    idInput.value = id;
+
+    const nameInput = form.querySelector("#category-edit-name");
+    nameInput.value = name;
 
 }
 
@@ -147,66 +205,14 @@ function fillIncomeCategoryForm(form, button) {
  * @param {HTMLButtonElement} button - The button containing the dataset.
  */
 function fillDeleteCategoryForm(form, button) {
-  const {id,  name} = button.dataset;
-  
-  const idInput = form.querySelector("#category-delete-id");
-  idInput.value = id;
+    const { id, name } = button.dataset;
 
-  const nameElement = form.querySelector("#parameter-to-delete");
-  nameElement.innerText = name;
+    const idInput = form.querySelector("#category-delete-id");
+    idInput.value = id;
 
-}
+    const nameElement = form.querySelector("#parameter-to-delete");
+    nameElement.innerText = name;
 
-/**
- * Handles the keydown event for the Enter key in category name input.
- * @param {KeyboardEvent} event - The keydown event object.
- */
-function handleEnterKeydown(event) {
-  if (event.key === "Enter") {
-      event.preventDefault();
-      handleSimilarCategoryNotification(event);
-  }
-}
-
-/**
- * Handles the notification for similar category names.
- * 
- * @param {Event} event - The event object triggered by the input element.
- * @returns {Promise<Array>} - A promise that resolves when the notification is handled.
- */
-async function handleSimilarCategoryNotification(event) {
-  const categoryName = event.target.value;
-  const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
-  const similarCategories = await getSimilarCategories(categoryName, categoryId);
-  const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
-  const similarCategoriesNotification = document.querySelector(`${SIMILAR_CATEGORIES_NOTIFICATION_ID}`);
-  if (similarCategories.length > 0) {
-      displaySimilarCategoriesListBelowInput(similarCategories);
-      form.disableSubmitButton();
-  } else {
-      similarCategoriesNotification.hideElement();
-      form.enableSubmitButton();
-  }
-}
-
-/**
-* Displays a list of similar categories below the input field.
-* 
-* @param {Array<string>} similarCategories - The list of similar categories to display.
-*/
-function displaySimilarCategoriesListBelowInput(similarCategories) {
-  const similarCategoriesNotification = document.querySelector(`${SIMILAR_CATEGORIES_NOTIFICATION_ID}`);
-  const similarCategoriesList = document.querySelector("#similar-categories-list");
-  similarCategoriesList.innerHTML = "";
-  similarCategories.forEach(category => {
-      const categoryElement = document.createElement("li");
-      categoryElement.classList.add("similar-category-item");
-      categoryElement.innerText = category;
-      similarCategoriesList.appendChild(categoryElement);
-      similarCategoriesNotification.showElement();
-      const confirmationCheckbox = document.querySelector(`${SIMILAR_CATEGORY_CHECKBOX_ID}`);
-      confirmationCheckbox.checked = false;
-  });
 }
 
 /**
@@ -216,12 +222,12 @@ function displaySimilarCategoriesListBelowInput(similarCategories) {
 * @returns {Promise<Array>} - A promise that resolves to an array of similar categories.
 */
 async function getSimilarCategories(categoryName, ignoreCategoryId = null) {
-  try {
-      const similarCategories = await fetch(`income-categories/find-similar-category?name=${categoryName}&ignore_id=${ignoreCategoryId}`);
-      result = await similarCategories.json();
-      return result;
-  } catch (error) {
-      console.error(error);
-      return 0;
-  }
+    try {
+        const similarCategories = await fetch(`income-categories/find-similar-category?name=${categoryName}&ignore_id=${ignoreCategoryId}`);
+        result = await similarCategories.json();
+        return result;
+    } catch (error) {
+        console.error(error);
+        return 0;
+    }
 }
