@@ -1,3 +1,13 @@
+/**
+ * This file contains the JavaScript code for the payment methods form functionality.
+ * It includes form validation, event listeners, and functions for handling modals and notifications.
+ * 
+ * @file FILEPATH: /public/js/transaction-properties-forms/paymentCategoryForm.js
+ * @since
+ */
+
+import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
+
 const METHOD_EDIT_FORM_ID = "#method-edit-form";
 const METHOD_EDIT_ID = "#method-edit-id";
 const METHOD_EDIT_NAME_ID = "#method-edit-name";
@@ -73,7 +83,7 @@ async function checkForSimilarItemsOnInput(event) {
     if (methodName != "") {
 
         similarMethodsList.setConfirmationCheckboxValue(false);
-        const similarMethods = await getSimilarMethods(methodName, methodId);
+        let similarMethods = await getSimilarMethods(methodName, methodId);
 
         if (similarMethods.length > 0) {
             
@@ -106,7 +116,7 @@ async function checkForSimilarItemsOnSubmit(event) {
         if (!similarMethodsList.isConfirmationCheckboxChecked()) {
             
             event.preventDefault();
-            const similarMethods = await getSimilarMethods(methodName, methodId);
+            let similarMethods = await getSimilarMethods(methodName, methodId);
 
             if (similarMethods.length > 0) {
                 similarMethodsList.udpateAndDisplayList(similarMethods);
@@ -213,7 +223,7 @@ function clearPaymentMethodForm() {
 async function getSimilarMethods(methodName, ignoreMethodId = null) {
     try {
         const similarMethods = await fetch(`payment-methods/find-similar-payment-method?name=${methodName}&ignore_id=${ignoreMethodId}`);
-        result = await similarMethods.json();
+        let result = await similarMethods.json();
         return result;
     } catch (error) {
         console.error(error);

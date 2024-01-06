@@ -6,6 +6,8 @@
  * @since
  */
 
+import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
+
 const CATEGORY_EDIT_FORM_ID = "#category-edit-form";
 const CATEGORY_EDIT_ID = "#category-edit-id";
 const CATEGORY_EDIT_NAME_ID = "#category-edit-name";
@@ -82,7 +84,7 @@ function updateCategoryEditModalOnLoad(event) {
     const form = categoryEditModal.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
     const button = event.relatedTarget;
     const action = button.getAttribute('data-action');
-    const similarCategoriesDialog = new similarItemsDialog();
+    const similarCategoriesDialog = new SimilarItemsDialog();
 
     if (action == 'update') {
 
@@ -124,12 +126,12 @@ async function checkForSimilarItemsOnInput(event) {
     const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
     const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
     const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
-    const similarCategoriesList = new similarItemsDialog();
+    const similarCategoriesList = new SimilarItemsDialog();
 
     if (categoryName != "") {
 
         similarCategoriesList.setConfirmationCheckboxValue(false);
-        const similarCategories = await getSimilarCategories(categoryName, categoryId);
+        let similarCategories = await getSimilarCategories(categoryName, categoryId);
 
         if (similarCategories.length > 0) {
 
@@ -156,14 +158,14 @@ async function checkForSimilarItemsOnSubmit(event) {
     const form = document.querySelector(`${CATEGORY_EDIT_FORM_ID}`);
     const categoryName = document.querySelector(`${CATEGORY_EDIT_NAME_ID}`).value;
     const categoryId = document.querySelector(`${CATEGORY_EDIT_ID}`).value;
-    const similarCategoriesList = new similarItemsDialog();
+    const similarCategoriesList = new SimilarItemsDialog();
 
     if (categoryName != "") {
 
         if (!similarCategoriesList.isConfirmationCheckboxChecked()) {
 
             event.preventDefault();
-            const similarCategories = await getSimilarCategories(categoryName, categoryId);
+            let similarCategories = await getSimilarCategories(categoryName, categoryId);
 
             if (similarCategories.length > 0) {
 
