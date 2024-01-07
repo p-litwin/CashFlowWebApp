@@ -1,4 +1,4 @@
-const COMMON_VALIDATION_PARAMETERS = {
+export const COMMON_VALIDATION_PARAMETERS = {
     errorClass: "is-invalid",
     validClass: "is-valid",
     errorElement: "span",

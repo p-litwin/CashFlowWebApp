@@ -7,6 +7,7 @@
  */
 
 import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
+import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 
 const CATEGORY_EDIT_FORM_ID = "#category-edit-form";
 const CATEGORY_EDIT_ID = "#category-edit-id";
