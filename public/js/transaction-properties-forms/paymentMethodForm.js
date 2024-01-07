@@ -7,6 +7,7 @@
  */
 
 import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
+import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 
 const METHOD_EDIT_FORM_ID = "#method-edit-form";
 const METHOD_EDIT_ID = "#method-edit-id";
@@ -67,76 +68,6 @@ if (submitButton) {
 };
 
 
-/**
- * Checks for similar items on method names input.
- * 
- * @param {Event} event - The input event.
- * @returns {Promise<void>} - A promise that resolves when the check is complete.
- */
-async function checkForSimilarItemsOnInput(event) {
-    
-    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
-    const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
-    const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-    const similarMethodsList = new SimilarItemsDialog();
-
-    if (methodName != "") {
-
-        similarMethodsList.setConfirmationCheckboxValue(false);
-        let similarMethods = await getSimilarMethods(methodName, methodId);
-
-        if (similarMethods.length > 0) {
-            
-            similarMethodsList.udpateAndDisplayList(similarMethods);
-            form.disableSubmitButton();
-            return;
-
-        }
-    }
-
-    similarMethodsList.hide();
-    form.enableSubmitButton();
-
-}
-
-/**
- * Checks for similar items on form submission.
- * @param {Event} event - The form submission event.
- * @returns {Promise<void>} - A promise that resolves when the check is complete.
- */
-async function checkForSimilarItemsOnSubmit(event) {
-    
-    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
-    const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
-    const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
-    const similarMethodsList = new SimilarItemsDialog();
-
-    if (methodName != "") {
-
-        if (!similarMethodsList.isConfirmationCheckboxChecked()) {
-            
-            event.preventDefault();
-            let similarMethods = await getSimilarMethods(methodName, methodId);
-
-            if (similarMethods.length > 0) {
-                similarMethodsList.udpateAndDisplayList(similarMethods);
-                form.disableSubmitButton();
-                return;
-
-            }
-            
-        } else {
-
-            const isFormInvalid = $(`${METHOD_EDIT_FORM_ID}`).validate().invalid;
-            isFormInvalid.name === false ? form.submit() : null;
-
-        }
-    }
-
-    similarMethodsList.hide();
-    form.enableSubmitButton();
-
-}
 
 /**
  * Handles the event when the payment method edit modal is shown.
@@ -176,6 +107,77 @@ function updatePaymentMethodDeleteModalOnLoad(event) {
     const button = event.relatedTarget;
     fillDeletePaymentMethodForm(form, button);
 };
+/**
+ * Checks for similar items on method name input.
+ *  
+ * @param {Event} event - The input event.
+ * @returns {Promise<void>} - A promise that resolves when the check is complete.
+ */
+async function checkForSimilarItemsOnInput(event) {
+
+    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
+    const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
+    const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
+    const similarMethodsList = new SimilarItemsDialog();
+
+    if (methodName != "") {
+
+        similarMethodsList.setConfirmationCheckboxValue(false);
+        let similarMethods = await getSimilarMethods(methodName, methodId);
+
+        if (similarMethods.length > 0) {
+
+            similarMethodsList.udpateAndDisplayList(similarMethods);
+            form.disableSubmitButton();
+            return;
+
+        }
+    }
+
+    similarMethodsList.hide();
+    form.enableSubmitButton();
+
+}
+
+/**
+ * Checks for similar items on form submission.
+ * @param {Event} event - The form submission event.
+ * @returns {Promise<void>} - A promise that resolves when the check is complete.
+ */
+async function checkForSimilarItemsOnSubmit(event) {
+
+    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
+    const methodName = document.querySelector(`${METHOD_EDIT_NAME_ID}`).value;
+    const methodId = document.querySelector(`${METHOD_EDIT_ID}`).value;
+    const similarMethodsList = new SimilarItemsDialog();
+
+    if (methodName != "") {
+
+        if (!similarMethodsList.isConfirmationCheckboxChecked()) {
+
+            event.preventDefault();
+            let similarMethods = await getSimilarMethods(methodName, methodId);
+
+            if (similarMethods.length > 0) {
+                similarMethodsList.udpateAndDisplayList(similarMethods);
+                form.disableSubmitButton();
+                return;
+
+            }
+
+        } else {
+
+            const isFormInvalid = $(`${METHOD_EDIT_FORM_ID}`).validate().invalid;
+            isFormInvalid.name === false ? form.submit() : null;
+
+        }
+
+        similarMethodsList.hide();
+        form.enableSubmitButton();
+    
+    }
+
+};
 
 /**
  * Fills the payment method form with data from the provided button.
@@ -183,7 +185,7 @@ function updatePaymentMethodDeleteModalOnLoad(event) {
  * @param {HTMLButtonElement} button - The button containing the data to fill the form.
  */
 function fillPaymentMethodForm(form, button) {
-    const { id, name } = button.dataset;
+    const { id, name, budget } = button.dataset;
     const idInput = form.querySelector(`${METHOD_EDIT_ID}`);
     idInput.value = id;
     const nameInput = form.querySelector(`${METHOD_EDIT_NAME_ID}`);
@@ -204,14 +206,6 @@ function fillDeletePaymentMethodForm(form, button) {
     const nameElement = form.querySelector("#parameter-to-delete");
     nameElement.innerText = name;
 
-}
-
-function clearPaymentMethodForm() {
-    const form = document.querySelector(`${METHOD_EDIT_FORM_ID}`);
-
-    form.clearAllFields();
-    form.removeValidation();
-    form.enableSubmitButton();
 }
 
 /**
