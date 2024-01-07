@@ -7,6 +7,7 @@
  */
 
 import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
+import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 
 const CATEGORY_EDIT_FORM_ID = "#category-edit-form";
 const CATEGORY_EDIT_ID = "#category-edit-id";
@@ -52,7 +53,7 @@ $(document).ready(function () {
 const categoryEditModal = document.getElementById('category-edit-modal')
 if (categoryEditModal) {
     categoryEditModal.addEventListener('show.bs.modal', updateCategoryEditModalOnLoad);
-    categoryEditModal.addEventListener('shown.bs.modal', event => {
+    categoryEditModal.addEventListener('shown.bs.modal', () => {
         categoryEditModal.querySelector(`${CATEGORY_EDIT_NAME_ID}`).focus();
     });
 };
@@ -230,7 +231,7 @@ function fillDeleteCategoryForm(form, button) {
 async function getSimilarCategories(categoryName, ignoreCategoryId = null) {
     try {
         const similarCategories = await fetch(`expense-categories/find-similar-category?name=${categoryName}&ignore_id=${ignoreCategoryId}`);
-        result = await similarCategories.json();
+        let result = await similarCategories.json();
         return result;
     } catch (error) {
         console.error(error);
