@@ -1,27 +1,27 @@
 import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
 import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
-import { TransactionPropertyForm } from "./TransactionPropertyForm.js";
+import { TransactionPropertyEditModal } from "./TransactionPropertyEditModal.js";
 
-class ExpenseCategoryForm extends TransactionPropertyForm  {
+class IncomeCategoryEditModal extends TransactionPropertyEditModal  {
     constructor() {
         super();
         this.propertyName = "category";
-        this.modalTitleEdit = "Edycja kategorii wydatku";
-        this.modalTitleAdd = "Dodawanie nowej kategorii wydatku";
-        this.controller = "expense-categories";
+        this.modalTitleEdit = "Edycja kategorii przychodu";
+        this.modalTitleAdd = "Dodawanie nowej kategorii przychodu";
+        this.controller = "income-categories";
 
         this.incomeCategoryNameValidationRules = {
             required: true,
             maxlength: 50,
             remote: {
-                url: '/expense-categories/validate-expense-category',
+                url: '/income-categories/validate-income-category',
                 data: {
                     name: () => $(`#${this.propertyName}-edit-name`).val(),
                     ignore_id: () => $(`#${this.propertyName}-edit-id`).val()
                 }
             },
             messages: {
-                remote: 'Kategoria wydatku już istnieje w bazie',
+                remote: 'Kategoria przychodu już istnieje w bazie',
             }
         };
 
@@ -40,4 +40,4 @@ class ExpenseCategoryForm extends TransactionPropertyForm  {
 
 }
 
-new ExpenseCategoryForm();
+new IncomeCategoryEditModal();

@@ -1,8 +1,7 @@
-import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
 import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
-import { TransactionPropertyForm } from "./TransactionPropertyForm.js";
+import { TransactionPropertyEditModal } from "./TransactionPropertyEditModal.js";
 
-class PaymentMethodForm extends TransactionPropertyForm  {
+class PaymentMethodEditModal extends TransactionPropertyEditModal  {
     constructor() {
         super();
         this.propertyName = "method";
@@ -40,4 +39,4 @@ class PaymentMethodForm extends TransactionPropertyForm  {
 
 }
 
-new PaymentMethodForm();
+new PaymentMethodEditModal();

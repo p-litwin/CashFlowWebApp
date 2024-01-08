@@ -1,6 +1,6 @@
 import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
 
-export class TransactionPropertyForm {
+export class TransactionPropertyEditModal {
 
     /**
      * The name of the property (eg. Category, Payment method, etc.)
@@ -14,7 +14,7 @@ export class TransactionPropertyForm {
     controller = null;
 
     constructor() {
-        if (new.target === TransactionPropertyForm) {
+        if (new.target === TransactionPropertyEditModal) {
             throw new TypeError("Cannot construct Abstract instances directly");
         }
     }
