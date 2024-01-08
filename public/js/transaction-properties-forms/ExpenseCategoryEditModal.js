@@ -62,5 +62,3 @@ export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
     }
 
 }
-
-new ExpenseCategoryEditModal();

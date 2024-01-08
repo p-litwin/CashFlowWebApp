@@ -1,7 +1,7 @@
 import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 import { TransactionPropertyEditModal } from "./TransactionPropertyEditModal.js";
 
-class PaymentMethodEditModal extends TransactionPropertyEditModal  {
+export class PaymentMethodEditModal extends TransactionPropertyEditModal  {
     constructor() {
         super();
         this.propertyName = "method";
@@ -38,5 +38,3 @@ class PaymentMethodEditModal extends TransactionPropertyEditModal  {
     };
 
 }
-
-new PaymentMethodEditModal();
