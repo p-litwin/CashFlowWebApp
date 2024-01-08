@@ -98,7 +98,7 @@ class PaymentMethods extends Authenticated
      *
      * @return void
      */
-    public static function findSimilarPaymentMethodAction() {
+    public static function findSimilarAction() {
         $similarMethods = PaymentMethod::getSimilarPaymentMethods($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($similarMethods);

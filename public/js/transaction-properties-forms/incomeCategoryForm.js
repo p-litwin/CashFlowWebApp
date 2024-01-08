@@ -6,6 +6,9 @@ class IncomeCategoryForm extends TransactionPropertyForm  {
     constructor() {
         super();
         this.propertyName = "category";
+        this.modalTitleEdit = "Edycja kategorii przychodu";
+        this.modalTitleAdd = "Dodawanie nowej kategorii przychodu";
+        this.controller = "income-categories";
 
         this.incomeCategoryNameValidationRules = {
             required: true,
@@ -33,43 +36,8 @@ class IncomeCategoryForm extends TransactionPropertyForm  {
         });
 
         this.addEventListeners(this.propertyName);
-    }
+    };
 
-    updatePropertyEditModalOnLoad(event) {
-        const propertyEditModal = event.target;
-        const modalTitle = propertyEditModal.querySelector('.modal-title');
-        const form = propertyEditModal.querySelector(`#${this.propertyName}-edit-form`);
-        const button = event.relatedTarget;
-        const action = button.getAttribute('data-action');
-        const similarCategoriesDialog = new SimilarItemsDialog();
-
-        if (action == 'update') {
-
-            modalTitle.innerText = "Edycja kategorii przychodu"
-            this.fillPropertyEditForm(form, button);
-
-        } else {
-
-            modalTitle.innerText = "Dodawanie nowej kategorii przychodu";
-            form.clearAllFields();
-
-        }
-        form.removeValidation();
-        similarCategoriesDialog.hide();
-        form.enableSubmitButton();
-        form.action = "/income-categories/" + action;
-    }
-
-    async getSimilarProperties(propertyName, ignorePropertyId = null) {
-        try {
-            const similarProperties = await fetch(`income-categories/find-similar-category?name=${propertyName}&ignore_id=${ignorePropertyId}`);
-            let result = await similarProperties.json();
-            return result;
-        } catch (error) {
-            console.error(error);
-            return 0;
-        }
-    }
 }
 
 new IncomeCategoryForm();

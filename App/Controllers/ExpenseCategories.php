@@ -98,7 +98,7 @@ class ExpenseCategories extends Authenticated
         echo json_encode($budget);
     }
 
-    public static function findSimilarCategoryAction() {
+    public static function findSimilarAction() {
         $similarCategory = ExpenseCategory::getSimilarCategories($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($similarCategory);

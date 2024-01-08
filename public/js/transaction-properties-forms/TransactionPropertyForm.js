@@ -2,7 +2,16 @@ import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
 
 export class TransactionPropertyForm {
 
+    /**
+     * The name of the property (eg. Category, Payment method, etc.)
+     * @type {string|null}
+     */
     propertyName = null;
+    /**
+     * The controller for the transaction property form.
+     * @type {null}
+     */
+    controller = null;
 
     constructor() {
         if (new.target === TransactionPropertyForm) {
@@ -51,19 +60,19 @@ export class TransactionPropertyForm {
 
         if (action == 'update') {
 
-            modalTitle.innerText = "Edycja kategorii przychodu"
+            modalTitle.innerText = `${this.modalTitleEdit}`
             this.fillPropertyEditForm(form, button);
 
         } else {
 
-            modalTitle.innerText = "Dodawanie nowej kategorii przychodu";
+            modalTitle.innerText = `${this.modalTitleAdd}`;
             form.clearAllFields();
 
         }
         form.removeValidation();
         similarCategoriesDialog.hide();
         form.enableSubmitButton();
-        form.action = "/income-categories/" + action;
+        form.action = `/${this.controller}/${action}`;
     }
 
     updatePropertyDeleteModalOnLoad(event) {
@@ -154,7 +163,15 @@ export class TransactionPropertyForm {
         nameElement.innerText = name;
     }
 
-    async getSimilarProperties(propertyName, ignoreCategoryId = null) {
-        throw new Error("Method 'getSimilarProperties()' must be implemented.");
+        async getSimilarProperties(propertyName, ignorePropertyId = null) {
+        try {
+            const similarProperties = await fetch(`${this.controller}/find-similar?name=${propertyName}&ignore_id=${ignorePropertyId}`);
+            let result = await similarProperties.json();
+            return result;
+        } catch (error) {
+            console.error(error);
+            return 0;
+        }
     }
+
 }
