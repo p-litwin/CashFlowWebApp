@@ -1,4 +1,3 @@
-import { SimilarItemsDialog } from "./SimilarItemsDialog.js";
 import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 import { TransactionPropertyEditModal } from "./TransactionPropertyEditModal.js";
 

@@ -51,10 +51,7 @@
                         <li class="dropdown-item ellipsis-dropdown-item"><button
                                 class="btn btn-block ellipsis-dropdown-button" data-bs-toggle="modal" data-bs-target="#category-edit-modal" 
                                 data-id="{{expense_category.id}}"  data-action="update" data-id="{{expense_category.id}}"
-                                data-name="{{expense_category.name}}" data-budget="{% if expense_category.budget %}
-                                {{expense_category.budget|number_format(2, ',', ' ')}}
-                                {% else %}
-                                {% endif %}">
+                                data-name="{{expense_category.name}}" data-budget="{% if expense_category.budget %}{{expense_category.budget|number_format(2, ',', '')}}{% endif %}">
                                 <i class="bi bi-pencil-square"></i> Edytuj</button></li>
                     </ul>
                 </div>
