@@ -1,6 +1,11 @@
 import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 import { TransactionPropertyEditModal } from "./TransactionPropertyEditModal.js";
 
+/**
+ * Represents a modal for editing income categories.
+ * @class
+ * @extends TransactionPropertyEditModal
+ */
 export class IncomeCategoryEditModal extends TransactionPropertyEditModal  {
     constructor() {
         super();
@@ -28,6 +33,9 @@ export class IncomeCategoryEditModal extends TransactionPropertyEditModal  {
         
     }
 
+    /**
+     * Initializes the modal by setting up event listeners and validation rules.
+     */
     init() {
         $(document).ready(() => {
             $(`#${this.propertyName}-edit-form`).validate(COMMON_VALIDATION_PARAMETERS);

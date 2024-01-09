@@ -1,7 +1,14 @@
 import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 import { TransactionPropertyEditModal } from "./TransactionPropertyEditModal.js";
 
+/**
+ * Represents a modal for editing expense categories.
+ * @extends TransactionPropertyEditModal
+ */
 export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
+    /**
+     * Creates an instance of ExpenseCategoryEditModal.
+     */
     constructor() {
         super();
         this.propertyName = "category";
@@ -9,6 +16,10 @@ export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
         this.modalTitleAdd = "Dodawanie nowej kategorii wydatku";
         this.controller = "expense-categories";
 
+        /**
+         * Validation rules for the expense category name input.
+         * @type {object}
+         */
         this.expenseCategoryNameValidationRules = {
             required: true,
             maxlength: 50,
@@ -24,6 +35,10 @@ export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
             }
         };
 
+        /**
+         * Validation rules for the expense category budget input.
+         * @type {object}
+         */
         this.expenseCategoryBudgetValidationRules = {
             number: true,
             min: 0,
@@ -35,9 +50,11 @@ export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
         };
 
         this.init();
-
     }
 
+    /**
+     * Initializes the expense category edit modal.
+     */
     init() {
         $(document).ready(() => {
             $(`#${this.propertyName}-edit-form`).validate(COMMON_VALIDATION_PARAMETERS);
@@ -45,9 +62,14 @@ export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
             $(`#${this.propertyName}-edit-budget`).rules("add", this.expenseCategoryBudgetValidationRules);
         });
 
-        this.addEventListeners(this.propertyName);
+        this.addEventListeners();
     };
 
+    /**
+     * Fills the expense category edit form with data from the button.
+     * @param {HTMLFormElement} form - The form element.
+     * @param {HTMLButtonElement} button - The button element.
+     */
     fillPropertyEditForm(form, button) {
         const { id, name, budget } = button.dataset;
 
@@ -60,5 +82,4 @@ export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
         const budgetInput = form.querySelector(`#${this.propertyName}-edit-budget`);
         budgetInput.value = budget;
     }
-
 }

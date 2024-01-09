@@ -1,7 +1,14 @@
 import { COMMON_VALIDATION_PARAMETERS } from "../commonFormsValidationParameters.js";
 import { TransactionPropertyEditModal } from "./TransactionPropertyEditModal.js";
 
-export class PaymentMethodEditModal extends TransactionPropertyEditModal  {
+/**
+ * Represents a modal for editing payment methods.
+ * @extends TransactionPropertyEditModal
+ */
+export class PaymentMethodEditModal extends TransactionPropertyEditModal {
+    /**
+     * Constructs a new instance of PaymentMethodEditModal.
+     */
     constructor() {
         super();
         this.propertyName = "method";
@@ -25,9 +32,11 @@ export class PaymentMethodEditModal extends TransactionPropertyEditModal  {
         };
 
         this.init();
-        
     }
 
+    /**
+     * Initializes the payment method edit modal.
+     */
     init() {
         $(document).ready(() => {
             $(`#${this.propertyName}-edit-form`).validate(COMMON_VALIDATION_PARAMETERS);
@@ -36,5 +45,4 @@ export class PaymentMethodEditModal extends TransactionPropertyEditModal  {
 
         this.addEventListeners(this.propertyName);
     };
-
 }
