@@ -33,11 +33,6 @@ export class TransactionPropertyEditModal {
             });
         };
 
-        const propertyDeleteModal = document.querySelector(`#${propertyName}-delete-modal`)
-        if (propertyDeleteModal) {
-            propertyDeleteModal.addEventListener('show.bs.modal', this.updatePropertyDeleteModalOnLoad.bind(this));
-        };
-
         const propertyNameInput = document.querySelector(`#${this.propertyName}-edit-name`);
         if (propertyNameInput) {
             propertyNameInput.addEventListener('keydown', preventDefaultEnterKeyBehoviour.bind(this));
@@ -73,13 +68,6 @@ export class TransactionPropertyEditModal {
         similarCategoriesDialog.hide();
         form.enableSubmitButton();
         form.action = `/${this.controller}/${action}`;
-    }
-
-    updatePropertyDeleteModalOnLoad(event) {
-        const deleteModal = event.target;
-        const form = deleteModal.querySelector(`#${this.propertyName}-delete-form`);
-        const button = event.relatedTarget;
-        this.fillPropertyDeleteForm(form, button);
     }
 
     async checkForSimilarItemsOnInput(event) {
@@ -151,16 +139,6 @@ export class TransactionPropertyEditModal {
 
         const nameInput = form.querySelector(`#${this.propertyName}-edit-name`);
         nameInput.value = name;
-    }
-
-    fillPropertyDeleteForm(form, button) {
-        const { id, name } = button.dataset;
-
-        const idInput = form.querySelector(`#${this.propertyName}-delete-id`);
-        idInput.value = id;
-
-        const nameElement = form.querySelector("#parameter-to-delete");
-        nameElement.innerText = name;
     }
 
         async getSimilarProperties(propertyName, ignorePropertyId = null) {
