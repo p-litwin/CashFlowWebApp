@@ -96,7 +96,7 @@ class IncomeCategories extends Authenticated{
      *
      * @return void
      */
-    public static function findSimilarCategoryAction() {
+    public static function findSimilarAction() {
         $similarCategory = IncomeCategory::getSimilarCategories($_GET['name'], $_GET['ignore_id'] ?? null);
         header('Content-Type: application/json');
         echo json_encode($similarCategory);

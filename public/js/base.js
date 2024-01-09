@@ -116,6 +116,13 @@ HTMLElement.prototype.hideElement = function() {
     this.style.display = "none";
 }
 
+/**
+ * Handles the keydown event for the Enter key.
+ * @param {KeyboardEvent} event - The keydown event object.
+ */
+function preventDefaultEnterKeyBehoviour(event) {
+    event.key === "Enter" ? event.preventDefault() : null;
+}
 
 /**
  * Converts a number or string to a float with comma as decimal separator.

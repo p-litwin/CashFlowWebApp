@@ -1,11 +1,16 @@
 /**
  * Represents a dialog for displaying similar items.
  */
-class similarItemsDialog {
+export class SimilarItemsDialog {
+    /**
+     * Represents a SimilarItemsDialog object.
+     * @constructor
+     */
     constructor() {
         this.dialog = document.querySelector("#similar-items-notification");
         this.list = document.querySelector("#similar-items-list");
         this.confirmationCheckbox = document.querySelector("#similar-item-checkbox");
+        this.assignEventToConfirmationCheckbox();
     }
 
     /**
@@ -46,6 +51,12 @@ class similarItemsDialog {
         });
     }
 
+    /**
+     * Updates and displays the list of similar items.
+     * 
+     * @param {Array} similarItems - The array of similar items to be displayed.
+     * @returns {void}
+     */
     udpateAndDisplayList(similarItems) {
         this.fillTheList(similarItems);
         this.setConfirmationCheckboxValue(false);
@@ -68,18 +79,22 @@ class similarItemsDialog {
         return this.confirmationCheckbox.checked;
     }
 
-}
+    assignEventToConfirmationCheckbox() {
+        this.confirmationCheckbox.addEventListener("click", event => {
+            this.toggleSubmitButton(event)
+        });
+    }
 
-const similarItemCheckBox = document.querySelector(`#similar-item-checkbox`);
-if (similarItemCheckBox) {
-    similarItemCheckBox.addEventListener('click', toggleSubmitButton);
-}
-
-function toggleSubmitButton(event) {
-    const form = event.target.closest('form');
-    if (event.target.checked) {
-        form.enableSubmitButton();
-    } else {
-        form.disableSubmitButton();
+    /**
+     * Toggles the submit button based on the checked state of the event target.
+     * @param {Event} event - The event object.
+     */
+    toggleSubmitButton(event) {
+        const form = event.target.closest('form');
+        if (event.target.checked) {
+            form.enableSubmitButton();
+        } else {
+            form.disableSubmitButton();
+        }
     }
 }
