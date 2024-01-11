@@ -12,10 +12,14 @@ export class TransactionEditModal {
 
     transactionAmountValidationRules ={
         required: true,
+        number: true,
+        step: 0.01,
         pattern: /^(\d+(?:[\.\,]\d{1,2})?)$/,
         messages: {
+            number: "To nie jest liczba.",
             required: "Pole nie może być puste.",
             pattern: "Wymagany format: 0,00.",
+            step: "Wymagany format: 0,00."
         }
     };
 
