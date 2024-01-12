@@ -10,7 +10,7 @@ export class TransactionEditModal {
 
     controller;
 
-    transactionAmountValidationRules ={
+    transactionAmountValidationRules = {
         required: true,
         number: true,
         step: 0.01,
@@ -41,7 +41,7 @@ export class TransactionEditModal {
 
     transactionCommentValidationRules = {
         maxlength: 100,
-        messages: { 
+        messages: {
             maxlength: "Wpisz nie więcej niż 100 znaków."
         }
     };
@@ -74,8 +74,16 @@ export class TransactionEditModal {
             transactionEditModal.addEventListener('show.bs.modal', this.udpateTransactionEditModalOnLoad.bind(this));
             transactionEditModal.addEventListener('shown.bs.modal', this.focusOnAmoutField.bind(this));
             transactionEditModal.addEventListener('hidden.bs.modal', this.handleHiddenModal.bind(this));
-        }
-        $('.transaction-form-button').on('click', this.handleTransactionFormButtonClick.bind(this));
+        };
+
+        $(`#${this.transactionType}-edit-date`).daterangepicker({
+            singleDatePicker: true,
+            autoUpdateInput: true,
+            showDropdowns: true,
+            autoApply: true,
+            locale: dateRangePickerLocale,
+            parentEl: `#${this.transactionType}-edit-form`
+        });
     }
 
     /**
@@ -83,10 +91,10 @@ export class TransactionEditModal {
      */
     addValidation() {
         $(`#${this.transactionType}-edit-form`).validate(COMMON_VALIDATION_PARAMETERS);
-        $(`#${this.transactionType}-edit-amount`).rules("add",this.transactionAmountValidationRules);
-        $(`#${this.transactionType}-edit-date`).rules("add",this.transactionDateValidationRules);
-        $(`#${this.transactionType}-edit-category`).rules("add",this.transactionCategoryValidationRules);
-        $(`#${this.transactionType}-edit-comment`).rules("add",this.transactionCommentValidationRules);
+        $(`#${this.transactionType}-edit-amount`).rules("add", this.transactionAmountValidationRules);
+        $(`#${this.transactionType}-edit-date`).rules("add", this.transactionDateValidationRules);
+        $(`#${this.transactionType}-edit-category`).rules("add", this.transactionCategoryValidationRules);
+        $(`#${this.transactionType}-edit-comment`).rules("add", this.transactionCommentValidationRules);
     }
 
     /**
@@ -130,20 +138,6 @@ export class TransactionEditModal {
      */
     handleHiddenModal() {
         document.querySelector(`#add-${this.transactionType}-button`).classList.remove('active');
-    }
-
-    /**
-     * Handles the click event of the transaction form button.
-     */
-    handleTransactionFormButtonClick() {
-        $(`#${this.transactionType}-edit-date`).daterangepicker({
-            singleDatePicker: true,
-            autoUpdateInput: true,
-            showDropdowns: true,
-            autoApply: true,
-            locale: dateRangePickerLocale,
-            parentEl: "#income-edit-form"
-        });
     }
 
     /**
