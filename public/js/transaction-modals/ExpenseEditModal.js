@@ -32,10 +32,11 @@ export class ExpenseEditModal extends TransactionEditModal {
         form.querySelector(`#${this.transactionType}-edit-method`).value = button.getAttribute('data-payment');
     }
 
-    udpateTransactionEditModalOnLoad(event) {
-        super.udpateTransactionEditModalOnLoad(event);
+    updateTransactionEditModalOnLoad(event) {
+        super.updateTransactionEditModalOnLoad(event);
         this.refreshBudgetDialog();
     }
+
     addEventListeners() {
         super.addEventListeners();
         document.querySelector(`#${this.transactionType}-edit-category`).addEventListener('change', this.refreshBudgetDialog.bind(this));
