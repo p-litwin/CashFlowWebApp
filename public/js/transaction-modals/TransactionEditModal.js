@@ -71,7 +71,7 @@ export class TransactionEditModal {
     addEventListeners() {
         const transactionEditModal = document.querySelector(`#${this.transactionType}-edit-modal`);
         if (transactionEditModal) {
-            transactionEditModal.addEventListener('show.bs.modal', this.udpateTransactionEditModalOnLoad.bind(this));
+            transactionEditModal.addEventListener('show.bs.modal', this.updateTransactionEditModalOnLoad.bind(this));
             transactionEditModal.addEventListener('shown.bs.modal', this.focusOnAmoutField.bind(this));
             transactionEditModal.addEventListener('hidden.bs.modal', this.handleHiddenModal.bind(this));
         };
@@ -101,13 +101,12 @@ export class TransactionEditModal {
      * Updates the Transaction Edit Modal on load.
      * @param {Event} event - The event object.
      */
-    udpateTransactionEditModalOnLoad(event) {
+    updateTransactionEditModalOnLoad(event) {
         const transactionEditModal = event.target;
         const modalTitle = event.target.querySelector('.modal-title');
         const button = event.relatedTarget;
         const form = transactionEditModal.querySelector(`#${this.transactionType}-edit-form`);
         const action = button.getAttribute('data-action');
-
         if (action == 'update') {
 
             modalTitle.innerHTML = `${this.modalTitleEdit}`;
@@ -117,7 +116,9 @@ export class TransactionEditModal {
 
             modalTitle.innerHTML = `${this.modalTitleAdd}`;
             form.clearAllFields();
-            form.querySelector(`#${this.transactionType}-edit-date`).value = new Date().toISOString().slice(0, 10);
+            const today = new Date().toISOString().slice(0, 10);
+            form.querySelector(`#${this.transactionType}-edit-date`).value = today;
+            $(`#${this.transactionType}-edit-date`).data('daterangepicker').setStartDate(today);
             button.classList.add("active");
 
         }

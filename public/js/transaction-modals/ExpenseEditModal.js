@@ -41,8 +41,6 @@ export class ExpenseEditModal extends TransactionEditModal {
         document.querySelector(`#${this.transactionType}-edit-category`).addEventListener('change', this.refreshBudgetDialog.bind(this));
         document.querySelector(`#${this.transactionType}-edit-amount`).addEventListener('input', this.refreshBudgetDialog.bind(this));
         document.querySelector(`#${this.transactionType}-edit-date`).addEventListener('blur', this.refreshBudgetDialog.bind(this));
-        // $('#expense-edit-date').on('apply.daterangepicker', this.refreshBudgetDialog.bind(this));
-        // document.querySelector(`#${this.transactionType}-edit-date`).addEventListener('apply.daterangepicker', this.refreshBudgetDialog.bind(this));
         $('#expense-edit-date').on('apply.daterangepicker', this.refreshBudgetDialog.bind(this));
     }
 
