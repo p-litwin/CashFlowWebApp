@@ -80,6 +80,6 @@ export class ExpenseCategoryEditModal extends TransactionPropertyEditModal {
         nameInput.value = name;
 
         const budgetInput = form.querySelector(`#${this.propertyName}-edit-budget`);
-        budgetInput.value = budget;
+        budgetInput.value = convertStringToNumber(budget);
     }
 }
