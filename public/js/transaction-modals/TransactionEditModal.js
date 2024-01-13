@@ -159,6 +159,6 @@ export class TransactionEditModal {
         commentTexarea.value = comment;
 
         const amountInput = form.querySelector(`#${this.transactionType}-edit-amount`);
-        amountInput.value = amount.replace(/\./g, ',');
+        amountInput.value = convertStringToNumber(amount);
     }
 }

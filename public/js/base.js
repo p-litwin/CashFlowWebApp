@@ -147,3 +147,23 @@ function convertToFloatWithComma(number) {
 
     return parsedNumber.toFixed(2).replace('.', ',');
 }
+
+function convertStringToNumber(string, decimalDigits = 2) {
+    
+    if (typeof string !== 'string') {
+        return 0;
+    }
+
+    string = string.replace(',', '.');
+    string = string.trim();
+    string = string.replace(/\s/g, '');
+
+
+    const parsedNumber = Number.parseFloat(string);
+
+    if (Number.isNaN(parsedNumber)) {
+        return 0;
+    }
+
+    return parsedNumber.toFixed(decimalDigits);
+}
